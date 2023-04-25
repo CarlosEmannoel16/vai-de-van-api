@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "lib": ["es5", "es6"],
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./build",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@entitiesPostgres/*": ["./src/domain/entities/postgres/"],
+      "@entities/*": ["./src/domain/entities/*"],
+      "@models/*": ["src/domain/models"],
+      "@shared/*": ["./src/shared"],
+      "@DataSource/*": ["./src/config/*"],
+      "@data/*": ["./src/data/*"],
+      "@infra/*": ["./src/infra/*"],
+      "@presentation/*": ["./src/presentation/*"]
+    }
+  }
+}
