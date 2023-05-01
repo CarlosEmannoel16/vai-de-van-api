@@ -27,6 +27,9 @@ export class User {
   cpf: string;
 
   @Column()
+  date_of_birth: Date;
+
+  @Column()
   type: string;
 
   @CreateDateColumn()

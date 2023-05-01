@@ -5,7 +5,7 @@ import {
 } from '@data/protocols/user';
 import UseCase from '@presentation/utils/decorators';
 import { CreateUser } from 'src/domain/usecases/user/createUser';
-@UseCase
+
 export class CreateUserUseCase implements CreateUser {
   constructor(
     private readonly createUserRepository: ICreateUserProtocolRepository,
