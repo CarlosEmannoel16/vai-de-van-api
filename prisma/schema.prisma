@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatusPayment {
+  EM_ANDAMENTO
+  CONFIRMADO
+  CANCELADO
+}
+
+enum StatusTicket {
+  USADO
+  CANCELADO
+  EXPIRADO
+  ATIVO
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  password      String
+  email         String   @unique
+  cpf           String   @unique
+  phone         String
+  date_of_birth DateTime
+  type          String
+  created_at    DateTime @default(now())
+  update_at     DateTime @updatedAt
+}
+
+model Driver {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+}
+
+model State {
+  id     String @id @default(uuid())
+  name   String
+  uf     String
+  cities City[]
+}
+
+model City {
+  id          String          @id @default(uuid())
+  name        String          @unique
+  coordinates String
+  routes      RouteOnCities[]
+  State       State?          @relation(fields: [stateId], references: [id])
+  stateId     String?
+}
+
+model Route {
+  id             String           @id @default(uuid())
+  SubRoute       SubRoute[]
+  departure_time DateTime
+  created_at     DateTime         @default(now())
+  update_at      DateTime         @updatedAt
+  path           RouteOnCities[]
+  RouteOnVehicle RouteOnVehicle[]
+}
+
+model Vehicle {
+  id                String           @id @default(uuid())
+  amount_of_accents Int
+  plate             String
+  with_air          Boolean
+  RouteOnVehicle    RouteOnVehicle[]
+}
+
+model RouteOnVehicle {
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
+  vehicleId String
+  route     Route   @relation(fields: [routeId], references: [id])
+  routeId   String
+
+  @@id([routeId, vehicleId])
+}
+
+model RouteOnCities {
+  City    City   @relation(fields: [cityId], references: [id])
+  cityId  String
+  Route   Route  @relation(fields: [routeId], references: [id])
+  routeId String
+
+  @@id([cityId, routeId])
+}
+
+model SubRoute {
+  id                String   @id @default(uuid())
+  route             Route    @relation(fields: [id_route], references: [id])
+  id_route          String
+  km                Int
+  amount_of_accents Int
+  value             Float
+  created_at        DateTime @default(now())
+  update_at         DateTime @updatedAt
+}
+
+model Payment {
+  id     String        @id @unique
+  status StatusPayment
+  Ticket Ticket[]
+}
+
+model Ticket {
+  id         String       @id @default(uuid())
+  amount     Float
+  cpf        String
+  name_user  String
+  status     StatusTicket
+  Payment    Payment?     @relation(fields: [paymentId], references: [id])
+  paymentId  String?
+  created_at DateTime     @default(now())
+  update_at  DateTime     @updatedAt
+}
