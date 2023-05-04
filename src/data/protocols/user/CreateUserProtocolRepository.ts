@@ -7,16 +7,21 @@ export interface ICreateUserProtocolRepository {
 export namespace ICreateUserProtocolRepository {
   export type Params = {
     name: string;
-    password: string;
-    email?: string;
-    phone: string;
     type: string;
+    email: string;
+    phone: string;
+    date_of_birth: Date;
     cpf: string;
+    password: string;
   };
 
   export type Result = {
     id: string;
     name: string;
     type: string;
+    email: string;
+    phone: string;
+    date_of_birth: Date;
+    cpf: string;
   };
 }

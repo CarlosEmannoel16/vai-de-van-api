@@ -1,12 +1,12 @@
-import { State } from '@entitiesPostgres/';
-import { ICreateStateProtocolRepository } from '@data/protocols/state/CreateStateProtocolRepository';
-import { AppDataSource } from '@DataSource/postgres';
-const repository = AppDataSource.getRepository(State);
+import { ICreateStateProtocolRepository } from '@/data/protocols/state/CreateStateProtocolRepository';
+import { PrismaClient } from '@prisma/client';
+const state = new PrismaClient().state;
+
 export class StateRepository implements ICreateStateProtocolRepository {
   async create(
     data: ICreateStateProtocolRepository.Params,
   ): Promise<ICreateStateProtocolRepository.Result> {
-    const { id, name, uf } = await repository.save(data);
+    const { id, name, uf } = await state.create({ data });
     return { id, name, uf };
   }
 }

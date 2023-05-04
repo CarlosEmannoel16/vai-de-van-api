@@ -1,13 +1,9 @@
-import 'reflect-metadata';
 import app from './loaders/app';
-import Databases from './loaders/Databases';
+import { createClient } from 'redis';
+const client = createClient();
 
-Databases.startPostgres()
-  .then(() => {
-    app.listen(3000, () => {
-      console.log('Server started on port 3000!');
-    });
-  })
-  .catch(error => {
-    console.log(error);
+client.connect().then(() => {
+  app.listen(3000, () => {
+    console.log('Server started on port 3000!');
   });
+});

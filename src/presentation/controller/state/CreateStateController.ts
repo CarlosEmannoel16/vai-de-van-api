@@ -1,9 +1,9 @@
-import { IController } from '@presentation/protocols/controller';
-import { IResponse } from '@presentation/utils/response';
+import { IController } from '@/presentation/protocols/controller';
+import { IResponse } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
-import { ICreateState } from 'src/domain/usecases/state/CreateState';
+import { ICreateState } from '@/domain/usecases/state/CreateState';
 import { createStateValidation } from './validation/yupValidationSate';
-import { httpResponse } from '@presentation/helpers/httpResponse';
+import { httpResponse } from '@/presentation/helpers/httpResponse';
 
 export class CreateStateController implements IController {
   constructor(private readonly createStateUseCase: ICreateState) {}

@@ -1,13 +1,12 @@
-import { AppDataSource } from '@DataSource/postgres';
-import { User } from '@entities/postgres/';
+import { PrismaClient } from '@prisma/client';
 import {
   IGetUserByIdProtocolRepository,
   ICreateUserProtocolRepository,
   IGetUserByCpfProtocolRepository,
   IGetUserByNameProtocolRepository,
-} from '@data/protocols/user/';
+} from '@/data/protocols/user/';
 
-const getRepository = AppDataSource.getRepository;
+const prisma = new PrismaClient();
 export class UserRepository
   implements
     ICreateUserProtocolRepository,
@@ -15,28 +14,34 @@ export class UserRepository
     IGetUserByNameProtocolRepository,
     IGetUserByCpfProtocolRepository
 {
-  async create(
-    data: ICreateUserProtocolRepository.Params,
-  ): Promise<ICreateUserProtocolRepository.Result> {
-    const user = await getRepository(User).save(data);
-    const { id, name, type } = user;
-    return { id, name, type };
+  async create({
+    cpf,
+    date_of_birth,
+    email,
+    name,
+    password,
+    phone,
+    type,
+  }: ICreateUserProtocolRepository.Params): Promise<ICreateUserProtocolRepository.Result> {
+    const user = await prisma.user.create({
+      data: { cpf, date_of_birth, email, name, password, phone, type },
+    });
+    return user;
   }
-
   async getById(
     idUser: string,
   ): Promise<IGetUserByIdProtocolRepository.Result> {
-    const user = await getRepository(User).findOne({ where: { id: idUser } });
+    const user = await prisma.user.findUnique({ where: { id: idUser } });
     return user;
   }
 
   async getUserByName(
     nameUser: string,
-  ): Promise<IGetUserByNameProtocolRepository.Result> {
-    const user = await getRepository(User).findOne({
-      where: { name: nameUser },
-    });
-    const { email, id, name, phone, type, cpf } = user;
+  ): Promise<IGetUserByNameProtocolRepository.Result | any> {
+    const user = await prisma.user.findFirst({ where: { name: nameUser } });
+    if (!user) return {};
+
+    const { email, id, name, phone, type, cpf, date_of_birth } = user;
     return {
       email,
       id,
@@ -44,11 +49,16 @@ export class UserRepository
       phone,
       type,
       cpf,
+      date_of_birth,
     };
   }
 
-  async getByCpf(cpf: string): Promise<IGetUserByCpfProtocolRepository.Result> {
-    const user = await getRepository(User).findOne({ where: { cpf } });
-    return { name: user.name };
+  async getByCpf(
+    cpfUser: string,
+  ): Promise<IGetUserByCpfProtocolRepository.Result | any> {
+    const user = await prisma.user.findFirst({ where: { cpf: cpfUser } });
+    if (!user) return {};
+    const { cpf, date_of_birth, email, id, name, phone, type } = user;
+    return { cpf, date_of_birth, email, id, name, phone, type };
   }
 }

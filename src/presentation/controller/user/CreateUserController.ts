@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { CreateUser } from 'src/domain/usecases/user/createUser';
-import { IController } from 'src/presentation/protocols/controller';
-import { IResponse, ResponseStatus } from 'src/presentation/utils/response';
+import { CreateUser } from '@/domain/usecases/user/createUser';
+import { IController } from '@/presentation/protocols/controller';
+import { IResponse, ResponseStatus } from '../../utils/response';
 import { createUserYupValidation } from './validation/yupValidationUser';
-import ControllerException from 'src/presentation/helpers/ControllerException';
+import ControllerException from '../../helpers/ControllerException';
 
 export class CreateUserController implements IController {
   constructor(private readonly createUserUseCase: CreateUser) {}
@@ -24,9 +24,10 @@ export class CreateUserController implements IController {
         data: user,
       });
     } catch (error) {
-      const { message, status, statusCode } =
-        ControllerException.handleError(error);
-      res.status(statusCode).json({ message, status });
+      const { message, status, statusCode } = ControllerException.handleError(
+        new Error(),
+      );
+      return res.status(statusCode).json({ message, status });
     }
   }
 }

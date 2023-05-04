@@ -14,5 +14,6 @@ export namespace IGetUserByNameProtocolRepository {
     phone: string;
     type: string;
     cpf: string;
+    date_of_birth: Date;
   };
 }

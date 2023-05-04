@@ -1,9 +1,10 @@
-import { GetUserByIdUseCase } from '@data/usecases/user/GetUserByIdUseCase';
-import { IController } from '@presentation/protocols/controller';
-import { IResponse, ResponseStatus } from '@presentation/utils/response';
+import { GetUserByIdUseCase } from '@/data/usecases/user/GetUserByIdUseCase';
+import { IController } from '@/presentation/protocols/controller';
+import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 import { getUserYupValidation } from './validation/yupValidationUser';
-import ControllerException from '@presentation/helpers/ControllerException';
+import ControllerException from '@/presentation/helpers/ControllerException';
+import { Err } from 'joi';
 
 export class GetUserByIdController implements IController {
   constructor(private readonly getUserById: GetUserByIdUseCase) {}
@@ -17,11 +18,12 @@ export class GetUserByIdController implements IController {
       });
       const user = await this.getUserById.execute(req.params.idUser);
       return res.status(200).json({ status: ResponseStatus.OK, data: user });
-    } catch (error) {
-      const { message, status, statusCode } =
-        ControllerException.handleError(error);
+    } catch (err) {
+      const { message, status, statusCode } = ControllerException.handleError(
+        err as Error,
+      );
 
-      res.status(statusCode).json({ message, status });
+      return res.status(statusCode).json({ message, status });
     }
   }
 }

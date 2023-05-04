@@ -4,12 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/server.ts",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
-    "run-migration": "ts-node-dev ./node_modules/typeorm/cli.js migration:run",
-    "typeorm": "typeorm-ts-node-commonjs",
-    "start": "ts-node src/server.ts",
+    "start": "ts-node-dev -r tsconfig-paths/register src/server.ts",
     "test": "jest"
   },
   "devDependencies": {
@@ -36,6 +33,7 @@
     "typescript": "4.5.2"
   },
   "dependencies": {
+    "@prisma/client": "4.13.0",
     "@types/yup": "^0.32.0",
     "bcrypt": "^5.1.0",
     "celebrate": "^15.0.1",
@@ -47,9 +45,13 @@
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.14.1",
     "pg": "^8.4.0",
+    "redis": "^4.6.6",
     "reflect-metadata": "^0.1.13",
     "socket.io": "^4.6.0",
     "typeorm": "0.3.12",
     "yup": "^1.0.2"
-  }
+  },
+  "_resolveFilename": [
+    "*"
+  ]
 }

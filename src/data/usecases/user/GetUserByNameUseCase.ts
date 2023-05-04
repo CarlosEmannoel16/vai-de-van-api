@@ -1,6 +1,6 @@
-import { IGetUserByNameProtocolRepository } from '@data/protocols/user/GetUserByNameProtocolRepository';
-import { GetUserByName } from 'src/domain/usecases/user/GetUserByName';
-import { formatCpfForReturn } from '@data/utils/formatCpfForReturn';
+import { IGetUserByNameProtocolRepository } from '@/data/protocols/user/GetUserByNameProtocolRepository';
+import { GetUserByName } from '@/domain/usecases/user/GetUserByName';
+import { formatCpfForReturn } from '@/data/utils/formatCpfForReturn';
 export class GetUserByNameUsecase implements GetUserByName {
   constructor(
     private readonly getUserByName: IGetUserByNameProtocolRepository,

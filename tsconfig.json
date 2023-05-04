@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
     "lib": ["es5", "es6"],
-    "target": "es5",
+    "target": "ES2019",
+    "declaration": true,
+    "strict": true,
     "module": "commonjs",
     "moduleResolution": "node",
+    "importHelpers": true,
+    "forceConsistentCasingInFileNames": true,
     "outDir": "./build",
+    "rootDir": "src",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@entitiesPostgres/*": ["./src/domain/entities/postgres/"],
-      "@entities/*": ["./src/domain/entities/*"],
-      "@models/*": ["src/domain/models"],
-      "@shared/*": ["./src/shared"],
-      "@DataSource/*": ["./src/config/*"],
-      "@data/*": ["./src/data/*"],
-      "@infra/*": ["./src/infra/*"],
-      "@presentation/*": ["./src/presentation/*"]
+      "@/*": ["*"]
     }
-  }
+  },
+  "include": ["./src/**/*"],
+  "exclude": []
 }

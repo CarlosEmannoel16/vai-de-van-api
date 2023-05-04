@@ -1,6 +1,7 @@
 import { ValidationError } from 'yup';
 import { ResponseStatus } from '../utils/response';
-import { BaseError } from '@data/errors/baseError';
+import { BaseError } from '@/data/errors/baseError';
+import { Err } from 'joi';
 
 export interface ControllerExceptionResult {
   statusCode: number;
@@ -30,7 +31,7 @@ class ControllerException {
     return {
       statusCode: 500,
       status: ResponseStatus.INTERNAL_SERVER_ERROR,
-      message: error.message || 'Erro no servidor',
+      message: error?.message || 'Erro no servidor',
     };
   }
 }
