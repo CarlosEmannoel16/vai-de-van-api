@@ -12,10 +12,11 @@ export class GetUserByIdController implements IController {
     res: Response<any, Record<string, any>>,
   ): Promise<Response<IResponse>> {
     try {
-      getUserYupValidation.validate(req.params, {
+      await getUserYupValidation.validate(req.params, {
         abortEarly: false,
       });
-      const user = await this.getUserById.execute(req.params.idUser);
+
+      const user = await this.getUserById.execute(req.params.id);
       return res.status(200).json({ status: ResponseStatus.OK, data: user });
     } catch (err) {
       const { message, status, statusCode } = ControllerException.handleError(

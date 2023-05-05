@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import { CreateUser } from '../../../domain/usecases/user/createUser';
+import { ICreateUser } from '../../../domain/usecases/user/createUser';
 import { IController } from '@/presentation/protocols/controller';
 import { IResponse, ResponseStatus } from '../../utils/response';
 import { createUserYupValidation } from './validation/yupValidationUser';
 import ControllerException from '../../helpers/ControllerException';
 
 export class CreateUserController implements IController {
-  private readonly createUserUseCase: CreateUser;
-  constructor(CreateUserUseCase: CreateUser) {
+  private readonly createUserUseCase: ICreateUser;
+  constructor(CreateUserUseCase: ICreateUser) {
     this.createUserUseCase = CreateUserUseCase;
   }
   async handle(

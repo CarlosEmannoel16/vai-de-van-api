@@ -1,8 +1,8 @@
-export interface GetUserByName {
-  getByName(nameUser: string): Promise<GetUserByName.Result>;
+export interface IGetUserByName {
+  getByName(nameUser: string): Promise<IGetUserByName.Result>;
 }
 
-export namespace GetUserByName {
+export namespace IGetUserByName {
   export type Result = {
     id: string;
     name: string;

@@ -2,18 +2,24 @@ import { InvalidGenericError } from '@/data/errors/InvalidGenericError';
 import {
   ICreateUserProtocolRepository,
   IGetUserByCpfProtocolRepository,
+  IGetUserByEmailProtocolRepository,
 } from '@/data/protocols/user';
-import { CreateUser } from '@/domain/usecases/user/createUser';
+import { ICreateUser } from '@domain/usecases/user/createUser';
 
-export class CreateUserUseCase implements CreateUser {
+export class CreateUserUseCase implements ICreateUser {
   constructor(
     private readonly createUserRepository: ICreateUserProtocolRepository,
     private readonly getUserByCPFRepository: IGetUserByCpfProtocolRepository,
+    private readonly getUserByEmailRepository: IGetUserByEmailProtocolRepository,
   ) {}
 
-  async execute(data: CreateUser.Params): Promise<CreateUser.Result> {
-    console.log('entrou sim');
+  async execute(data: ICreateUser.Params): Promise<ICreateUser.Result> {
     const existsUser = await this.getUserByCPFRepository.getByCpf(data.cpf);
+    const existsUserWithEmail =
+      await this.getUserByEmailRepository.getUserByEmail(data.email);
+
+    if (existsUserWithEmail.email)
+      throw new InvalidGenericError('E-mail Já cadastrado');
     if (existsUser.name) throw new InvalidGenericError('Cpf já cadastrado');
     const {
       name,

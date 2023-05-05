@@ -1,11 +1,14 @@
-import { Request, Response, Router } from 'express';
-import { makeCreateUserController } from './main/factories/controllers/makeCreateUserController';
-// import { makeGetUserByIdController } from './main/factories/controllers/user/makeGetUserByIdController';
-const CreateUserController = makeCreateUserController();
+import { Router } from 'express';
+import { adpterRouter } from './main/utils/adpterRouter';
+import {
+  makeCreateUserController,
+  makeGetUserByIdController,
+  makeGetAllUserController,
+} from './main/factories/controllers';
+
 const routes = Router();
-routes.post('/user', (req: Request, res: Response) => {
-  CreateUserController.handle(req, res);
-});
-// router.get('/user/:idUser', makeGetUserByIdController().handle);
+routes.post('/user', adpterRouter(makeCreateUserController()));
+routes.get('/users', adpterRouter(makeGetAllUserController()));
+routes.get('/user/:id', adpterRouter(makeGetUserByIdController()));
 
 export = routes;

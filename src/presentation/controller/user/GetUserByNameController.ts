@@ -2,10 +2,10 @@
 // import { IResponse } from '@/presentation/utils/response';
 // import { Request, Response } from 'express';
 // import { getUserByNameYupValidation } from './validation/yupValidationUser';
-// import { GetUserByName } from '@/domain/usecases/user/GetUserByName';
+// import { IGetUserByName } from '@/domain/usecases/user/IGetUserByName';
 
 // export class GetUserByNameController implements IController {
-//   constructor(private readonly getUserByName: GetUserByName) {}
+//   constructor(private readonly getUserByName: IGetUserByName) {}
 
 //   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
 //     getUserByNameYupValidation.validate(req.params, {

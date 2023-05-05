@@ -1,8 +1,8 @@
-export interface CreateUser {
-  execute: (data: CreateUser.Params) => Promise<CreateUser.Result>;
+export interface ICreateUser {
+  execute: (data: ICreateUser.Params) => Promise<ICreateUser.Result>;
 }
 
-export namespace CreateUser {
+export namespace ICreateUser {
   export type Params = {
     name: string;
     phone: string;
