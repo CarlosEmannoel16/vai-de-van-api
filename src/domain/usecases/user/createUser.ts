@@ -1,7 +1,5 @@
-import { Rule } from '@/domain/models/ruleModel';
-
 export interface CreateUser {
-  execute(data: CreateUser.Params): Promise<CreateUser.Result>;
+  execute: (data: CreateUser.Params) => Promise<CreateUser.Result>;
 }
 
 export namespace CreateUser {
@@ -9,7 +7,7 @@ export namespace CreateUser {
     name: string;
     phone: string;
     email?: string;
-    type: Rule;
+    type: string;
     cpf: string;
     password: string;
     date_of_birth: Date;

@@ -3,17 +3,17 @@ import {
   ICreateUserProtocolRepository,
   IGetUserByCpfProtocolRepository,
 } from '@/data/protocols/user';
-import UseCase from '@/presentation/utils/decorators';
 import { CreateUser } from '@/domain/usecases/user/createUser';
 
 export class CreateUserUseCase implements CreateUser {
   constructor(
     private readonly createUserRepository: ICreateUserProtocolRepository,
-    private readonly getUserByNameRepository: IGetUserByCpfProtocolRepository,
+    private readonly getUserByCPFRepository: IGetUserByCpfProtocolRepository,
   ) {}
 
   async execute(data: CreateUser.Params): Promise<CreateUser.Result> {
-    const existsUser = await this.getUserByNameRepository.getByCpf(data.cpf);
+    console.log('entrou sim');
+    const existsUser = await this.getUserByCPFRepository.getByCpf(data.cpf);
     if (existsUser.name) throw new InvalidGenericError('Cpf já cadastrado');
     const {
       name,
@@ -31,7 +31,7 @@ export class CreateUserUseCase implements CreateUser {
       phone,
       type,
       email,
-      date_of_birth,
+      date_of_birth: new Date(date_of_birth),
     });
     return user;
   }

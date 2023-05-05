@@ -34,4 +34,8 @@ export const createUserYupValidation = Yup.object().shape({
     .required('O cpf é obrigatório')
     .min(11, 'O Cpf deve possuir 11 caracteres')
     .max(11, 'O Cpf deve possuir 11 caracteres'),
+
+  password: Yup.string()
+    .typeError('A password deve ser uma string')
+    .required('O password é obrigatório'),
 });

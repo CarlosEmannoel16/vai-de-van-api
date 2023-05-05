@@ -1,4 +1,4 @@
 export enum Rule {
-  ADM = 'ADM',
-  DRIVER = 'DRIVER',
+  ADM,
+  DRIVER,
 }

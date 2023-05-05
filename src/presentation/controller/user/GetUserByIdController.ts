@@ -4,7 +4,6 @@ import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 import { getUserYupValidation } from './validation/yupValidationUser';
 import ControllerException from '@/presentation/helpers/ControllerException';
-import { Err } from 'joi';
 
 export class GetUserByIdController implements IController {
   constructor(private readonly getUserById: GetUserByIdUseCase) {}
