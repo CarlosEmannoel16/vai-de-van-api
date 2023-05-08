@@ -38,6 +38,7 @@ model User {
 
 model Driver {
   id         String   @id @default(uuid())
+  cnh        String 
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 }
