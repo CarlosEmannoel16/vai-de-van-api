@@ -1,4 +1,4 @@
-import { ICreateStateProtocolRepository } from '@/data/protocols/state/CreateStateProtocolRepository';
+import { ICreateStateProtocolRepository } from '@/dataUseCases/protocols/state/CreateStateProtocolRepository';
 import { PrismaClient } from '@prisma/client';
 const state = new PrismaClient().state;
 

@@ -1,5 +1,5 @@
-import { GetUserByIdUseCase } from '@/data/usecases/user/GetUserByIdUseCase';
-import { IController } from '@/presentation/protocols/controller';
+import { GetUserByIdUseCase } from '@/dataUseCases/usecases/user/GetUserByIdUseCase';
+import { IController } from '@/presentation/protocols/IController';
 import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 import { getUserYupValidation } from './validation/yupValidationUser';

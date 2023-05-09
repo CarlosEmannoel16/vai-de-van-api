@@ -1,4 +1,4 @@
-import { IController } from '@/presentation/protocols/controller';
+import { IController } from '@/presentation/protocols/IController';
 import { Request, Response } from 'express';
 
 export const adpterRouter = (controller: IController) => {

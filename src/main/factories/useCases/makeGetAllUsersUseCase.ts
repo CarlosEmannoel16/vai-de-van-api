@@ -1,4 +1,4 @@
-import { GetAllUsersUseCase } from '@/data/usecases/user/GetAllUsersUseCase';
+import { GetAllUsersUseCase } from '@/dataUseCases/usecases/user/GetAllUsersUseCase';
 import { IGetAllUsers } from '@/domain/usecases/user/GetAllUsers';
 import { UserRepository } from '@/infra/db/postgres/repository/UserRepository';
 

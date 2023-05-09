@@ -6,7 +6,7 @@ import {
   IGetUserByNameProtocolRepository,
   IGetUserByEmailProtocolRepository,
   IGetAllUsersProtocolRepository,
-} from '@/data/protocols/user/';
+} from '@/dataUseCases/protocols/user';
 
 const prisma = new PrismaClient();
 export class UserRepository

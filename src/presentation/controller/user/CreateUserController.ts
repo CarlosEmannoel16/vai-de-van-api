@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { ICreateUser } from '../../../domain/usecases/user/createUser';
-import { IController } from '@/presentation/protocols/controller';
+import { IController } from '@/presentation/protocols/IController';
 import { IResponse, ResponseStatus } from '../../utils/response';
 import { createUserYupValidation } from './validation/yupValidationUser';
 import ControllerException from '../../helpers/ControllerException';
@@ -28,7 +28,6 @@ export class CreateUserController implements IController {
       const { message, status, statusCode } = ControllerException.handleError(
         error as Error,
       );
-      console.log(error);
       return res.status(statusCode).json({ message, status });
     }
   }

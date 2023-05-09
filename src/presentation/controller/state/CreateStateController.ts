@@ -1,4 +1,4 @@
-import { IController } from '@/presentation/protocols/controller';
+import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 import { ICreateState } from '@/domain/usecases/state/CreateState';

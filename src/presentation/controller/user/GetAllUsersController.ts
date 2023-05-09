@@ -1,6 +1,6 @@
 import { IGetAllUsers } from '@/domain/usecases/user/GetAllUsers';
 import ControllerException from '@/presentation/helpers/ControllerException';
-import { IController } from '@/presentation/protocols/controller';
+import { IController } from '@/presentation/protocols/IController';
 import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 

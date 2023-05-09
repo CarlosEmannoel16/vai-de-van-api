@@ -34,11 +34,14 @@ model User {
   type          String
   created_at    DateTime @default(now())
   update_at     DateTime @updatedAt
+  Driver        Driver[]
 }
 
 model Driver {
   id         String   @id @default(uuid())
-  cnh        String 
+  cnh        String
+  idUser     String
+  User       User     @relation(fields: [idUser], references: [id])
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 }
