@@ -19,7 +19,7 @@ routes.use(adpterMiddleware(makeMiddlewareAuth()))
 .get('/users', adpterRouter(makeGetAllUserController()))
 .get('/user/:id', adpterRouter(makeGetUserByIdController()))
 .post('/user/driver', adpterRouter(makeCreateDriverController()))
-.post('/routes')
+
 
 // Next Routers
 
