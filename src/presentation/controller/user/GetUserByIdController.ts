@@ -1,12 +1,13 @@
-import { GetUserByIdUseCase } from '@/dataUseCases/usecases/user/GetUserByIdUseCase';
+import { GetUserByIdUseCase } from '@/data/usecases/user/GetUserByIdUseCase';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 import { getUserYupValidation } from './validation/yupValidationUser';
 import ControllerException from '@/presentation/helpers/ControllerException';
+import { IGetUserById } from '@/domain/usecases/user/GetUserByid';
 
 export class GetUserByIdController implements IController {
-  constructor(private readonly getUserById: GetUserByIdUseCase) {}
+  constructor(private readonly getUserById: IGetUserById) {}
   async handle(
     req: Request,
     res: Response<any, Record<string, any>>,

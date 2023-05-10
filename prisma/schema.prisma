@@ -37,6 +37,11 @@ model User {
   Driver        Driver[]
 }
 
+model SessionUsers {
+  idUser   String @id 
+  token    String
+}
+
 model Driver {
   id         String   @id @default(uuid())
   cnh        String

@@ -1,6 +1,6 @@
 import { ValidationError } from 'yup';
 import { ResponseStatus } from '../utils/response';
-import { BaseError } from '@/dataUseCases/errors/baseError';
+import { BaseError } from '@/data/errors/baseError';
 import { Err } from 'joi';
 
 export interface ControllerExceptionResult {

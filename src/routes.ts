@@ -3,20 +3,21 @@ import {
   makeCreateUserController,
   makeGetUserByIdController,
   makeGetAllUserController,
-} from './main/factories/controllers';
+  makeLoginController,
+  makeCreateDriverController
+} from '@makeControllers';
 import { makeMiddlewareAuth } from './main/factories/middlewares/makeMiddlewaredAuth'
 import { adpterMiddleware, adpterRouter } from './main/utils'
 const routes = Router();
 
-routes.get('/login')
+routes.post('/login',  adpterRouter(makeLoginController()))
 
+//routes private
 routes.use(adpterMiddleware(makeMiddlewareAuth()))
 .post('/user', adpterRouter(makeCreateUserController()))
 .get('/users', adpterRouter(makeGetAllUserController()))
-.get('/user/:id', adpterRouter(makeGetUserByIdController()));
-
-
-
+.get('/user/:id', adpterRouter(makeGetUserByIdController()))
+.post('/user/driver', adpterRouter(makeCreateDriverController()))
 
 
 // Next Routers

@@ -1,6 +1,7 @@
 import { GetUserByIdController } from '@/presentation/controller/user/GetUserByIdController';
-import { makeUseByIdUseCase } from '../useCases/makeGetUserByIdUseCase';
+import { makeGetUseByIdUseCase } from '@makeUseCases';
+import { IController } from '@/presentation/protocols/IController';
 
-export function makeGetUserByIdController(): GetUserByIdController {
-  return new GetUserByIdController(makeUseByIdUseCase());
+export function makeGetUserByIdController(): IController {
+  return new GetUserByIdController(makeGetUseByIdUseCase());
 }

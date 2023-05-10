@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
-    "start": "ts-node-dev -r tsconfig-paths/register src/server.ts",
+    "start": "ts-node-dev -r  tsconfig-paths/register src/server.ts",
     "test": "jest"
   },
   "devDependencies": {

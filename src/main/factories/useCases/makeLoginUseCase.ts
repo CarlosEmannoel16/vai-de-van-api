@@ -1,7 +1,7 @@
-import { IAuthLogin } from "@/dataUseCases/protocols/auth/authLogin";
-import {AuthLogin} from '@/dataUseCases/usecases/auth/AuthLogin'
-import {UserRepository} from '@/infra/db/postgres/repository/UserRepository'
+import { IAuthLogin } from "@/infra/protocols/auth/authLogin";
+import {AuthLogin} from '@/data/usecases/auth/AuthLogin'
+import {makeUserRepository} from '../repositories/makeUserRepositories'
 
 export const makeLoginUseCase = (): IAuthLogin=>{
-    return new AuthLogin(new UserRepository())
+    return new AuthLogin(makeUserRepository())
 }

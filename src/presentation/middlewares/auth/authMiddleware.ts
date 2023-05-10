@@ -1,5 +1,5 @@
-import { NotAuthorizedError } from "@/dataUseCases/errors/NotAuthorizedError";
-import { IJwtCompare } from "@/dataUseCases/protocols/auth/jwtCompare";
+import { NotAuthorizedError } from "@/data/errors/NotAuthorizedError";
+import { IJwtCompare } from "@/infra/protocols/auth/jwtCompare";
 import { IMiddleware } from "@/presentation/protocols/IMiddleware";
 import { Request, Response, NextFunction } from "express";
 import ControllerException from '@/presentation/helpers/ControllerException'

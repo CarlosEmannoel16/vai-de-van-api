@@ -1,6 +1,6 @@
-import { GetUserByIdUseCase } from '@/dataUseCases/usecases/user/GetUserByIdUseCase';
+import { GetUserByIdUseCase } from '@/data/usecases/user/GetUserByIdUseCase';
 import { IGetUserById } from '@/domain/usecases/user/GetUserByid';
-import { UserRepository } from '@/infra/db/postgres/repository/UserRepository';
+import { makeUserRepository } from '@makeRepositories';
 export const makeGetUseByIdUseCase = (): IGetUserById => {
-  return new GetUserByIdUseCase(new UserRepository());
+  return new GetUserByIdUseCase(makeUserRepository());
 };

@@ -1,5 +1,5 @@
 import { AuthMiddleware } from '../../../presentation/middlewares/auth/authMiddleware'
-import { JwtCompare } from '../../../dataUseCases/usecases/auth/CompareJwt'
+import { JwtCompare } from '../../../data/usecases/auth/CompareJwt'
 import { IMiddleware } from '../../../presentation/protocols/IMiddleware'
 
 export const makeMiddlewareAuth = (): IMiddleware => {

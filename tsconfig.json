@@ -17,7 +17,16 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
-      "@domain/*": ["domain/*"]
+      "@domain/*": ["domain/*"],
+      "@main/*": ["main/*"],
+      "@presentation/*": ["presentation/*"],
+      "@config/*": ["config/*"],
+      "@infra/*": ["infra/*"],
+      "@data/*": ["data/*"],
+      "@makeRepositories": ["main/factories/repositories/index.ts"],
+      "@makeControllers": ["main/factories/controllers/index.ts"],
+      "@makeUseCases": ["main/factories/useCases/index.ts"],
+
     }
   },
   "include": ["./src/**/*"],

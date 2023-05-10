@@ -1,5 +1,5 @@
 import { LoginController } from '@/presentation/controller/auth/LoginController';
-import { makeLoginUseCase } from '../useCases/makeLoginUseCase';
+import { makeLoginUseCase } from '@makeUseCases';
 import { IController } from '@/presentation/protocols/IController';
 
 export function makeLoginController(): IController {
