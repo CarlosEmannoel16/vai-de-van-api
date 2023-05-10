@@ -4,7 +4,9 @@ export interface IJwtCompare{
 
 export namespace IJwtCompare {
     export type Response = {
-        message: string
+        message?: string
         authorized: boolean
+        id?: string,
+        name?: string
     }
 }

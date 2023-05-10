@@ -3,6 +3,7 @@ import {
   ICreateUserProtocolRepository,
   IGetUserByCpfProtocolRepository,
   IGetUserByEmailProtocolRepository,
+  IGetUserByIdProtocolRepository,
 } from '@/infra/protocols/user';
 import { ICreateUser } from '@domain/usecases/user/createUser';
 
@@ -13,13 +14,15 @@ export class CreateUserUseCase implements ICreateUser {
     private readonly getUserByEmailRepository: IGetUserByEmailProtocolRepository,
   ) {}
 
-  async execute(data: ICreateUser.Params): Promise<ICreateUser.Result> {
+  async execute(data: ICreateUser.Params): Promise<ICreateUser.Result> {    
     const existsUser = await this.getUserByCPFRepository.getByCpf(data.cpf);
     const existsUserWithEmail =
       await this.getUserByEmailRepository.getUserByEmail(data.email);
-
+    
     if (existsUserWithEmail.email)
       throw new InvalidGenericError('E-mail Já cadastrado');
+
+    
     if (existsUser.name) throw new InvalidGenericError('Cpf já cadastrado');
     const {
       name,

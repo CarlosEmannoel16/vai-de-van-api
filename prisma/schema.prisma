@@ -38,8 +38,8 @@ model User {
 }
 
 model SessionUsers {
-  idUser   String @id 
-  token    String
+  idUser String @id
+  token  String
 }
 
 model Driver {
@@ -65,12 +65,15 @@ model City {
   routes      RouteOnCities[]
   State       State?          @relation(fields: [stateId], references: [id])
   stateId     String?
+  Route       Route?
 }
 
 model Route {
   id             String           @id @default(uuid())
   SubRoute       SubRoute[]
   departure_time DateTime
+  Origin         City             @relation(fields: [originId], references: [id])
+  originId       String           @unique
   created_at     DateTime         @default(now())
   update_at      DateTime         @updatedAt
   path           RouteOnCities[]

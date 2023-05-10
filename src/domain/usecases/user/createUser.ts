@@ -11,6 +11,8 @@ export namespace ICreateUser {
     cpf: string;
     password: string;
     date_of_birth: Date;
+    requestOwner: string
+
   };
 
   export type Result = {
