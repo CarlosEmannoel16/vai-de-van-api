@@ -5,6 +5,7 @@ export enum ResponseStatus {
   UNAUTHORIZED = 'UNAUTHORIZED',
   OK = 'OK',
   CREATED = 'CREATED',
+  UPDATE = 'UPDATED'
 }
 
 export interface IResponse {

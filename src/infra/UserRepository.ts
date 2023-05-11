@@ -8,18 +8,36 @@ import {
   IGetAllUsersProtocolRepository,
 } from '@/infra/protocols';
 import { ICreateDriverProtocolRepository } from './protocols/drivers/createDriver';
+import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
 
 const prisma = new PrismaClient();
 export class UserRepository
   implements
-    ICreateUserProtocolRepository,
-    IGetUserByIdProtocolRepository,
-    IGetUserByNameProtocolRepository,
-    IGetUserByCpfProtocolRepository,
-    IGetUserByEmailProtocolRepository,
-    IGetAllUsersProtocolRepository,
-    ICreateDriverProtocolRepository
-{
+  ICreateUserProtocolRepository,
+  IGetUserByIdProtocolRepository,
+  IGetUserByNameProtocolRepository,
+  IGetUserByCpfProtocolRepository,
+  IGetUserByEmailProtocolRepository,
+  IGetAllUsersProtocolRepository,
+  ICreateDriverProtocolRepository,
+  IUpdateUserProtocolRepository {
+  update(data: IUpdateUserProtocolRepository.Params): Promise<IUpdateUserProtocolRepository.Result> {
+    const { id, cpf, date_of_birth, email, name, password, phone, type } = data;
+    const user = prisma.user.update({
+      data: {
+        cpf,
+        date_of_birth,
+        email,
+        name,
+        password,
+        phone,
+        type,
+      }, where: {
+        id: id
+      }
+    })
+    return user
+  }
   async createDriver(
     data: ICreateDriverProtocolRepository.Params,
   ): Promise<ICreateDriverProtocolRepository.Result> {
