@@ -7,7 +7,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "removeComments": true,
-    "typeRoots": ["./node_modules/@types", "./src/@types/express"],
+    "typeRoots": ["./node_modules/@types", "./src/types/express"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
