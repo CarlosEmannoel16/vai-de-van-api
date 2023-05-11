@@ -14,8 +14,9 @@ const routes = Router();
 routes.post('/login',  adpterRouter(makeLoginController()))
 
 //routes private
-routes.use(adpterMiddleware(makeMiddlewareAuth()))
-.post('/user', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateUserController()))
+//routes.use(adpterMiddleware(makeMiddlewareAuth()))
+routes.
+post('/user', adpterRouter(makeCreateUserController()))
 .get('/users', adpterRouter(makeGetAllUserController()))
 .get('/user/:id', adpterRouter(makeGetUserByIdController()))
 .post('/user/driver', adpterRouter(makeCreateDriverController()))
