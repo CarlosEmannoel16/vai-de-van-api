@@ -46,7 +46,7 @@ model Driver {
   id         String   @id @default(uuid())
   cnh        String
   idUser     String
-  User       User     @relation(fields: [idUser], references: [id])
+  User       User     @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 }

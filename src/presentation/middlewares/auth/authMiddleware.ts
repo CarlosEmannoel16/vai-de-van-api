@@ -13,7 +13,7 @@ export class AuthMiddleware implements IMiddleware {
       const { authorized, id, name } = this.compareJwt.execute(bearer);
       if (!authorized) throw new NotAuthorizedError('Cliente nao autorizado');
       req.user = { id, name };
-      next();
+      return next();
     } catch (error) {
       const { message, status, statusCode } =
         ControllerException.handleError(error);

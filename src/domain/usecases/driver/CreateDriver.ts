@@ -16,7 +16,7 @@ export namespace ICreateDriver {
         cnh: string
         email: string;
         phone: string;
-        date_of_birth: Date;
+        date_of_birth: string;
         cpf: string;
         password: string;
     }

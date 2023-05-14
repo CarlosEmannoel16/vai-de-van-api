@@ -10,7 +10,7 @@ export class AdmMiddleware implements IMiddleware {
   async execute(req: Request, res: Response, next: NextFunction) {
     try {
      const requestOwnerData = await this.getUserById.getById(req.user.id)
-     if(requestOwnerData.type === `ADM`) next();
+     if(requestOwnerData.type === `ADM`) return next();
      throw new NotAuthorizedError('Usuário nao possui acesso a essa rota')
     } catch (error) {
       const { message, status, statusCode } =

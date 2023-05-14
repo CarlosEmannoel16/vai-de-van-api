@@ -12,11 +12,12 @@ export class JwtCompare implements IJwtCompare {
             response = { message: 'Token inválido.', authorized: false }
              return
           }
-          console.log(decoded)
-          response = { message: 'ok', authorized: true, id: decoded['id']  as string}
+          console.log('decoded', decoded)
+          response = { message: 'ok', authorized: true, id: decoded['id']  as string,  name: decoded['name']  as string}
          return 
           
         });
+        console.log(response)
         return response
     }
    

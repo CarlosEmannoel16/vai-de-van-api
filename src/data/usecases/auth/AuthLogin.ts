@@ -12,7 +12,7 @@ export class AuthLogin implements IAuthLogin {
     if (!Object.keys(user).length) throw new NotAuthorizedError('Usuário ou senha inválidos');
 
     if (user.password === data.password) {
-      const token = jwt.sign({ name: user.name, type: user.id }, config.jwt.secret, {
+      const token = jwt.sign({ name: user.name, id: user.id }, config.jwt.secret, {
         expiresIn: config.jwt.expiresIn,
       });
       return { authorized: true, type: user.type, user, token, message: 'Ok!' };

@@ -5,10 +5,10 @@ import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 
 export class GetAllUsersController implements IController {
-  constructor(private readonly geetAllUsersUseCase: IGetAllUsers) {}
+  constructor(private readonly getAllUsersUseCase: IGetAllUsers) {}
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
     try {
-      const users = await this.geetAllUsersUseCase.execute();
+      const users = await this.getAllUsersUseCase.execute();
       return res.status(200).json({ status: ResponseStatus.OK, data: users });
     } catch (error) {
       const { message, status, statusCode } = ControllerException.handleError(

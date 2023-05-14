@@ -13,7 +13,7 @@ export class UpdateUserUseCase implements IUpdateUser {
     async execute(data: IUpdateUser.Params): Promise<IUpdateUser.Result> {
         const userExist = await this.getUserByIdRepository.getById(data.id);
 
-        if (userExist.id) throw new InvalidGenericError('Usuário não encontrado');
+        if (!userExist.id) throw new InvalidGenericError('Usuário não encontrado');
         
         const {
             id,

@@ -11,6 +11,7 @@ export class CreateDriverController implements IController {
 
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
     try {
+      console.log(req.body)
       const driver = await this.createDriver.create(req.body);
       return res.status(200).json({ data: driver });
     } catch (error) {

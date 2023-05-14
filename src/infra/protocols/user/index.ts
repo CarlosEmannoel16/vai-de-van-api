@@ -4,3 +4,4 @@ export * from './GetUserByNameProtocolRepository';
 export * from './GetUserByCpfProtocolRepository';
 export * from './GetUserByEmailProtocolRepository';
 export * from './GetAllUsersProtocolRepository';
+export * from './DeleteUserProtocolRepository'

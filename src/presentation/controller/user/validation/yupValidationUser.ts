@@ -5,6 +5,10 @@ export const getUserByNameYupValidation = Yup.object().shape({
     .typeError('O name deve ser uma string')
     .required('O nome do usuário é obrigatório'),
 });
+export const deleteUserByIdYupValidation = Yup.object().shape({
+  id: Yup.string()
+    .required('O id do usuário é obrigatório'),
+});
 
 export const getUserYupValidation = Yup.object().shape({
   id: Yup.string()

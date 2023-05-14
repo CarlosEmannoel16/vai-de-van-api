@@ -12,7 +12,7 @@ export class UpdateUserController implements IController {
         this.updateUserUseCase = UpdateUserUseCase
     }
 
-    async handle(req: Request, res: Response<IResponse>): Promise<Response<IResponse>> {
+    async handle(req: Request, res: Response): Promise<Response<IResponse>> {
         try {
             await updateUserYupValidation.validate(req.body, {
                 abortEarly: false,
@@ -20,7 +20,7 @@ export class UpdateUserController implements IController {
 
             const user = await this.updateUserUseCase.execute(req.body)
 
-            res.status(204).json({
+            return res.status(200).json({
                 status: ResponseStatus.UPDATE,
                 data: user
             })

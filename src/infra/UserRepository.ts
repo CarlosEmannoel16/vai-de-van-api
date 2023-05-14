@@ -6,6 +6,7 @@ import {
   IGetUserByNameProtocolRepository,
   IGetUserByEmailProtocolRepository,
   IGetAllUsersProtocolRepository,
+  IDeleteUserProtocolRepository,
 } from '@/infra/protocols';
 import { ICreateDriverProtocolRepository } from './protocols/drivers/createDriver';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
@@ -13,15 +14,28 @@ import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtoc
 const prisma = new PrismaClient();
 export class UserRepository
   implements
-  ICreateUserProtocolRepository,
-  IGetUserByIdProtocolRepository,
-  IGetUserByNameProtocolRepository,
-  IGetUserByCpfProtocolRepository,
-  IGetUserByEmailProtocolRepository,
-  IGetAllUsersProtocolRepository,
-  ICreateDriverProtocolRepository,
-  IUpdateUserProtocolRepository {
-  update(data: IUpdateUserProtocolRepository.Params): Promise<IUpdateUserProtocolRepository.Result> {
+    ICreateUserProtocolRepository,
+    IGetUserByIdProtocolRepository,
+    IGetUserByNameProtocolRepository,
+    IGetUserByCpfProtocolRepository,
+    IGetUserByEmailProtocolRepository,
+    IGetAllUsersProtocolRepository,
+    ICreateDriverProtocolRepository,
+    IUpdateUserProtocolRepository,
+    IDeleteUserProtocolRepository
+{
+  async delete(id: string): Promise<boolean> {
+    console.log('id ==>', id);
+    const result = await prisma.user.delete({
+      where: { id },
+      include: { Driver: true },
+    });
+    console.log(result)
+    return result ? true : false;
+  }
+  async update(
+    data: IUpdateUserProtocolRepository.Params,
+  ): Promise<IUpdateUserProtocolRepository.Result> {
     const { id, cpf, date_of_birth, email, name, password, phone, type } = data;
     const user = prisma.user.update({
       data: {
@@ -32,11 +46,12 @@ export class UserRepository
         password,
         phone,
         type,
-      }, where: {
-        id: id
-      }
-    })
-    return user
+      },
+      where: {
+        id: id,
+      },
+    });
+    return user;
   }
   async createDriver(
     data: ICreateDriverProtocolRepository.Params,
@@ -45,7 +60,7 @@ export class UserRepository
     const driver = await prisma.user.create({
       data: {
         cpf,
-        date_of_birth,
+        date_of_birth: new Date(date_of_birth),
         email,
         name,
         password,
@@ -73,7 +88,7 @@ export class UserRepository
   async getById(
     idUser: string,
   ): Promise<IGetUserByIdProtocolRepository.Result> {
-    const user = await prisma.user.findUnique({ where: { id: idUser } });
+    const user = await prisma.user.findFirst({ where: { id: idUser } });
     return user;
   }
 
