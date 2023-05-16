@@ -1,4 +1,4 @@
-import { IAuthLogin } from "@/infra/protocols/auth/authLogin";
+import { IAuthLogin } from "@/infra/protocols/auth/AuthLogin";
 import {AuthLogin} from '@/data/usecases/auth/AuthLogin'
 import {makeUserRepository} from '../repositories/makeUserRepositories'
 

@@ -1,5 +1,5 @@
 import { NotAuthorizedError } from '@/data/errors/NotAuthorizedError';
-import { IAuthLogin } from '@/infra/protocols/auth/authLogin';
+import { IAuthLogin } from '@/infra/protocols/auth/AuthLogin';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';

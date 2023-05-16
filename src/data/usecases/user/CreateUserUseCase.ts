@@ -5,7 +5,7 @@ import {
   IGetUserByEmailProtocolRepository,
   IGetUserByIdProtocolRepository,
 } from '@/infra/protocols/user';
-import { ICreateUser } from '@domain/usecases/user/createUser';
+import { ICreateUser } from '@/domain/usecases/user/CreateUser';
 
 export class CreateUserUseCase implements ICreateUser {
   constructor(

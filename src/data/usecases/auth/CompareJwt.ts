@@ -1,4 +1,4 @@
-import { IJwtCompare } from "@/infra/protocols/auth/jwtCompare";
+import { IJwtCompare } from "@/infra/protocols/auth/JwtCompare";
 import jwt from 'jsonwebtoken'
 import config from '@config/auth'
 export class JwtCompare implements IJwtCompare {

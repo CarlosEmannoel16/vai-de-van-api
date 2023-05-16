@@ -8,7 +8,7 @@ import {
   IGetAllUsersProtocolRepository,
   IDeleteUserProtocolRepository,
 } from '@/infra/protocols';
-import { ICreateDriverProtocolRepository } from './protocols/drivers/createDriver';
+import { ICreateDriverProtocolRepository } from './protocols/drivers/CreateDriver';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
 
 const prisma = new PrismaClient();

@@ -1,4 +1,4 @@
-import { IAuthLogin } from '@/infra/protocols/auth/authLogin';
+import { IAuthLogin } from '@/infra/protocols/auth/AuthLogin';
 import { IGetUserByEmailProtocolRepository } from '@/infra/protocols/user';
 import { NotAuthorizedError } from '@/data/errors/NotAuthorizedError';
 import jwt from 'jsonwebtoken';

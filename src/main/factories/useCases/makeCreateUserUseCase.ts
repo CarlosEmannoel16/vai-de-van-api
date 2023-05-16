@@ -1,5 +1,5 @@
 import { CreateUserUseCase } from '../../../data/usecases/user/CreateUserUseCase';
-import { ICreateUser } from '../../../domain/usecases/user/createUser';
+import { ICreateUser } from '../../../domain/usecases/user/CreateUser';
 import { makeUserRepository } from '@makeRepositories';
 
 export const makeCreateUserUseCase = (): ICreateUser => {

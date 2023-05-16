@@ -16,17 +16,18 @@ import { adpterMiddleware, adpterRouter } from './main/utils';
 const routes = Router();
 
 routes.post('/login', adpterRouter(makeLoginController()));
-routes.get('/user/:id', adpterRouter(makeGetUserByIdController()))
-.get('/users', adpterRouter(makeGetAllUserController()))
-.post('/user', adpterRouter(makeCreateUserController()))
+
 
 
 //routes private
 routes
   .use(adpterMiddleware(makeMiddlewareAuth()))
+  .get('/user/:id', adpterRouter(makeGetUserByIdController()))
+  .get('/users', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeGetAllUserController()))
+  .post('/user', adpterRouter(makeCreateUserController()))
   .delete('/user/:id', adpterRouter(makeDeleteUserController()))
-  .post('/user/driver', adpterRouter(makeCreateDriverController()))
-  .put('/user', adpterRouter(makeUpdateUserController()));
+  .post('/user/driver',adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateDriverController()))
+  .put('/user', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeUpdateUserController()));
 
 // Next Routers
 
