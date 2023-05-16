@@ -49,6 +49,7 @@ model Driver {
   User       User     @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
+  Travel     Travel[]
 }
 
 model State {
@@ -66,18 +67,36 @@ model City {
   State       State?          @relation(fields: [stateId], references: [id])
   stateId     String?
   Route       Route?
+  SubRoute    SubRoute?
 }
 
 model Route {
   id             String           @id @default(uuid())
   SubRoute       SubRoute[]
+  name           String
+  km             Int
   departure_time DateTime
+  arrival_time   DateTime
   Origin         City             @relation(fields: [originId], references: [id])
   originId       String           @unique
   created_at     DateTime         @default(now())
   update_at      DateTime         @updatedAt
   path           RouteOnCities[]
   RouteOnVehicle RouteOnVehicle[]
+  Travel         Travel[]
+}
+
+model SubRoute {
+  id         String          @id @default(uuid())
+  route      Route           @relation(fields: [id_route], references: [id])
+  id_route   String
+  km         Int
+  Origin     City            @relation(fields: [originId], references: [id])
+  originId   String          @unique
+  value      Float
+  path       RouteOnCities[]
+  created_at DateTime        @default(now())
+  update_at  DateTime        @updatedAt
 }
 
 model Vehicle {
@@ -86,6 +105,19 @@ model Vehicle {
   plate             String
   with_air          Boolean
   RouteOnVehicle    RouteOnVehicle[]
+  Travel            Travel[]
+}
+
+model Travel {
+  id         String    @id @default(uuid())
+  idVechicle String
+  Vechicle   Vehicle   @relation(fields: [idVechicle], references: [id])
+  idDriver   String
+  Drivers    Driver    @relation(fields: [driverId], references: [id])
+  driverId   String
+  Route      Route     @relation(fields: [routeId], references: [id])
+  routeId    String
+  Payment    Payment[]
 }
 
 model RouteOnVehicle {
@@ -98,29 +130,22 @@ model RouteOnVehicle {
 }
 
 model RouteOnCities {
-  City    City   @relation(fields: [cityId], references: [id])
-  cityId  String
-  Route   Route  @relation(fields: [routeId], references: [id])
-  routeId String
+  City       City      @relation(fields: [cityId], references: [id])
+  cityId     String
+  Route      Route     @relation(fields: [routeId], references: [id])
+  routeId    String
+  SubRoute   SubRoute? @relation(fields: [subRouteId], references: [id])
+  subRouteId String?
 
   @@id([cityId, routeId])
 }
 
-model SubRoute {
-  id                String   @id @default(uuid())
-  route             Route    @relation(fields: [id_route], references: [id])
-  id_route          String
-  km                Int
-  amount_of_accents Int
-  value             Float
-  created_at        DateTime @default(now())
-  update_at         DateTime @updatedAt
-}
-
 model Payment {
-  id     String        @id @unique
-  status StatusPayment
-  Ticket Ticket[]
+  id       String        @id @unique
+  Travel   Travel        @relation(fields: [travelId], references: [id])
+  status   StatusPayment
+  Ticket   Ticket[]
+  travelId String
 }
 
 model Ticket {
