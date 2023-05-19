@@ -15,7 +15,9 @@ import {
 import { adpterMiddleware, adpterRouter } from './main/utils';
 const routes = Router();
 
-routes.post('/login', adpterRouter(makeLoginController()));
+routes.post('/login', adpterRouter(makeLoginController()))
+routes.get('/free/users', adpterRouter(makeGetAllUserController()))
+.post('/free/user', adpterRouter(makeCreateUserController()))
 
 
 

@@ -4,15 +4,11 @@ export interface ICreateRoute {
   
   export namespace ICreateRoute {
     export type Params = {
-      departure_time: string;
-      originId: string;
-      email?: string;
-      type: string;
-      cpf: string;
-      password: string;
-      date_of_birth: Date;
-      requestOwner: string
-  
+      departure_time: string,
+      destinyId: string,
+      km: number,
+      name: string,
+      originId :string
     };
   
     export type Result = {

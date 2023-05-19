@@ -30,7 +30,7 @@ export class UserRepository
       where: { id },
       include: { Driver: true },
     });
-    console.log(result)
+    console.log(result);
     return result ? true : false;
   }
   async update(
@@ -129,7 +129,27 @@ export class UserRepository
   }
 
   async getAll(): Promise<IGetAllUsersProtocolRepository.Result[]> {
-    const users = await prisma.user.findMany();
-    return users;
+    const users = await prisma.driver.findMany({
+      select: {
+        User: {
+          select: {
+            cpf: true,
+            email: true,
+            created_at: true,
+            date_of_birth: true,
+            id: true,
+            name: true,
+            phone: true,
+            type: true,
+            update_at: true,
+          },
+        },
+        cnh: true,
+        Travel: true,
+        Vehicle: true,
+      },
+    }) 
+
+    return users
   }
 }
