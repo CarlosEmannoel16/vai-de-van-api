@@ -33,7 +33,7 @@ model User {
   date_of_birth DateTime
   type          String
   created_at    DateTime @default(now())
-  update_at     DateTime @updatedAt
+  update_at     DateTime @default(now()) @updatedAt
   Driver        Driver[]
 }
 
@@ -43,121 +43,146 @@ model SessionUsers {
 }
 
 model Driver {
-  id         String    @id @default(uuid())
-  cnh        String
-  idUser     String
-  User       User      @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  created_at DateTime  @default(now())
-  update_at  DateTime  @updatedAt
-  Travel     Travel[]
-  Vehicle    Vehicle[]
+  id                String    @id @default(uuid())
+  cnh               String
+  cnhDateOfIssue    DateTime  @default(now())
+  cnhExpirationDate DateTime  @default(now())
+  idUser            String
+  User              User      @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Travel            Travel[]
+  Vehicle           Vehicle[]
+  created_at        DateTime  @default(now())
+  update_at         DateTime  @default(now()) @updatedAt
 }
 
 model State {
-  id     String @id @default(uuid())
-  name   String
-  uf     String
-  cities City[]
+  id         String   @id @default(uuid())
+  name       String
+  uf         String
+  cities     City[]
+  created_at DateTime @default(now())
+  update_at  DateTime @default(now()) @updatedAt
 }
 
 model City {
-  id          String          @id @default(uuid())
-  name        String          @unique
-  coordinates String
-  routes      RouteOnCities[]
-  State       State?          @relation(fields: [stateId], references: [id])
-  stateId     String?
-  Route       Route?
-  SubRoute    SubRoute?
+  id            String      @id @default(uuid())
+  name          String      @unique
+  coordinates   String
+  State         State?      @relation(fields: [stateId], references: [id])
+  stateId       String?
+  RoutesDistiny Route[]     @relation("Destiny")
+  RouteOrigin   Route[]     @relation("Origin")
+  created_at    DateTime    @default(now())
+  update_at     DateTime    @default(now()) @updatedAt
+  TripStops     TripStops[]
 }
 
 model Route {
-  id             String           @id @default(uuid())
-  SubRoute       SubRoute[]
-  name           String
-  km             Int
-  departure_time DateTime
-  Origin         City             @relation(fields: [originId], references: [id])
-  originId       String           @unique
-  created_at     DateTime         @default(now())
-  update_at      DateTime         @updatedAt
-  path           RouteOnCities[]
-  RouteOnVehicle RouteOnVehicle[]
-  Travel         Travel[]
+  id         String   @id @default(uuid())
+  name       String
+  km         Int
+  kmValue    Float?
+  Origin     City     @relation(fields: [originId], references: [id], name: "Origin")
+  originId   String   @unique
+  destinyId  String
+  Destiny    City     @relation(fields: [destinyId], references: [id], "Destiny")
+  Travel     Travel[]
+  created_at DateTime @default(now())
+  update_at  DateTime @default(now()) @updatedAt
 }
 
-model SubRoute {
-  id         String          @id @default(uuid())
-  route      Route           @relation(fields: [id_route], references: [id])
-  id_route   String
-  km         Int
-  Origin     City            @relation(fields: [originId], references: [id])
-  originId   String          @unique
-  value      Float
-  path       RouteOnCities[]
-  created_at DateTime        @default(now())
-  update_at  DateTime        @updatedAt
+model PricesBetweenStops {
+  id               String    @id @default(uuid())
+  idOrigin         String
+  idDestiny        String
+  TripStopsOrigin  TripStops @relation(fields: [idOrigin], references: [id], name: "TripStopsOrigin")
+  TripStopsDestiny TripStops @relation(fields: [idDestiny], references: [id], name: "TripStopsDestiny")
+  price            Float
+}
+
+model TripStops {
+  id                        String               @id @default(uuid())
+  cityIdFromTo              String
+  City                      City                 @relation(fields: [cityIdFromTo], references: [id])
+  travelId                  String
+  Travel                    Travel               @relation(fields: [travelId], references: [id])
+  tripStopOrder             String
+  created_at                DateTime             @default(now())
+  update_at                 DateTime             @default(now()) @updatedAt
+  PricesBetweenStopsOrigin  PricesBetweenStops[] @relation("TripStopsOrigin")
+  PricesBetweenStopsDestiny PricesBetweenStops[] @relation("TripStopsDestiny")
 }
 
 model Vehicle {
-  id                String           @id @default(uuid())
+  id                String       @id @default(uuid())
   amount_of_accents Int
   plate             String
   with_air          Boolean
-  RouteOnVehicle    RouteOnVehicle[]
+  Model             ModelVehicle @relation(fields: [modelId], references: [id])
+  modelId           String
   Travel            Travel[]
-  Driver            Driver?          @relation(fields: [driverId], references: [id])
-  driverId          String?
+  cor               String
+  Driver            Driver[]
+  created_at        DateTime     @default(now())
+  update_at         DateTime     @default(now()) @updatedAt
+}
+
+model ModelVehicle {
+  id      String    @id @default(cuid())
+  name    String
+  Vehicle Vehicle[]
 }
 
 model Travel {
-  id         String    @id @default(uuid())
-  idVechicle String
-  Vechicle   Vehicle   @relation(fields: [idVechicle], references: [id])
-  idDriver   String
-  Drivers    Driver    @relation(fields: [driverId], references: [id])
-  driverId   String
-  Route      Route     @relation(fields: [routeId], references: [id])
-  routeId    String
-  Payment    Payment[]
-}
-
-model RouteOnVehicle {
-  vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
-  vehicleId String
-  route     Route   @relation(fields: [routeId], references: [id])
-  routeId   String
-
-  @@id([routeId, vehicleId])
-}
-
-model RouteOnCities {
-  City       City      @relation(fields: [cityId], references: [id])
-  cityId     String
-  Route      Route     @relation(fields: [routeId], references: [id])
-  routeId    String
-  SubRoute   SubRoute? @relation(fields: [subRouteId], references: [id])
-  subRouteId String?
-
-  @@id([cityId, routeId])
+  id            String      @id @default(uuid())
+  idVechicle    String
+  Vechicle      Vehicle     @relation(fields: [idVechicle], references: [id])
+  Route         Route       @relation(fields: [routeId], references: [id])
+  routeId       String
+  Payment       Payment[]
+  Driver        Driver?     @relation(fields: [driverId], references: [id])
+  driverId      String?
+  departureDate DateTime
+  arrivalDate   DateTime
+  created_at    DateTime    @default(now())
+  update_at     DateTime    @default(now()) @updatedAt
+  TripStops     TripStops[]
+  Tickets       Ticket[]
 }
 
 model Payment {
-  id       String        @id @unique
-  Travel   Travel        @relation(fields: [travelId], references: [id])
-  status   StatusPayment
-  Ticket   Ticket[]
-  travelId String
+  id         String        @id @unique
+  Travel     Travel        @relation(fields: [travelId], references: [id])
+  status     StatusPayment
+  Ticket     Ticket[]
+  travelId   String
+  created_at DateTime      @default(now())
+  update_at  DateTime      @default(now()) @updatedAt
 }
 
 model Ticket {
   id         String       @id @default(uuid())
   amount     Float
-  cpf        String
-  name_user  String
+  Customer   Custumer     @relation(fields: [custumerId], references: [id])
   status     StatusTicket
   Payment    Payment?     @relation(fields: [paymentId], references: [id])
   paymentId  String?
   created_at DateTime     @default(now())
-  update_at  DateTime     @updatedAt
+  update_at  DateTime     @default(now()) @updatedAt
+  custumerId String
+  Travel     Travel?      @relation(fields: [travelId], references: [id])
+  travelId   String?
+}
+
+model Custumer {
+  id         String   @id @default(uuid())
+  cpf        String
+  name       String
+  email      String
+  password   String
+  phone      String
+  phone2     String
+  Ticket     Ticket[]
+  created_at DateTime @default(now())
+  update_at  DateTime @default(now()) @updatedAt
 }

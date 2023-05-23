@@ -1,5 +1,4 @@
 import { ICreateRoute } from '@/domain/usecases/routes/CreateRoutes';
-import { ICreateDriverProtocolRepository } from '@/infra/protocols/drivers/CreateDriver';
 import { ICreateRouteProtocolRepository } from '@/infra/protocols/route/CreateRouteProtocolRepository';
 
 export class CreateRouteUseCase implements ICreateRoute {

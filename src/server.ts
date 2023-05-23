@@ -34,5 +34,5 @@ io.on('connection', (socket: Socket) => {
 
 
 server.listen(config.server.port, () => {
-  console.log('Server started');
+  console.log('Server started :D emoji');
 });

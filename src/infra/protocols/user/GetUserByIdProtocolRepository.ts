@@ -1,9 +1,7 @@
 import { UserModel } from '@/domain/models';
 
 export interface IGetUserByIdProtocolRepository {
-  getById(idUser: string): Promise<IGetUserByIdProtocolRepository.Result>;
+  getById(idUser: string): Promise<UserModel>;
 }
 
-export namespace IGetUserByIdProtocolRepository {
-  export type Result = UserModel;
-}
+

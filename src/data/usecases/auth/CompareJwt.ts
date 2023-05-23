@@ -17,7 +17,6 @@ export class JwtCompare implements IJwtCompare {
          return 
           
         });
-        console.log(response)
         return response
     }
    

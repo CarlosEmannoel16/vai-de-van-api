@@ -10,6 +10,7 @@ import {
 } from '@/infra/protocols';
 import { ICreateDriverProtocolRepository } from './protocols/drivers/CreateDriver';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
+import { UserModel } from '@/domain/models';
 
 const prisma = new PrismaClient();
 export class UserRepository
@@ -25,12 +26,10 @@ export class UserRepository
     IDeleteUserProtocolRepository
 {
   async delete(id: string): Promise<boolean> {
-    console.log('id ==>', id);
     const result = await prisma.user.delete({
       where: { id },
       include: { Driver: true },
     });
-    console.log(result);
     return result ? true : false;
   }
   async update(
@@ -85,10 +84,29 @@ export class UserRepository
     });
     return user;
   }
-  async getById(
-    idUser: string,
-  ): Promise<IGetUserByIdProtocolRepository.Result> {
-    const user = await prisma.user.findFirst({ where: { id: idUser } });
+  async getById(idUser: string): Promise<UserModel> {
+    const user = await prisma.user.findFirst({
+      select: {
+        Driver: {
+          select: {
+            cnh: true,
+            cnhDateOfIssue: true,
+            cnhExpirationDate: true,
+            id: true,
+          },
+        },
+        type: true,
+        cpf: true,
+        email: true,
+        id: true,
+        name: true,
+        date_of_birth: true,
+        update_at: true,
+        password: true,
+        phone: true,
+      },
+      where: { id: idUser },
+    });
     return user;
   }
 
@@ -148,8 +166,8 @@ export class UserRepository
         Travel: true,
         Vehicle: true,
       },
-    }) 
+    });
 
-    return users
+    return users;
   }
 }

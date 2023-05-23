@@ -6,3 +6,4 @@ export * from './makeLoginController'
 export * from './makeCreateDriverController'
 export * from './makeUpdateUserController';
 export * from './makeDeleteUserController'
+export * from './makeUpdateProfileImageUserController'
