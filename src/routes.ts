@@ -16,6 +16,7 @@ import {
 import { adpterMiddleware, adpterRouter } from './main/utils';
 import upload from '@config/upload'
 import multer from 'multer';
+import { makeCreateVehicleController } from './main/factories/controllers/makeCreateVehicleController';
 const routes = Router();
 
 routes.post('/login', adpterRouter(makeLoginController()))
@@ -31,8 +32,8 @@ routes
   .post('/user', adpterRouter(makeCreateUserController()))
   .delete('/user/:id', adpterRouter(makeDeleteUserController()))
   .post('/user/driver',adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateDriverController()))
-  .put('/user', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeUpdateUserController()));
-
+  .put('/user/driver', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeUpdateUserController()))
+  .post('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()),adpterRouter(makeCreateVehicleController()) )
 // Next Routers
 
 //Routes

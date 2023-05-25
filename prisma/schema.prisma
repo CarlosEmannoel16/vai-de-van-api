@@ -114,29 +114,22 @@ model TripStops {
 }
 
 model Vehicle {
-  id                String       @id @default(uuid())
+  id                String    @id @default(uuid())
   amount_of_accents Int
   plate             String
   with_air          Boolean
-  Model             ModelVehicle @relation(fields: [modelId], references: [id])
-  modelId           String
   Travel            Travel[]
   cor               String
   Driver            Driver[]
-  created_at        DateTime     @default(now())
-  update_at         DateTime     @default(now()) @updatedAt
-}
-
-model ModelVehicle {
-  id      String    @id @default(cuid())
-  name    String
-  Vehicle Vehicle[]
+  created_at        DateTime  @default(now())
+  update_at         DateTime  @default(now()) @updatedAt
+  Owner             Custumer? @relation(fields: [ownerId], references: [id])
+  ownerId           String
 }
 
 model Travel {
   id            String      @id @default(uuid())
-  idVechicle    String
-  Vechicle      Vehicle     @relation(fields: [idVechicle], references: [id])
+  Vechicle      Vehicle[]
   Route         Route       @relation(fields: [routeId], references: [id])
   routeId       String
   Payment       Payment[]
@@ -175,7 +168,7 @@ model Ticket {
 }
 
 model Custumer {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   cpf        String
   name       String
   email      String
@@ -183,6 +176,7 @@ model Custumer {
   phone      String
   phone2     String
   Ticket     Ticket[]
-  created_at DateTime @default(now())
-  update_at  DateTime @default(now()) @updatedAt
+  created_at DateTime  @default(now())
+  update_at  DateTime  @default(now()) @updatedAt
+  Vehicle    Vehicle[]
 }

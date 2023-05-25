@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ICreateUser } from '../../../domain/usecases/user/CreateUser';
+import { ICreateUser } from '../../../domain/usecases/user/createUser';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse, ResponseStatus } from '../../utils/response';
 import { createUserYupValidation } from './validation/yupValidationUser';
