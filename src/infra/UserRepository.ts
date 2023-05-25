@@ -8,7 +8,7 @@ import {
   IGetAllUsersProtocolRepository,
   IDeleteUserProtocolRepository,
 } from '@/infra/protocols';
-import { ICreateDriverProtocolRepository } from './protocols/drivers/CreateDriver';
+import { ICreateDriverProtocolRepository } from './protocols/drivers/createDriver';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
 import { UserModel } from '@/domain/models';
 

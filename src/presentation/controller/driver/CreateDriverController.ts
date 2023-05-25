@@ -1,5 +1,5 @@
 import { ICreateDriver } from '@/domain/usecases/driver/CreateDriver';
-import { ICreateDriverProtocolRepository } from '@/infra/protocols/drivers/CreateDriver';
+import { ICreateDriverProtocolRepository } from '@/infra/protocols/drivers/createDriver';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';
