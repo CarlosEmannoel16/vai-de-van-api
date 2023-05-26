@@ -5,6 +5,7 @@ import routes from './routes';
 import config from '@/config/developmet'
 import { Server, Socket } from 'socket.io';
 import { createServer } from 'http';
+import morgan from 'morgan';
 dotenv.config();
 
 const app = express();
@@ -17,6 +18,7 @@ const io = new Server(server, {  cors: {
 },});
 
 io
+app.use(morgan('dev'))
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

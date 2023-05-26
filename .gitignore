@@ -6,3 +6,5 @@ tmp/
 temp/
 .env
 cases
+dist/
+yarn.lock

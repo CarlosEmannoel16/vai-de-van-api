@@ -1,5 +1,5 @@
 import { ICreateDriver } from '@/domain/usecases/driver/CreateDriver';
-import { ICreateDriverProtocolRepository } from '@/infra/protocols/drivers/CreateDriver';
+import { ICreateDriverProtocolRepository } from '@/infra/protocols/drivers/createDriver';
 
 export class CreateDriverUseCase implements ICreateDriver {
     constructor(private readonly createDriver: ICreateDriverProtocolRepository){}
