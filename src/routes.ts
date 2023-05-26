@@ -17,12 +17,15 @@ import { adpterMiddleware, adpterRouter } from './main/utils';
 import upload from '@config/upload'
 import multer from 'multer';
 import { makeCreateVehicleController } from './main/factories/controllers/makeCreateVehicleController';
+import { makeGetAllRouteController } from './main/factories/controllers/makeGetAllRouteController';
 const routes = Router();
 
 routes.post('/login', adpterRouter(makeLoginController()))
 routes.get('/free/users', adpterRouter(makeGetAllUserController()))
 .post('/free/user', adpterRouter(makeCreateUserController()))
 
+
+routes.get('/routes', adpterRouter(makeGetAllRouteController()))
 //routes private
 routes
   .use(adpterMiddleware(makeMiddlewareAuth()))
@@ -38,7 +41,7 @@ routes
 
 //Routes
 // routes.get('/route/:id')
-// routes.get('/route')
+
 // routes.post('/route')
 // routes.put('/route')
 // routes.delete('/route/:id')
