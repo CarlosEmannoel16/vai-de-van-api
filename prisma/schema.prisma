@@ -24,17 +24,18 @@ enum StatusTicket {
 }
 
 model User {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   name          String
   password      String
-  email         String   @unique
-  cpf           String   @unique
+  email         String    @unique
+  cpf           String    @unique
   phone         String
   date_of_birth DateTime
   type          String
-  created_at    DateTime @default(now())
-  update_at     DateTime @default(now()) @updatedAt
+  created_at    DateTime  @default(now())
+  update_at     DateTime  @default(now()) @updatedAt
   Driver        Driver[]
+  Vehicle       Vehicle[]
 }
 
 model SessionUsers {
@@ -43,16 +44,15 @@ model SessionUsers {
 }
 
 model Driver {
-  id                String    @id @default(uuid())
+  id                String   @id @default(uuid())
   cnh               String
-  cnhDateOfIssue    DateTime  @default(now())
-  cnhExpirationDate DateTime  @default(now())
+  cnhDateOfIssue    DateTime @default(now())
+  cnhExpirationDate DateTime @default(now())
   idUser            String
-  User              User      @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  User              User     @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: Cascade)
   Travel            Travel[]
-  Vehicle           Vehicle[]
-  created_at        DateTime  @default(now())
-  update_at         DateTime  @default(now()) @updatedAt
+  created_at        DateTime @default(now())
+  update_at         DateTime @default(now()) @updatedAt
 }
 
 model State {
@@ -98,6 +98,8 @@ model PricesBetweenStops {
   TripStopsOrigin  TripStops @relation(fields: [idOrigin], references: [id], name: "TripStopsOrigin")
   TripStopsDestiny TripStops @relation(fields: [idDestiny], references: [id], name: "TripStopsDestiny")
   price            Float
+  Payment          Payment[]
+  Ticket           Ticket[]
 }
 
 model TripStops {
@@ -114,22 +116,22 @@ model TripStops {
 }
 
 model Vehicle {
-  id                String    @id @default(uuid())
+  id                String   @id @default(uuid())
   amount_of_accents Int
   plate             String
   with_air          Boolean
   Travel            Travel[]
   cor               String
-  Driver            Driver[]
-  created_at        DateTime  @default(now())
-  update_at         DateTime  @default(now()) @updatedAt
-  Owner             Custumer? @relation(fields: [ownerId], references: [id])
+  created_at        DateTime @default(now())
+  update_at         DateTime @default(now()) @updatedAt
+  Owner             User     @relation(fields: [ownerId], references: [id])
   ownerId           String
 }
 
 model Travel {
   id            String      @id @default(uuid())
-  Vechicle      Vehicle[]
+  Vechicle      Vehicle     @relation(fields: [idVehicle], references: [id])
+  idVehicle     String
   Route         Route       @relation(fields: [routeId], references: [id])
   routeId       String
   Payment       Payment[]
@@ -144,31 +146,35 @@ model Travel {
 }
 
 model Payment {
-  id         String        @id @unique
-  Travel     Travel        @relation(fields: [travelId], references: [id])
-  status     StatusPayment
-  Ticket     Ticket[]
-  travelId   String
-  created_at DateTime      @default(now())
-  update_at  DateTime      @default(now()) @updatedAt
+  id                   String              @id @unique
+  Travel               Travel              @relation(fields: [travelId], references: [id])
+  status               StatusPayment
+  Ticket               Ticket[]
+  travelId             String
+  created_at           DateTime            @default(now())
+  update_at            DateTime            @default(now()) @updatedAt
+  PricesBetweenStops   PricesBetweenStops? @relation(fields: [pricesBetweenStopsId], references: [id])
+  pricesBetweenStopsId String?
 }
 
 model Ticket {
-  id         String       @id @default(uuid())
-  amount     Float
-  Customer   Custumer     @relation(fields: [custumerId], references: [id])
-  status     StatusTicket
-  Payment    Payment?     @relation(fields: [paymentId], references: [id])
-  paymentId  String?
-  created_at DateTime     @default(now())
-  update_at  DateTime     @default(now()) @updatedAt
-  custumerId String
-  Travel     Travel?      @relation(fields: [travelId], references: [id])
-  travelId   String?
+  id                   String             @id @default(uuid())
+  amount               Float
+  Customer             Custumer           @relation(fields: [custumerId], references: [id])
+  status               StatusTicket
+  Payment              Payment?           @relation(fields: [paymentId], references: [id])
+  paymentId            String?
+  created_at           DateTime           @default(now())
+  update_at            DateTime           @default(now()) @updatedAt
+  custumerId           String
+  Travel               Travel?            @relation(fields: [travelId], references: [id])
+  travelId             String?
+  PricesBetweenStops   PricesBetweenStops @relation(fields: [pricesBetweenStopsId], references: [id])
+  pricesBetweenStopsId String
 }
 
 model Custumer {
-  id         String    @id @default(uuid())
+  id         String   @id @default(uuid())
   cpf        String
   name       String
   email      String
@@ -176,7 +182,6 @@ model Custumer {
   phone      String
   phone2     String
   Ticket     Ticket[]
-  created_at DateTime  @default(now())
-  update_at  DateTime  @default(now()) @updatedAt
-  Vehicle    Vehicle[]
+  created_at DateTime @default(now())
+  update_at  DateTime @default(now()) @updatedAt
 }

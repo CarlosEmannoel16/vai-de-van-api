@@ -95,6 +95,7 @@ export class UserRepository
             id: true,
           },
         },
+        Vehicle: true,
         type: true,
         cpf: true,
         email: true,
@@ -104,6 +105,7 @@ export class UserRepository
         update_at: true,
         password: true,
         phone: true,
+
       },
       where: { id: idUser },
     });
