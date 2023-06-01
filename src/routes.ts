@@ -8,24 +8,24 @@ import {
   makeUpdateUserController,
   makeDeleteUserController,
   makeUpdateProfileUserController
-} from '@makeControllers';
+} from './main/factories/controllers';
 import {
   makeMiddlewareAuth,
   makeMiddlewareRouteAdm,
 } from './main/factories/middlewares';
 import { adpterMiddleware, adpterRouter } from './main/utils';
-import upload from '@config/upload'
+import upload from './config/upload'
 import multer from 'multer';
 import { makeCreateVehicleController } from './main/factories/controllers/makeCreateVehicleController';
 import { makeGetAllRouteController } from './main/factories/controllers/makeGetAllRouteController';
+import { makeGetByIdController } from './main/factories/controllers/makeGetByIdController';
 const routes = Router();
 
 routes.post('/login', adpterRouter(makeLoginController()))
 routes.get('/free/users', adpterRouter(makeGetAllUserController()))
-.post('/free/user', adpterRouter(makeCreateUserController()))
+.post(',', adpterRouter(makeCreateUserController()))
 
 
-routes.get('/routes', adpterRouter(makeGetAllRouteController()))
 //routes private
 routes
   .use(adpterMiddleware(makeMiddlewareAuth()))
@@ -40,8 +40,8 @@ routes
 // Next Routers
 
 //Routes
-// routes.get('/route/:id')
-
+routes.get('/route/:id', adpterRouter(makeGetByIdController()))
+routes.get('/routes', adpterRouter(makeGetAllRouteController()))
 // routes.post('/route')
 // routes.put('/route')
 // routes.delete('/route/:id')
@@ -59,4 +59,4 @@ routes
 // routes.get('/report/routes/:idCity')
 // routes.get('/report/routes/all')
 
-export = routes;
+export default routes;

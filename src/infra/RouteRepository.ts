@@ -1,8 +1,31 @@
 import { ICreateRouteProtocolRepository } from './protocols/route/CreateRouteProtocolRepository';
 import { PrismaClient, Route } from '@prisma/client';
 import { IGetAllRouteProtocolRepository } from './protocols/route/GetAllRouteProtocolRepository';
+import { IGetByIdRouteProtocolRepository } from './protocols/route/GetByIdRouteProtocolRepository';
 const prisma = new PrismaClient();
-export class RouteRepository implements IGetAllRouteProtocolRepository {
+export class RouteRepository
+  implements IGetAllRouteProtocolRepository, IGetByIdRouteProtocolRepository
+{
+  async getById(
+    data: IGetByIdRouteProtocolRepository.Params,
+  ): Promise<IGetByIdRouteProtocolRepository.Result> {
+    const route = prisma.route.findFirst({
+      where:{
+        id: data.id,
+      },
+      select: {
+        id: true,
+        name: true,
+        km: true,
+        kmValue: true,
+        originId: true,
+        destinyId: true,
+      },
+    });
+    return route
+  }
+
+
   async getAll(): Promise<IGetAllRouteProtocolRepository.Result[]> {
     const routes = prisma.route.findMany({
       select: {
@@ -27,7 +50,7 @@ export class RouteRepository implements IGetAllRouteProtocolRepository {
   //       originId,
   //       path: {
   //         createMany: {
-  //           data: [{ cityId: destinyId }, { cityId: originId }],
+  //           data: [{ cityId: destinyId }, { destinyId: originId }],
   //         },
   //       },
   //     },
