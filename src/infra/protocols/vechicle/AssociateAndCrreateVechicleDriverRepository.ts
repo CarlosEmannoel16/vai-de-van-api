@@ -12,8 +12,6 @@ export namespace IAssociateAndCreateVechileDriverRepository {
     plate: string;
     with_air: boolean;
     modelId: string;
-    id: string;
-    idDriver: string,
     ownerId: string,
   };
 }

@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient, User } from '@prisma/client';
 import {
   IGetUserByIdProtocolRepository,
   ICreateUserProtocolRepository,
@@ -8,9 +8,9 @@ import {
   IGetAllUsersProtocolRepository,
   IDeleteUserProtocolRepository,
 } from '@/infra/protocols';
-import { ICreateDriverProtocolRepository } from './protocols/drivers/createDriver';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
 import { UserModel } from '@/domain/models';
+import { ICreateDriverProtocolRepository } from '@infra/protocols/drivers';
 
 const prisma = new PrismaClient();
 export class UserRepository
@@ -84,32 +84,14 @@ export class UserRepository
     });
     return user;
   }
-  async getById(idUser: string): Promise<UserModel> {
-    const user = await prisma.user.findFirst({
-      select: {
-        Driver: {
-          select: {
-            cnh: true,
-            cnhDateOfIssue: true,
-            cnhExpirationDate: true,
-            id: true,
-          },
-        },
-        Vehicle: true,
-        type: true,
-        cpf: true,
-        email: true,
-        id: true,
-        name: true,
-        date_of_birth: true,
-        update_at: true,
-        password: true,
-        phone: true,
-
-      },
+  async getById(
+    idUser: string,
+  ):Promise<any> {
+    return await prisma.user.findFirst({
       where: { id: idUser },
+      include: { Driver: true, Vehicle: true },
+    
     });
-    return user;
   }
 
   async getUserByName(
@@ -148,8 +130,8 @@ export class UserRepository
     return { cpf, date_of_birth, email, id, name, phone, type, password };
   }
 
-  async getAll(): Promise<IGetAllUsersProtocolRepository.Result[]> {
-    const users = await prisma.driver.findMany({
+  async getAll():Promise<IGetAllUsersProtocolRepository.Result[]> {
+    const data = await prisma.driver.findMany({
       select: {
         User: {
           select: {
@@ -162,14 +144,19 @@ export class UserRepository
             phone: true,
             type: true,
             update_at: true,
+            Vehicle: true,
+            Driver: {
+              select: {
+                cnh: true,
+                cnhDateOfIssue: true,
+                cnhExpirationDate: true,
+                Travel: true,
+              },
+            },
           },
         },
-        cnh: true,
-        Travel: true,
-        Vehicle: true,
       },
     });
-
-    return users;
+    return data;
   }
 }

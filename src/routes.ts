@@ -28,7 +28,7 @@ routes.get('/free/users', adpterRouter(makeGetAllUserController()))
 routes.get('/routes', adpterRouter(makeGetAllRouteController()))
 //routes private
 routes
-  .use(adpterMiddleware(makeMiddlewareAuth()))
+   .use(adpterMiddleware(makeMiddlewareAuth()))
   .post('/user/upload/profile', multer({storage: upload.storage}).single('avatar'), adpterRouter(makeUpdateProfileUserController()))
   .get('/user/:id', adpterRouter(makeGetUserByIdController()))
   .get('/users', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeGetAllUserController()))
@@ -36,7 +36,11 @@ routes
   .delete('/user/:id', adpterRouter(makeDeleteUserController()))
   .post('/user/driver',adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateDriverController()))
   .put('/user/driver', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeUpdateUserController()))
-  .post('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()),adpterRouter(makeCreateVehicleController()) )
+  .post('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateVehicleController()) )
+  .put('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateVehicleController()) )
+  .delete('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateVehicleController()) )
+
+
 // Next Routers
 
 //Routes
@@ -49,7 +53,6 @@ routes
 //Veiculos
 // routes.get('/vechicle/:id')
 // routes.get('/vechicle')
-// routes.post('/vechicle')
 // routes.put('/vechicle')
 // routes.delete('/vechicle/:id')
 
