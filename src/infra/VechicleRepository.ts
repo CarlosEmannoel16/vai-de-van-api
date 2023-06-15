@@ -6,6 +6,7 @@ import {
   ICreateVechileProtocolRepository,
   IAssociateVechileDriverRepository,
 } from './protocols/vechicle';
+import { IDeleteVehicleRepository } from './protocols/vechicle/DeleteVehicleRepository';
 
 const prisma = new PrismaClient();
 
@@ -15,8 +16,15 @@ export class VechicleRepository
     GetVechicleByIdProtocolRepository,
     GetVechicleProtocolRepository,
     IAssociateAndCreateVechileDriverRepository,
-    IAssociateVechileDriverRepository
+    IAssociateVechileDriverRepository,
+    IDeleteVehicleRepository
 {
+  async deleteById(id: string): Promise<Vehicle> {
+    return prisma.vehicle.delete({
+      where: { id },
+    });
+   
+  }
   async associate({
     idDriver,
     idVechile,
@@ -61,6 +69,6 @@ export class VechicleRepository
         with_air,
         ownerId,
       },
-    })
+    });
   }
 }

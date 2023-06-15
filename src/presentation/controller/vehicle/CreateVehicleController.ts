@@ -5,7 +5,7 @@ import { ResponseStatus } from '@/presentation/utils/response';
 import { IResponse } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 
-export class CreateVehicleCOntroller implements IController {
+export class CreateVehicleController implements IController {
   constructor(private readonly createVehicleUseCase: ICreateVechicle) {}
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
     try {

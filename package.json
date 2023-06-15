@@ -10,6 +10,9 @@
     "dev": "ts-node-dev --respawn --files -r    tsconfig-paths/register src/server.ts",
     "test": "jest"
   },
+  "prisma": {
+    "seed": "ts-node ./prisma/seed.ts"
+  },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
