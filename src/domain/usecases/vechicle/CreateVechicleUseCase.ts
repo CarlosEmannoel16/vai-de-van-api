@@ -10,7 +10,6 @@ export interface ICreateVechicle {
         plate: string;
         with_air: boolean;
         cor: string;
-        idDriver: string
         ownerId: string
     };
 

@@ -7,3 +7,7 @@ export * from './makeCreateDriverController'
 export * from './makeUpdateUserController';
 export * from './makeDeleteUserController'
 export * from './makeUpdateProfileImageUserController'
+export * from './makeUpdateUserController'
+export * from './makeCreateVehicleController'
+
+

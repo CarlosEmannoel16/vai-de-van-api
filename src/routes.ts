@@ -19,6 +19,8 @@ import multer from 'multer';
 import { makeCreateVehicleController } from './main/factories/controllers/makeCreateVehicleController';
 import { makeGetAllRouteController } from './main/factories/controllers/makeGetAllRouteController';
 import { makeGetByIdController } from './main/factories/controllers/makeGetByIdController';
+import { makeDeleteVehicleController } from './main/factories/controllers/makeDeleteVehicleController';
+
 const routes = Router();
 
 routes.post('/login', adpterRouter(makeLoginController()))
@@ -28,7 +30,7 @@ routes.get('/free/users', adpterRouter(makeGetAllUserController()))
 
 //routes private
 routes
-  .use(adpterMiddleware(makeMiddlewareAuth()))
+   .use(adpterMiddleware(makeMiddlewareAuth()))
   .post('/user/upload/profile', multer({storage: upload.storage}).single('avatar'), adpterRouter(makeUpdateProfileUserController()))
   .get('/user/:id', adpterRouter(makeGetUserByIdController()))
   .get('/users', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeGetAllUserController()))
@@ -36,7 +38,11 @@ routes
   .delete('/user/:id', adpterRouter(makeDeleteUserController()))
   .post('/user/driver',adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateDriverController()))
   .put('/user/driver', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeUpdateUserController()))
-  .post('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()),adpterRouter(makeCreateVehicleController()) )
+  .post('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateVehicleController()) )
+  .put('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateVehicleController()) )
+  .delete('/vehicle/:id', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeDeleteVehicleController()) )
+
+
 // Next Routers
 
 //Routes
@@ -49,7 +55,6 @@ routes.get('/routes', adpterRouter(makeGetAllRouteController()))
 //Veiculos
 // routes.get('/vechicle/:id')
 // routes.get('/vechicle')
-// routes.post('/vechicle')
 // routes.put('/vechicle')
 // routes.delete('/vechicle/:id')
 

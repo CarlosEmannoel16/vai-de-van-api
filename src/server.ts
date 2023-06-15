@@ -17,7 +17,7 @@ const io = new Server(server, {  cors: {
   credentials: true,
 },});
 
-io
+
 app.use(morgan('dev'))
 app.use(cors());
 app.use(express.json());
