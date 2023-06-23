@@ -124,7 +124,7 @@ model Vehicle {
   cor               String
   created_at        DateTime @default(now())
   update_at         DateTime @default(now()) @updatedAt
-  Owner             User     @relation(fields: [ownerId], references: [id])
+  Owner             User     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ownerId           String
 }
 

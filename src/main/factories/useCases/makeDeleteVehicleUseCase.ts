@@ -1,4 +1,4 @@
-import { DeleteVehicleUseCase } from "@/data/usecases/vechicle/deleteVehicle";
+import { DeleteVehicleUseCase } from "@/data/usecases/vechicle/DeleteVehicle";
 import { IDeleteVehicleUseCase } from "@/domain/usecases/vechicle/DeleteVehicleUseCase";
 import { makeVehicleRepository } from "@/main/factories/repositories/index";
 

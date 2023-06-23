@@ -1,5 +1,7 @@
+import { User } from "@prisma/client";
+
 export interface ICreateDriverProtocolRepository {
-    createDriver: (data:ICreateDriverProtocolRepository.Params)=> Promise<ICreateDriverProtocolRepository.Result>
+    createDriver(data:ICreateDriverProtocolRepository.Params): Promise<User>
 }
 
 export namespace ICreateDriverProtocolRepository {
@@ -11,14 +13,9 @@ export namespace ICreateDriverProtocolRepository {
         date_of_birth: string;
         cpf: string;
         password: string;
+        cnhDateOfIssue: string 
+        cnhExpirationDate: string
       };
     
-      export type Result = {
-        id: string;
-        name: string;
-        email: string;
-        phone: string;
-        date_of_birth: Date;
-        cpf: string;
-      };
+     
 }
