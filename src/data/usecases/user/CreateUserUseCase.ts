@@ -3,9 +3,8 @@ import {
   ICreateUserProtocolRepository,
   IGetUserByCpfProtocolRepository,
   IGetUserByEmailProtocolRepository,
-  IGetUserByIdProtocolRepository,
 } from '@/infra/protocols/user';
-import { ICreateUser } from '@/domain/usecases/user/CreateUser';
+import { ICreateUser } from '@/domain/usecases/user/createUser';
 
 export class CreateUserUseCase implements ICreateUser {
   constructor(
