@@ -6,9 +6,6 @@ export interface IGetAllUsers {
 
 export namespace IGetAllUsers {
   export type Result = {
-    cnh: string;
-    Travel: Travel[];
-    Vehicle: Vehicle[];
     User: {
         id: string;
         name: string;
@@ -19,6 +16,13 @@ export namespace IGetAllUsers {
         type: string;
         created_at: Date;
         update_at: Date;
+        Vehicle: Vehicle[]
+        Driver:{
+          cnh: string,
+          cnhDateOfIssue: Date
+          cnhExpirationDate: Date,
+          Travel: Travel[]
+        }[]
     }
 }
 }

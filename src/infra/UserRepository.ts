@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient, User } from '@prisma/client';
 import {
   IGetUserByIdProtocolRepository,
   ICreateUserProtocolRepository,
@@ -8,9 +8,9 @@ import {
   IGetAllUsersProtocolRepository,
   IDeleteUserProtocolRepository,
 } from '@/infra/protocols';
-import { ICreateDriverProtocolRepository } from './protocols/drivers/CreateDriver';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
 import { UserModel } from '@/domain/models';
+import { ICreateDriverProtocolRepository } from '@infra/protocols/drivers';
 
 const prisma = new PrismaClient();
 export class UserRepository
@@ -28,7 +28,7 @@ export class UserRepository
   async delete(id: string): Promise<boolean> {
     const result = await prisma.user.delete({
       where: { id },
-      include: { Driver: true },
+      include: { Driver: { where: { idUser: id } } },
     });
     return result ? true : false;
   }
@@ -54,9 +54,19 @@ export class UserRepository
   }
   async createDriver(
     data: ICreateDriverProtocolRepository.Params,
-  ): Promise<ICreateDriverProtocolRepository.Result> {
-    const { cnh, cpf, date_of_birth, email, name, password, phone } = data;
-    const driver = await prisma.user.create({
+  ): Promise<User> {
+    const {
+      cnh,
+      cpf,
+      date_of_birth,
+      email,
+      name,
+      password,
+      phone,
+      cnhDateOfIssue,
+      cnhExpirationDate,
+    } = data;
+    return prisma.user.create({
       data: {
         cpf,
         date_of_birth: new Date(date_of_birth),
@@ -65,10 +75,9 @@ export class UserRepository
         password,
         phone,
         type: 'DRIVER',
-        Driver: { create: { cnh } },
+        Driver: { create: { cnh, cnhDateOfIssue, cnhExpirationDate } },
       },
     });
-    return driver;
   }
   async create({
     cpf,
@@ -84,30 +93,11 @@ export class UserRepository
     });
     return user;
   }
-  async getById(idUser: string): Promise<UserModel> {
-    const user = await prisma.user.findFirst({
-      select: {
-        Driver: {
-          select: {
-            cnh: true,
-            cnhDateOfIssue: true,
-            cnhExpirationDate: true,
-            id: true,
-          },
-        },
-        type: true,
-        cpf: true,
-        email: true,
-        id: true,
-        name: true,
-        date_of_birth: true,
-        update_at: true,
-        password: true,
-        phone: true,
-      },
+  async getById(idUser: string): Promise<any> {
+    return await prisma.user.findFirst({
       where: { id: idUser },
+      include: { Driver: true, Vehicle: true },
     });
-    return user;
   }
 
   async getUserByName(
@@ -147,7 +137,7 @@ export class UserRepository
   }
 
   async getAll(): Promise<IGetAllUsersProtocolRepository.Result[]> {
-    const users = await prisma.driver.findMany({
+    const data = await prisma.driver.findMany({
       select: {
         User: {
           select: {
@@ -160,14 +150,19 @@ export class UserRepository
             phone: true,
             type: true,
             update_at: true,
+            Vehicle: true,
+            Driver: {
+              select: {
+                cnh: true,
+                cnhDateOfIssue: true,
+                cnhExpirationDate: true,
+                Travel: true,
+              },
+            },
           },
         },
-        cnh: true,
-        Travel: true,
-        Vehicle: true,
       },
     });
-
-    return users;
+    return data;
   }
 }

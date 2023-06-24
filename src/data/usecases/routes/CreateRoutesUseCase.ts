@@ -4,13 +4,6 @@ import { ICreateRouteProtocolRepository } from '@/infra/protocols/route/CreateRo
 export class CreateRouteUseCase implements ICreateRoute {
   constructor(private readonly CreateRoute: ICreateRouteProtocolRepository) {}
   async execute(data: ICreateRoute.Params): Promise<ICreateRoute.Result> {
-    const { departure_time, destinyId, km, name, originId } = data;
-    return this.CreateRoute.create({
-      departure_time,
-      destinyId,
-      km,
-      name,
-      originId,
-    });
+    return this.CreateRoute.create(data);
   }
 }

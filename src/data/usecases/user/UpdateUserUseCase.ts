@@ -24,6 +24,8 @@ export class UpdateUserUseCase implements IUpdateUser {
             email,
             password,
             date_of_birth,
+            cnhDateOfIssue,
+            cnhExpirationDate,
         } = data;
 
         const user = await this.updateUserRepository.update({
@@ -35,6 +37,8 @@ export class UpdateUserUseCase implements IUpdateUser {
             type,
             email,
             date_of_birth: new Date(date_of_birth),
+            cnhDateOfIssue: new Date(cnhDateOfIssue),
+            cnhExpirationDate: new Date(cnhExpirationDate)
         });
 
         return user

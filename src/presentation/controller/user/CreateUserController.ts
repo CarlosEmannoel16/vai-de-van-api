@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { IController } from '@/presentation/protocols/IController';
 import { IResponse, ResponseStatus } from '../../utils/response';
 import { createUserYupValidation } from './validation/yupValidationUser';
 import ControllerException from '../../helpers/ControllerException';
-import { ICreateUser } from '@domain/usecases/user/createUser';
+import { IController } from '@/presentation/protocols/IController';
+import { ICreateUser } from '@/domain/usecases/user';
 
 export class CreateUserController implements IController {
   private readonly createUserUseCase: ICreateUser;

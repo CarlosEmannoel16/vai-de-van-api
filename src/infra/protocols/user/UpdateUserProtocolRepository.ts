@@ -7,11 +7,13 @@ export namespace IUpdateUserProtocolRepository {
         id: string;
         name: string;
         phone: string;
-        email?: string;
+        email: string;
         type: string;
         cpf: string;
         password: string;
         date_of_birth: Date;
+        cnhExpirationDate: Date;
+        cnhDateOfIssue: Date
     };
 
 

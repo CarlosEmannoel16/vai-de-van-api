@@ -10,9 +10,9 @@ export namespace ICreateRouteProtocolRepository {
   export type Params = {
     name: string
     km: number
-    departure_time: string
     originId: string
     destinyId: string
+    kmValue: number
   };
 
 

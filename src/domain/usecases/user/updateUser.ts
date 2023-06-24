@@ -7,12 +7,14 @@ export namespace IUpdateUser {
         id: string;
         name: string;
         phone: string;
-        email?: string;
+        email: string;
         type: string;
         cpf: string;
         password: string;
-        date_of_birth: Date;
+        date_of_birth: string;
         requestOwner: string;
+        cnhExpirationDate: string
+        cnhDateOfIssue: string
     };
 
     export type Result = {

@@ -7,7 +7,11 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "removeComments": true,
-    "typeRoots": ["./node_modules/@types", "./src/types/express"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types/express",
+      "./node_modules/yup"
+    ],
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
@@ -25,8 +29,7 @@
       "@data/*": ["data/*"],
       "@makeRepositories": ["main/factories/repositories/index.ts"],
       "@makeControllers": ["main/factories/controllers/index.ts"],
-      "@makeUseCases": ["main/factories/useCases/index.ts"],
-
+      "@makeUseCases": ["main/factories/useCases/index.ts"]
     }
   },
   "include": ["./src/**/*"],

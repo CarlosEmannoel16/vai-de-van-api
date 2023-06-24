@@ -2,9 +2,10 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
 import routes from './routes';
-import config from '@/config/developmet'
+import config from './config/developmet'
 import { Server, Socket } from 'socket.io';
 import { createServer } from 'http';
+import morgan from 'morgan';
 dotenv.config();
 
 const app = express();
@@ -16,7 +17,8 @@ const io = new Server(server, {  cors: {
   credentials: true,
 },});
 
-io
+
+app.use(morgan('dev'))
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,7 +31,6 @@ io.on('connection', (socket: Socket) => {
     console.log('Mensagem recebida:', msg);
     io.emit('chat message', msg); 
   });
-
 });
 
 
