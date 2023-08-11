@@ -13,5 +13,6 @@ export namespace IAssociateAndCreateVechileDriverRepository {
     with_air: boolean;
     modelId: string;
     ownerId: string,
+    description: string
   };
 }

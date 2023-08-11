@@ -11,6 +11,7 @@ export interface ICreateVechicle {
         with_air: boolean;
         cor: string;
         ownerId: string
+        description: string
     };
 
   }

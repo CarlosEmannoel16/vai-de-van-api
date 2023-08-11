@@ -8,7 +8,7 @@ export interface ICreateRoute {
       km: number,
       name: string,
       originId :string
-      kmValue: number
+      kmValue: string
     };
   
     export type Result = {

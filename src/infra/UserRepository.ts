@@ -11,6 +11,7 @@ import {
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
 import { UserModel } from '@/domain/models';
 import { ICreateDriverProtocolRepository } from '@infra/protocols/drivers';
+import { IGetUserByParamsProtocolRepository } from './protocols/user/GetUserByParamsProtocolRepository';
 
 const prisma = new PrismaClient();
 export class UserRepository
@@ -23,8 +24,12 @@ export class UserRepository
     IGetAllUsersProtocolRepository,
     ICreateDriverProtocolRepository,
     IUpdateUserProtocolRepository,
-    IDeleteUserProtocolRepository
+    IDeleteUserProtocolRepository,
+    IGetUserByParamsProtocolRepository
 {
+  async getUserByParams(data: IGetUserByParamsProtocolRepository.Params): Promise<User> {
+   return prisma.user.findFirst({where: data});
+  }
   async delete(id: string): Promise<boolean> {
     const result = await prisma.user.delete({
       where: { id },
@@ -66,13 +71,16 @@ export class UserRepository
       cnhDateOfIssue,
       cnhExpirationDate,
     } = data;
+    console.log(data);
     return prisma.user.create({
       data: {
         cpf,
-        date_of_birth: new Date(date_of_birth),
+        date_of_birth,
         email,
         name,
         password,
+        created_at: new Date(),
+        update_at: new Date(),
         phone,
         type: 'DRIVER',
         Driver: { create: { cnh, cnhDateOfIssue, cnhExpirationDate } },

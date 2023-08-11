@@ -7,7 +7,12 @@ export class CreateVechicleUseCase implements ICreateVechicle {
     private createVechicleRepository: ICreateVechileProtocolRepository,
   ) {}
   async execute(data: ICreateVechicle.Params): Promise<Vehicle> {
-    const result = await this.createVechicleRepository.create(data);
-    return result
+    console.log('Criando veiculo');
+    const result = await this.createVechicleRepository.create({
+      ...data,
+      amount_of_accents: Number(data.amount_of_accents),
+
+    });
+    return result;
   }
 }

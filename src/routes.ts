@@ -21,28 +21,32 @@ import { makeGetAllRouteController } from './main/factories/controllers/makeGetA
 import { makeGetByIdController } from './main/factories/controllers/makeGetByIdController';
 import { makeDeleteVehicleController } from './main/factories/controllers/makeDeleteVehicleController';
 import { makeCreateRouteController } from './main/factories/controllers/makeCreateRouteController';
+import { makeGetCitiesController } from './main/factories/controllers/makeGetCitiesController';
+import { makeGetAllVehiclesController } from './main/factories/controllers/makeGetAllVehiclesController';
 
 const routes = Router();
 
-routes.post('/login', adpterRouter(makeLoginController()))
-routes.get('/free/users', adpterRouter(makeGetAllUserController()))
-.post(',', adpterRouter(makeCreateUserController()))
+routes
+.post('/login', adpterRouter(makeLoginController()))
+.get('/free/users', adpterRouter(makeGetAllUserController()))
+.get('/city', adpterRouter(makeGetCitiesController()))
 
 
 //routes private
 routes
-   .use(adpterMiddleware(makeMiddlewareAuth()))
+  //.use(adpterMiddleware(makeMiddlewareAuth()))
   .post('/user/upload/profile', multer({storage: upload.storage}).single('avatar'), adpterRouter(makeUpdateProfileUserController()))
   .get('/user/:id', adpterRouter(makeGetUserByIdController()))
-  .get('/users', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeGetAllUserController()))
+  .get('/users',  adpterRouter(makeGetAllUserController()))
   .post('/user', adpterRouter(makeCreateUserController()))
   .delete('/user/:id', adpterRouter(makeDeleteUserController()))
-  .post('/user/driver',adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateDriverController()))
-  .put('/user/driver', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeUpdateUserController()))
-  .post('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateVehicleController()) )
-  .put('/vehicle', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeCreateVehicleController()) )
-  .delete('/vehicle/:id', adpterMiddleware(makeMiddlewareRouteAdm()), adpterRouter(makeDeleteVehicleController()) )
-  .get('/citys', adpterRouter(makeGetAllUserController()))
+  .post('/user/driver', adpterRouter(makeCreateDriverController()))
+  .put('/user/driver', adpterRouter(makeUpdateUserController()))
+  .post('/vehicle', adpterRouter(makeCreateVehicleController()) )
+  .get('/vehicle',  adpterRouter(makeGetAllVehiclesController()))
+  .put('/vehicle',  adpterRouter(makeCreateVehicleController()) )
+
+  .delete('/vehicle/:id',  adpterRouter(makeDeleteVehicleController()) )
 
 // Next Routers
 

@@ -13,6 +13,7 @@ export namespace ICreateVechileProtocolRepository {
     with_air: boolean;
     cor: string;
     ownerId: string
+    description: string
   };
 
 }

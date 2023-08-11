@@ -12,7 +12,7 @@ export namespace ICreateRouteProtocolRepository {
     km: number
     originId: string
     destinyId: string
-    kmValue: number
+    kmValue: string
   };
 
 

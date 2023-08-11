@@ -1,4 +1,4 @@
-import { Travel } from "@prisma/client";
+import { Travel, TripStops } from "@prisma/client";
 
 export interface ICreateTravelProtocolRepository {
   create(
@@ -11,8 +11,10 @@ export namespace ICreateTravelProtocolRepository {
   export type Params = {
     arrivalDate: string
     departureDate: Date
+    description: string
     driverId: string
     idVechicle: string;
     routeId: string;
+    tripStops: TripStops[]
   };
 }

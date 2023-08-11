@@ -4,7 +4,6 @@ export interface ICreateDriver {
    create: (data: ICreateDriver.resquest) => Promise<User>
 }
 export namespace ICreateDriver {
- 
 
     export type resquest = {
         name: string;

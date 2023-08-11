@@ -10,11 +10,11 @@ export namespace ICreateDriverProtocolRepository {
         cnh: string
         email: string;
         phone: string;
-        date_of_birth: string;
+        date_of_birth: Date;
         cpf: string;
         password: string;
-        cnhDateOfIssue: string 
-        cnhExpirationDate: string
+        cnhDateOfIssue: Date 
+        cnhExpirationDate: Date
       };
     
      

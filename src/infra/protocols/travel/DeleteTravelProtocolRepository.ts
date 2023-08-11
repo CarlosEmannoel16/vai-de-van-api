@@ -1,2 +1,4 @@
-export interface DeleteTravelProtocolRepository{}
+export interface IDeleteTravelProtocolRepository{
+    delete(id: string): Promise<any>;
+}
 

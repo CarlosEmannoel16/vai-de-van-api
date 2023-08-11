@@ -81,7 +81,7 @@ model Route {
   id         String   @id @default(uuid())
   name       String
   km         Int
-  kmValue    Float?
+  kmValue    String?
   Origin     City     @relation(fields: [originId], references: [id], name: "Origin")
   originId   String   @unique
   destinyId  String
@@ -118,6 +118,7 @@ model TripStops {
 model Vehicle {
   id                String   @id @default(uuid())
   amount_of_accents Int
+  description       String
   plate             String
   with_air          Boolean
   Travel            Travel[]

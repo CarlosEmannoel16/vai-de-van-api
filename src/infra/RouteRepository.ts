@@ -37,6 +37,8 @@ export class RouteRepository
         kmValue: true,
         originId: true,
         destinyId: true,
+        Origin: true,
+        Destiny: true,
       },
     });
     return routes;

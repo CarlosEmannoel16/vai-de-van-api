@@ -1,7 +1,5 @@
-export interface GetVechicleProtocolRepository{
-    getAll(): Promise<GetVechicleProtocolRepository.Result>
-}
+import { Vehicle } from "@prisma/client"
 
-export namespace GetVechicleProtocolRepository {
-    export type Result = {}
+export interface GetVechicleProtocolRepository{
+    getAll(): Promise<Vehicle[]>
 }

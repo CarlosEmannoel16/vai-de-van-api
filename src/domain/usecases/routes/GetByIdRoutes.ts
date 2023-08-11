@@ -10,7 +10,7 @@ export namespace IGetByIdRoutes {
     id: string;
     name: string;
     km: number;
-    kmValue: number | null;
+    kmValue: string | null;
     originId: string;
     destinyId: string;
   };
