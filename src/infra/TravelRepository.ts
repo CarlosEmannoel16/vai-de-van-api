@@ -12,19 +12,15 @@ export class TravelRepository implements ITravelProtocolRepository {
     return travel.findUnique({ where: { id } });
   }
 
-  async create(data: ICreateTravelProtocolRepository.Params): Promise<Travel> {
+  async create(data: ICreateTravelProtocolRepository.Params): Promise<any> {
+    console.log(data);
     return travel.create({
       data: {
         arrivalDate: data.arrivalDate,
         departureDate: data.arrivalDate,
-        created_at: new Date(),
-        driverId: data.driverId,
-        idVehicle: data.idVechicle,
-        update_at: new Date(),
+        idVehicle: data.idVehicle,
         routeId: data.routeId,
-        TripStops:{
-            createMany: {data: data.tripStops}
-        }
+        driverId: data.driverId,
       },
     });
   }
@@ -36,7 +32,9 @@ export class TravelRepository implements ITravelProtocolRepository {
   async delete(id: string): Promise<any> {
     return travel.delete({ where: { id } });
   }
-  async search(data: ISearchTravelProtocolRepository.Params): Promise<Travel[]> {
+  async search(
+    data: ISearchTravelProtocolRepository.Params,
+  ): Promise<Travel[]> {
     return travel.findMany({
       where: {
         Route: {

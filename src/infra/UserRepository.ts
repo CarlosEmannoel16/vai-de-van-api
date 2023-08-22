@@ -71,7 +71,6 @@ export class UserRepository
       cnhDateOfIssue,
       cnhExpirationDate,
     } = data;
-    console.log(data);
     return prisma.user.create({
       data: {
         cpf,

@@ -8,7 +8,7 @@ export namespace ISearchTravels{
     export type Params = {
         origin: string;
         destiny: string;
-        dateOfTravel: Date;
+        dateOfTravel: Date; 
     }
 
 

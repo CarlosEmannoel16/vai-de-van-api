@@ -12,7 +12,6 @@ export class JwtCompare implements IJwtCompare {
             response = { message: 'Token inválido.', authorized: false }
              return
           }
-          console.log('decoded', decoded)
           response = { message: 'ok', authorized: true, id: decoded['id']  as string,  name: decoded['name']  as string}
          return 
           

@@ -9,12 +9,15 @@ export interface ICreateTravelProtocolRepository {
 export namespace ICreateTravelProtocolRepository {
   export type Result = Travel;
   export type Params = {
-    arrivalDate: string
+    arrivalDate: Date
     departureDate: Date
     description: string
     driverId: string
-    idVechicle: string;
+    idVehicle: string;
     routeId: string;
-    tripStops: TripStops[]
+    tripStops: {
+      cityIdFromTo: string
+      tripStopOrder: number
+    }[]
   };
 }

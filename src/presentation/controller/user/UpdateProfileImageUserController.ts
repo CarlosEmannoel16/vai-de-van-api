@@ -11,7 +11,6 @@ export class UpdateProfileImageUserController implements IController {
     res: Response<IResponse>,
   ): Promise<Response<IResponse>> {
     try {
-        console.log(req.file)
       
     } catch (error) {
       const { message, status, statusCode } = ControllerException.handleError(

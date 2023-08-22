@@ -7,7 +7,6 @@ export class GetByIdRouterUseCase{
     async execute(data: IGetByIdRoutes.Params): Promise<IGetByIdRoutes.Result>{
         if (!data.id) throw new InvalidGenericError('Id é obrigatório');
         const route = await this.getByIdRoute.getById(data);
-        console.log(route)
         if (!route) throw new InvalidGenericError('Routa não encontrado');
         return route
     }

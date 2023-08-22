@@ -16,13 +16,14 @@ import {
 import { adpterMiddleware, adpterRouter } from './main/utils';
 import upload from './config/upload'
 import multer from 'multer';
-import { makeCreateVehicleController } from './main/factories/controllers/makeCreateVehicleController';
-import { makeGetAllRouteController } from './main/factories/controllers/makeGetAllRouteController';
-import { makeGetByIdController } from './main/factories/controllers/makeGetByIdController';
-import { makeDeleteVehicleController } from './main/factories/controllers/makeDeleteVehicleController';
-import { makeCreateRouteController } from './main/factories/controllers/makeCreateRouteController';
-import { makeGetCitiesController } from './main/factories/controllers/makeGetCitiesController';
-import { makeGetAllVehiclesController } from './main/factories/controllers/makeGetAllVehiclesController';
+import { makeCreateVehicleController } from './main/factories/controllers/Vehicles/makeCreateVehicleController';
+import { makeGetAllRouteController } from './main/factories/controllers/Route/makeGetAllRouteController';
+import { makeGetByIdController } from './main/factories/controllers/Route/makeGetRouteByIdController';
+import { makeDeleteVehicleController } from './main/factories/controllers/Vehicles/makeDeleteVehicleController';
+import { makeCreateRouteController } from './main/factories/controllers/Route/makeCreateRouteController';
+import { makeGetCitiesController } from './main/factories/controllers/Cities/makeGetCitiesController';
+import { makeGetAllVehiclesController } from './main/factories/controllers/Vehicles/makeGetAllVehiclesController';
+import { makeCreateTravelController } from './main/factories/controllers/Travel/makeCreateTravelController';
 
 const routes = Router();
 
@@ -68,5 +69,8 @@ routes.post('/route', adpterRouter(makeCreateRouteController()))
 // routes.get('/report/routes/:idDriver')
 // routes.get('/report/routes/:idCity')
 // routes.get('/report/routes/all')
+
+//Travel
+routes.post('/travel', adpterRouter(makeCreateTravelController()))
 
 export default routes;

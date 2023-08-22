@@ -28,7 +28,6 @@ app.use(routes);
 
 io.on('connection', (socket: Socket) => {
   socket.on('chat-message', (msg: string) => {
-    console.log('Mensagem recebida:', msg);
     io.emit('chat message', msg); 
   });
 });

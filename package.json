@@ -10,7 +10,7 @@
     "start": "ts-node-dev --respawn --files -r    tsconfig-paths/register dist/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify --exit-child src/server.ts",
     "test": "jest"
-  }, 
+  },
   "prisma": {
     "seed": "ts-node ./prisma/seed.ts"
   },
@@ -57,6 +57,7 @@
     "redis": "^4.6.6",
     "socket.io": "^4.6.1",
     "typeorm": "0.3.12",
+    "uuid": "^9.0.0",
     "yup": "^1.0.2"
   },
   "_resolveFilename": [

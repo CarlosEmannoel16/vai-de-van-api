@@ -38,7 +38,6 @@ async function main() {
 
   const citiesResult = await prisma.city.createMany({ data: [...data], skipDuplicates: true });
 
-  console.log({ adm, state, citiesResult });
 }
 main()
   .then(async () => {

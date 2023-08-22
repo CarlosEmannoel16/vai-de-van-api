@@ -48,7 +48,7 @@ model Driver {
   cnh               String
   cnhDateOfIssue    DateTime @default(now())
   cnhExpirationDate DateTime @default(now())
-  idUser            String
+  idUser            String   @unique
   User              User     @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: Cascade)
   Travel            Travel[]
   created_at        DateTime @default(now())
@@ -92,27 +92,25 @@ model Route {
 }
 
 model PricesBetweenStops {
-  id               String    @id @default(uuid())
-  idOrigin         String
-  idDestiny        String
-  TripStopsOrigin  TripStops @relation(fields: [idOrigin], references: [id], name: "TripStopsOrigin")
-  TripStopsDestiny TripStops @relation(fields: [idDestiny], references: [id], name: "TripStopsDestiny")
-  price            Float
-  Payment          Payment[]
-  Ticket           Ticket[]
+  id         String    @id @default(uuid())
+  idDestiny  String
+  price      Float
+  tripStopId String
+  Payment    Payment[]
+  Ticket     Ticket[]
+  TripStops  TripStops @relation(fields: [tripStopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model TripStops {
-  id                        String               @id @default(uuid())
-  cityIdFromTo              String
-  City                      City                 @relation(fields: [cityIdFromTo], references: [id])
-  travelId                  String
-  Travel                    Travel               @relation(fields: [travelId], references: [id])
-  tripStopOrder             String
-  created_at                DateTime             @default(now())
-  update_at                 DateTime             @default(now()) @updatedAt
-  PricesBetweenStopsOrigin  PricesBetweenStops[] @relation("TripStopsOrigin")
-  PricesBetweenStopsDestiny PricesBetweenStops[] @relation("TripStopsDestiny")
+  id                 String               @id @default(uuid())
+  cityIdFromTo       String
+  City               City                 @relation(fields: [cityIdFromTo], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  travelId           String
+  Travel             Travel               @relation(fields: [travelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  tripStopOrder      Int
+  created_at         DateTime             @default(now())
+  update_at          DateTime             @default(now()) @updatedAt
+  PricesBetweenStops PricesBetweenStops[]
 }
 
 model Vehicle {
@@ -136,7 +134,7 @@ model Travel {
   Route         Route       @relation(fields: [routeId], references: [id])
   routeId       String
   Payment       Payment[]
-  Driver        Driver?     @relation(fields: [driverId], references: [id])
+  Driver        Driver?     @relation(fields: [driverId], references: [idUser])
   driverId      String?
   departureDate DateTime
   arrivalDate   DateTime
