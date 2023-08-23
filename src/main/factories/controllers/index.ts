@@ -8,6 +8,5 @@ export * from './Users/makeUpdateUserController';
 export * from './Users/makeDeleteUserController'
 export * from './Users/makeUpdateProfileImageUserController'
 export * from './Users/makeUpdateUserController'
-export * from './Vehicles/makeCreateVehicleController'
 
 

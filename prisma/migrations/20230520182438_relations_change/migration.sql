@@ -27,7 +27,7 @@ ALTER TABLE "RouteOnCities" DROP CONSTRAINT "RouteOnCities_subRouteId_fkey";
 ALTER TABLE "RouteOnVehicle" DROP CONSTRAINT "RouteOnVehicle_routeId_fkey";
 
 -- DropForeignKey
-ALTER TABLE "RouteOnVehicle" DROP CONSTRAINT "RouteOnVehicle_vehicleId_fkey";
+ALTER TABLE "RouteOnVehicle" DROP CONSTRAINT "RouteOnVehicle_VehicleId_fkey";
 
 -- DropForeignKey
 ALTER TABLE "SubRoute" DROP CONSTRAINT "SubRoute_id_route_fkey";
@@ -48,7 +48,7 @@ ADD COLUMN     "cnhExpirationDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTA
 -- AlterTable
 ALTER TABLE "Route" DROP COLUMN "departure_time",
 ADD COLUMN     "destinyId" TEXT NOT NULL,
-ADD COLUMN     "vehicleId" TEXT;
+ADD COLUMN     "VehicleId" TEXT;
 
 -- AlterTable
 ALTER TABLE "Ticket" DROP COLUMN "cpf",
@@ -114,7 +114,7 @@ ALTER TABLE "Route" ADD CONSTRAINT "Route_id_fkey" FOREIGN KEY ("id") REFERENCES
 ALTER TABLE "Route" ADD CONSTRAINT "Route_destinyId_fkey" FOREIGN KEY ("destinyId") REFERENCES "City"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Route" ADD CONSTRAINT "Route_vehicleId_fkey" FOREIGN KEY ("vehicleId") REFERENCES "Vehicle"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Route" ADD CONSTRAINT "Route_VehicleId_fkey" FOREIGN KEY ("VehicleId") REFERENCES "Vehicle"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Vehicle" ADD CONSTRAINT "Vehicle_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "ModelVehicle"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

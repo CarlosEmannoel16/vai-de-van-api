@@ -16,14 +16,15 @@ import {
 import { adpterMiddleware, adpterRouter } from './main/utils';
 import upload from './config/upload'
 import multer from 'multer';
-import { makeCreateVehicleController } from './main/factories/controllers/Vehicles/makeCreateVehicleController';
 import { makeGetAllRouteController } from './main/factories/controllers/Route/makeGetAllRouteController';
 import { makeGetByIdController } from './main/factories/controllers/Route/makeGetRouteByIdController';
-import { makeDeleteVehicleController } from './main/factories/controllers/Vehicles/makeDeleteVehicleController';
 import { makeCreateRouteController } from './main/factories/controllers/Route/makeCreateRouteController';
 import { makeGetCitiesController } from './main/factories/controllers/Cities/makeGetCitiesController';
-import { makeGetAllVehiclesController } from './main/factories/controllers/Vehicles/makeGetAllVehiclesController';
 import { makeCreateTravelController } from './main/factories/controllers/Travel/makeCreateTravelController';
+import { makeFindAllTravelController } from './main/factories/controllers/Travel/makeFindAllTravelController';
+import { makeCreateVehicleController } from './main/factories/controllers/Vehicles/makeCreateVehicleController';
+import { makeGetAllVehiclesController } from './main/factories/controllers/Vehicles/makeGetAllVehiclesController';
+import { makeDeleteVehicleController } from './main/factories/controllers/Vehicles/makeDeleteVehicleController';
 
 const routes = Router();
 
@@ -72,5 +73,6 @@ routes.post('/route', adpterRouter(makeCreateRouteController()))
 
 //Travel
 routes.post('/travel', adpterRouter(makeCreateTravelController()))
+routes.get('/travel', adpterRouter(makeFindAllTravelController()))
 
 export default routes;

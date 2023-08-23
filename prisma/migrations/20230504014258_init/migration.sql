@@ -70,10 +70,10 @@ CREATE TABLE "Vehicle" (
 
 -- CreateTable
 CREATE TABLE "RouteOnVehicle" (
-    "vehicleId" TEXT NOT NULL,
+    "VehicleId" TEXT NOT NULL,
     "routeId" TEXT NOT NULL,
 
-    CONSTRAINT "RouteOnVehicle_pkey" PRIMARY KEY ("routeId","vehicleId")
+    CONSTRAINT "RouteOnVehicle_pkey" PRIMARY KEY ("routeId","VehicleId")
 );
 
 -- CreateTable
@@ -135,7 +135,7 @@ CREATE UNIQUE INDEX "Payment_id_key" ON "Payment"("id");
 ALTER TABLE "City" ADD CONSTRAINT "City_stateId_fkey" FOREIGN KEY ("stateId") REFERENCES "State"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "RouteOnVehicle" ADD CONSTRAINT "RouteOnVehicle_vehicleId_fkey" FOREIGN KEY ("vehicleId") REFERENCES "Vehicle"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "RouteOnVehicle" ADD CONSTRAINT "RouteOnVehicle_VehicleId_fkey" FOREIGN KEY ("VehicleId") REFERENCES "Vehicle"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "RouteOnVehicle" ADD CONSTRAINT "RouteOnVehicle_routeId_fkey" FOREIGN KEY ("routeId") REFERENCES "Route"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

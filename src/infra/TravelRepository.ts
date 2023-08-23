@@ -1,12 +1,29 @@
 import { ITravelProtocolRepository } from './protocols/travel';
 import { ICreateTravelProtocolRepository } from './protocols/travel/CreateTravelProtocolRepository';
+import { IFindAllTravelsProtocolRepository } from './protocols/travel/FindAllTravelsProtocolRepository';
 import { ISearchTravelProtocolRepository } from './protocols/travel/SearchTravelProtocolRepository';
 import { PrismaClient, Travel } from '@prisma/client';
 
 const travel = new PrismaClient().travel;
 export class TravelRepository implements ITravelProtocolRepository {
-  async findAll(): Promise<Travel[]> {
-    return travel.findMany();
+  async findAll(): Promise<IFindAllTravelsProtocolRepository.Params[]> {
+    return travel.findMany({
+      select: {
+        id: true,
+        departureDate: true,
+        arrivalDate: true,
+        Driver: {
+          select:{
+            id: true,
+            User: true
+          }
+        },
+        Route: true,
+        Vechicle: true,
+        update_at: true,
+        created_at: true,
+      },
+    });
   }
   async findById(id: string): Promise<any> {
     return travel.findUnique({ where: { id } });

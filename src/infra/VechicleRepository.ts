@@ -20,7 +20,7 @@ export class VechicleRepository
     IDeleteVehicleRepository
 {
   async deleteById(id: string): Promise<Vehicle> {
-    return prisma.vehicle.delete({
+    return prisma.Vehicle.delete({
       where: { id },
     });
    
@@ -29,7 +29,7 @@ export class VechicleRepository
     idDriver,
     idVechile,
   }: IAssociateVechileDriverRepository.Params): Promise<Vehicle> {
-    return prisma.vehicle.update({
+    return prisma.Vehicle.update({
       where: { id: idVechile },
       data: { ownerId: idDriver },
     });
@@ -43,7 +43,7 @@ export class VechicleRepository
     description
 
   }: IAssociateAndCreateVechileDriverRepository.Params): Promise<Vehicle> {
-    return prisma.vehicle.create({
+    return prisma.Vehicle.create({
       data: {
         amount_of_accents,
         cor,
@@ -55,16 +55,16 @@ export class VechicleRepository
     });
   }
   async getAll(): Promise<Vehicle[]> {
-    return prisma.vehicle.findMany();
+    return prisma.Vehicle.findMany();
   }
   async getById(id: string): Promise<GetVechicleByIdProtocolRepository.Result> {
-    return prisma.vehicle.findUnique({ where: { id } });
+    return prisma.Vehicle.findUnique({ where: { id } });
   }
   async create(
     data: ICreateVechileProtocolRepository.params,
   ): Promise<Vehicle> {
     const { amount_of_accents, cor, plate, with_air, ownerId,description } = data;
-    return prisma.vehicle.create({
+    return prisma.Vehicle.create({
       data: {
         amount_of_accents,
         cor,

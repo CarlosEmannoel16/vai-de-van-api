@@ -1,4 +1,4 @@
-import {  GetAllVehiclesController } from "@/presentation/controller/vehicle/ListVehicleController"
+import { GetAllVehiclesController } from "@/presentation/controller/vehicle/ListVehicleController"
 import { makeGetAllVehiclesUseCase } from "../../useCases/makeGetAllVehiclesUseCase"
 
 export const makeGetAllVehiclesController = () => {
