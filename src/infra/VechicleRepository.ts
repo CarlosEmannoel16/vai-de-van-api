@@ -1,26 +1,19 @@
 import { PrismaClient, Vehicle } from '@prisma/client';
-import {
-  GetVechicleByIdProtocolRepository,
-  GetVechicleProtocolRepository,
-  IAssociateAndCreateVechileDriverRepository,
-  ICreateVechileProtocolRepository,
-  IAssociateVechileDriverRepository,
-} from './protocols/vechicle';
+
 import { IDeleteVehicleRepository } from './protocols/vechicle/DeleteVehicleRepository';
+import { IAssociateVechileDriverRepository } from './protocols/vechicle/AssociateVechileDriverRepository';
+import { IAssociateAndCreateVechileDriverRepository } from './protocols/vechicle/AssociateAndCrreateVechicleDriverRepository';
+import { ICreateVechileProtocolRepository } from './protocols/vechicle/CreateVechileProtocolRepository';
+import { GetVechicleByIdProtocolRepository } from './protocols/vechicle/GetVechicleByIdProtocolRepository';
 
 const prisma = new PrismaClient();
 
 export class VechicleRepository
   implements
-    ICreateVechileProtocolRepository,
-    GetVechicleByIdProtocolRepository,
-    GetVechicleProtocolRepository,
-    IAssociateAndCreateVechileDriverRepository,
-    IAssociateVechileDriverRepository,
-    IDeleteVehicleRepository
+  IDeleteVehicleRepository
 {
   async deleteById(id: string): Promise<Vehicle> {
-    return prisma.Vehicle.delete({
+    return prisma.vehicle.delete({
       where: { id },
     });
    
@@ -29,7 +22,7 @@ export class VechicleRepository
     idDriver,
     idVechile,
   }: IAssociateVechileDriverRepository.Params): Promise<Vehicle> {
-    return prisma.Vehicle.update({
+    return prisma.vehicle.update({
       where: { id: idVechile },
       data: { ownerId: idDriver },
     });
@@ -43,7 +36,7 @@ export class VechicleRepository
     description
 
   }: IAssociateAndCreateVechileDriverRepository.Params): Promise<Vehicle> {
-    return prisma.Vehicle.create({
+    return prisma.vehicle.create({
       data: {
         amount_of_accents,
         cor,
@@ -55,16 +48,16 @@ export class VechicleRepository
     });
   }
   async getAll(): Promise<Vehicle[]> {
-    return prisma.Vehicle.findMany();
+    return prisma.vehicle.findMany();
   }
   async getById(id: string): Promise<GetVechicleByIdProtocolRepository.Result> {
-    return prisma.Vehicle.findUnique({ where: { id } });
+    return prisma.vehicle.findUnique({ where: { id } });
   }
   async create(
     data: ICreateVechileProtocolRepository.params,
   ): Promise<Vehicle> {
     const { amount_of_accents, cor, plate, with_air, ownerId,description } = data;
-    return prisma.Vehicle.create({
+    return prisma.vehicle.create({
       data: {
         amount_of_accents,
         cor,

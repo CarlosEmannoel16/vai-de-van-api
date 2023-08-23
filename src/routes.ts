@@ -25,6 +25,7 @@ import { makeFindAllTravelController } from './main/factories/controllers/Travel
 import { makeCreateVehicleController } from './main/factories/controllers/Vehicles/makeCreateVehicleController';
 import { makeGetAllVehiclesController } from './main/factories/controllers/Vehicles/makeGetAllVehiclesController';
 import { makeDeleteVehicleController } from './main/factories/controllers/Vehicles/makeDeleteVehicleController';
+import { makeGetVehicleByIdController } from './main/factories/controllers/Vehicles/makeGetVehicleByIdController';
 
 const routes = Router();
 
@@ -47,6 +48,7 @@ routes
   .post('/vehicle', adpterRouter(makeCreateVehicleController()) )
   .get('/vehicle',  adpterRouter(makeGetAllVehiclesController()))
   .put('/vehicle',  adpterRouter(makeCreateVehicleController()) )
+  .get('/vehicle/:id',  adpterRouter(makeGetVehicleByIdController()))
 
   .delete('/vehicle/:id',  adpterRouter(makeDeleteVehicleController()) )
 
@@ -73,6 +75,6 @@ routes.post('/route', adpterRouter(makeCreateRouteController()))
 
 //Travel
 routes.post('/travel', adpterRouter(makeCreateTravelController()))
-routes.get('/travel', adpterRouter(makeFindAllTravelController()))
+routes.get('/travel/all', adpterRouter(makeFindAllTravelController()))
 
 export default routes;

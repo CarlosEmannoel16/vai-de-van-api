@@ -1,5 +1,4 @@
-import { IDeleteVehicleUseCase } from '@/domain/usecases/vechicle/FindAllVehicleUseCase';
-import { IDeleteVehicleRepository } from '@/infra/protocols/vechicle/DeleteVehicleRepository';
+import { IDeleteVehicleUseCase } from '@/domain/usecases/vechicle/DeleteVehicleUseCase copy';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';
