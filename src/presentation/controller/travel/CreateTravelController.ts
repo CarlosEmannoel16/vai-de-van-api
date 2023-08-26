@@ -14,8 +14,9 @@ export class CreateTravelController implements IController {
       const data = await this.createTravel.execute(req.body);
       return res.status(200).json(data);
     } catch (error) {
-      console.log(error);
-      return res.status(200).json(error.message);
+      const { message, status, statusCode } =
+      ControllerException.handleError(error);
+    return res.status(statusCode).json({ message, status });
     }
   }
 }

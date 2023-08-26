@@ -26,6 +26,9 @@ import { makeCreateVehicleController } from './main/factories/controllers/Vehicl
 import { makeGetAllVehiclesController } from './main/factories/controllers/Vehicles/makeGetAllVehiclesController';
 import { makeDeleteVehicleController } from './main/factories/controllers/Vehicles/makeDeleteVehicleController';
 import { makeGetVehicleByIdController } from './main/factories/controllers/Vehicles/makeGetVehicleByIdController';
+import { makeUpdateVehicleController } from './main/factories/controllers/Vehicles/makeUpdateVehicleController';
+import { makeGetTravelByIdController } from './main/factories/controllers/Travel/makeGetTravelByIdController';
+import { makeSearchTravelClientController } from './main/factories/controllers/Travel/makeSearchTravelClientController';
 
 const routes = Router();
 
@@ -47,7 +50,7 @@ routes
   .put('/user/driver', adpterRouter(makeUpdateUserController()))
   .post('/vehicle', adpterRouter(makeCreateVehicleController()) )
   .get('/vehicle',  adpterRouter(makeGetAllVehiclesController()))
-  .put('/vehicle',  adpterRouter(makeCreateVehicleController()) )
+  .put('/vehicle',  adpterRouter(makeUpdateVehicleController()) )
   .get('/vehicle/:id',  adpterRouter(makeGetVehicleByIdController()))
 
   .delete('/vehicle/:id',  adpterRouter(makeDeleteVehicleController()) )
@@ -74,7 +77,11 @@ routes.post('/route', adpterRouter(makeCreateRouteController()))
 // routes.get('/report/routes/all')
 
 //Travel
+routes.get('/travel/search', adpterRouter(makeSearchTravelClientController()))
 routes.post('/travel', adpterRouter(makeCreateTravelController()))
 routes.get('/travel/all', adpterRouter(makeFindAllTravelController()))
+routes.get('/travel/:id', adpterRouter(makeGetTravelByIdController()))
+
+
 
 export default routes;

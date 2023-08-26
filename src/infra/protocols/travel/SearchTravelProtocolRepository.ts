@@ -1,7 +1,7 @@
-import { Travel } from "@prisma/client";
+import { City, PricesBetweenStops, Travel, TripStops } from "@prisma/client";
 
 export interface ISearchTravelProtocolRepository {
-    search(data: ISearchTravelProtocolRepository.Params): Promise<Travel[]>;
+    search(data: ISearchTravelProtocolRepository.Params):  Promise<ISearchTravelProtocolRepository.Result[]>;
 }
 
 export namespace ISearchTravelProtocolRepository {
@@ -12,11 +12,12 @@ export namespace ISearchTravelProtocolRepository {
     }
 
     export type Result = {
-        id: string;
-        origin: string;
-        destiny: string;
-        price: number;
-        company: string;
-        date: Date;
-    }[]
+        Travel: Travel,
+        City: City,
+        PricesBetweenStops: PricesBetweenStops[],
+        cityIdFromTo: string,
+        id: string,
+        travelId: string,
+        tripStopOrder: number,
+    } 
 }

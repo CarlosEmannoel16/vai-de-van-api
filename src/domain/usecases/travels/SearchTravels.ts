@@ -1,15 +1,21 @@
 import { Travel } from "@prisma/client";
 
-export interface  ISearchTravels{
-    execute(data: ISearchTravels.Params): Promise<Travel[]>;
+export interface  ISearchTravelsUseCaseProtocol {
+    execute(data: ISearchTravelsUseCaseProtocol.Params):  Promise<ISearchTravelsUseCaseProtocol.Result | undefined> ;
 }
 
-export namespace ISearchTravels{
+export namespace ISearchTravelsUseCaseProtocol{
     export type Params = {
         origin: string;
         destiny: string;
         dateOfTravel: Date; 
     }
 
+    export type Result = {
+        nameDestiny: string;
+        nameOrigin: string;
+        dateOfDeparture: Date;
+        value: number;
+    }
 
 }

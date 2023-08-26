@@ -68,4 +68,13 @@ export class VechicleRepository
       },
     });
   }
+
+  async update(data: Vehicle): Promise<Vehicle> {
+    return prisma.vehicle.update({
+      where: { id: data.id},
+      data: {
+        ...data,
+      }
+    });
+  }
 }
