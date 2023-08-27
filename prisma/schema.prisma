@@ -65,16 +65,17 @@ model State {
 }
 
 model City {
-  id            String      @id @default(uuid())
-  name          String      @unique
-  coordinates   String
-  State         State?      @relation(fields: [stateId], references: [id])
-  stateId       String?
-  RoutesDistiny Route[]     @relation("Destiny")
-  RouteOrigin   Route[]     @relation("Origin")
-  created_at    DateTime    @default(now())
-  update_at     DateTime    @default(now()) @updatedAt
-  TripStops     TripStops[]
+  id               String      @id @default(uuid())
+  name             String      @unique
+  coordinates      String
+  State            State?      @relation(fields: [stateId], references: [id])
+  stateId          String?
+  RoutesDistiny    Route[]     @relation("Destiny")
+  RouteOrigin      Route[]     @relation("Origin")
+  created_at       DateTime    @default(now())
+  update_at        DateTime    @default(now()) @updatedAt
+  TripStopsDestiny TripStops[] @relation("CityDestiny")
+  TripStopsOrigin  TripStops[] @relation("CityOrigin")
 }
 
 model Route {
@@ -103,8 +104,10 @@ model PricesBetweenStops {
 
 model TripStops {
   id                 String               @id @default(uuid())
-  cityIdFromTo       String
-  City               City                 @relation(fields: [cityIdFromTo], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cityIdOrigin       String
+  cityIdDestiny      String
+  CityDestiny        City                 @relation(fields: [cityIdDestiny], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
+  CityOrigin         City                 @relation(fields: [cityIdOrigin], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityOrigin")
   travelId           String
   Travel             Travel               @relation(fields: [travelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   tripStopOrder      Int

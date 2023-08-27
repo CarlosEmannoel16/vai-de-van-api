@@ -59,16 +59,23 @@ export class TravelRepository implements ITravelProtocolRepository {
         Travel: {
           arrivalDate: data.dateOfTravel,
         },
+        cityIdFromTo: data.destiny,
+        City: {
+          id: data.origin,
+        }
       },
       
       select: {
         Travel: true,
         City: true,
-        PricesBetweenStops: true,
+        PricesBetweenStops: {
+         
+        },
         cityIdFromTo: true,
         id: true,
         travelId: true,
         tripStopOrder: true,
+        
       }
     });
   }

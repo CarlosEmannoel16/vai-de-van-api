@@ -52,7 +52,6 @@ routes
   .get('/vehicle',  adpterRouter(makeGetAllVehiclesController()))
   .put('/vehicle',  adpterRouter(makeUpdateVehicleController()) )
   .get('/vehicle/:id',  adpterRouter(makeGetVehicleByIdController()))
-
   .delete('/vehicle/:id',  adpterRouter(makeDeleteVehicleController()) )
 
 // Next Routers
@@ -64,11 +63,7 @@ routes.post('/route', adpterRouter(makeCreateRouteController()))
 // routes.put('/route')
 // routes.delete('/route/:id')
 
-//Veiculos
-// routes.get('/vechicle/:id')
-// routes.get('/vechicle')
-// routes.put('/vechicle')
-// routes.delete('/vechicle/:id')
+
 
 //Relatorios
 // routes.get('/report/routes/:idRouter')
