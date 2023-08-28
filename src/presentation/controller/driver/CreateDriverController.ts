@@ -14,7 +14,7 @@ export class CreateDriverController implements IController {
       const driver = await this.createDriver.create(req.body);
       return res.status(200).json({ data: driver });
     } catch (error) {
-     
+     console.log(error);
       const { message, status, statusCode } =
         ControllerException.handleError(error);
       res.status(statusCode).json({ message, status });

@@ -16,7 +16,7 @@ export class CreateTravelController implements IController {
     } catch (error) {
       const { message, status, statusCode } =
       ControllerException.handleError(error);
-    return res.status(statusCode).json({ message, status });
+    return res.status(500).json({ message, status });
     }
   }
 }

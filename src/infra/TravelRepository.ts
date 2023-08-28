@@ -1,3 +1,4 @@
+import { Between } from 'typeorm';
 import { ITravelProtocolRepository } from './protocols/travel';
 import { ICreateTravelProtocolRepository } from './protocols/travel/CreateTravelProtocolRepository';
 import { IFindAllTravelsProtocolRepository } from './protocols/travel/FindAllTravelsProtocolRepository';
@@ -49,34 +50,43 @@ export class TravelRepository implements ITravelProtocolRepository {
   async delete(id: string): Promise<any> {
     return travel.delete({ where: { id } });
   }
-  
+
   async search(
     data: ISearchTravelProtocolRepository.Params,
   ): Promise<ISearchTravelProtocolRepository.Result[] | undefined> {
-    const tripstops = new PrismaClient().tripStops;
-    return tripstops.findMany({
+    const travel = new PrismaClient().travel;
+    const result = await travel.findMany({
       where: {
-        Travel: {
-          arrivalDate: data.dateOfTravel,
+        departureDate: {
+          lte: `${data.dateOfTravel}T00:00:00.000Z`,
+          gte: `${data.dateOfTravel}T23:59:59.000Z`,
         },
-        cityIdFromTo: data.destiny,
-        City: {
-          id: data.origin,
-        }
+        TripStops: {
+          every: {
+            cityid: data.origin,
+          },
+        },
       },
-      
       select: {
-        Travel: true,
-        City: true,
-        PricesBetweenStops: {
-         
+        arrivalDate: true,
+        departureDate: true,
+        Route: true,
+        TripStops: {
+          select: {
+            City: true,
+            tripStopOrder: true,
+            PricesBetweenStops: {
+              where: {
+                idDestiny: data.destiny,
+              },
+            },
+          },
         },
-        cityIdFromTo: true,
-        id: true,
-        travelId: true,
-        tripStopOrder: true,
-        
-      }
+        Vechicle: true,
+      },
     });
+
+    console.log(result);
+    return result;
   }
 }

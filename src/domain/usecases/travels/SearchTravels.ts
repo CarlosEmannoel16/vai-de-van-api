@@ -16,6 +16,6 @@ export namespace ISearchTravelsUseCaseProtocol{
         nameOrigin: string;
         dateOfDeparture: Date;
         value: number;
-    }
+    }[]
 
 }

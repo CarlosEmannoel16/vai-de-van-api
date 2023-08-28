@@ -78,7 +78,7 @@ export class CreateTravels implements ICreateTravels {
         Number(tripStopOrigin.distanceFromLastStop || 0);
       const idTripStop = v4();
       DTOTripStops.push({
-        cityIdFromTo: tripStopOrigin.cityIdFromTo,
+        cityid: tripStopOrigin.cityIdFromTo,
         travelId: resultTravel.id,
         created_at: new Date(),
         tripStopOrder: tripStopOrigin.tripStopOrder || index,
@@ -99,12 +99,7 @@ export class CreateTravels implements ICreateTravels {
           value = value + Number(tripStopDestiny.distanceFromLastStop || distanciaTotal)
        
           if(tripStopDestiny.tripStopOrder === 999) value = value - lastTripstopKmValue
-        //   console.log(
-        //   'de ' + tripStopOrigin.name + ' para ' + tripStopDestiny.name,
-        //   ' ==> ',
-        //   value,
-        // );
-
+  
         DTOPricesBetweenStops.push({
           idDestiny: tripStopDestiny.cityIdFromTo,
           price: value * Number(route.kmValue),

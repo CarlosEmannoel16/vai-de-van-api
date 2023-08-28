@@ -65,26 +65,25 @@ model State {
 }
 
 model City {
-  id               String      @id @default(uuid())
-  name             String      @unique
-  coordinates      String
-  State            State?      @relation(fields: [stateId], references: [id])
-  stateId          String?
-  RoutesDistiny    Route[]     @relation("Destiny")
-  RouteOrigin      Route[]     @relation("Origin")
-  created_at       DateTime    @default(now())
-  update_at        DateTime    @default(now()) @updatedAt
-  TripStopsDestiny TripStops[] @relation("CityDestiny")
-  TripStopsOrigin  TripStops[] @relation("CityOrigin")
+  id            String      @id @default(uuid())
+  name          String      @unique
+  coordinates   String
+  State         State?      @relation(fields: [stateId], references: [id])
+  stateId       String?
+  RoutesDistiny Route[]     @relation("Destiny")
+  RouteOrigin   Route[]     @relation("Origin")
+  created_at    DateTime    @default(now())
+  update_at     DateTime    @default(now()) @updatedAt
+  TripStops     TripStops[] @relation("CityDestiny")
 }
 
 model Route {
   id         String   @id @default(uuid())
-  name       String
+  name       String   @unique
   km         Int
   kmValue    String?
   Origin     City     @relation(fields: [originId], references: [id], name: "Origin")
-  originId   String   @unique
+  originId   String
   destinyId  String
   Destiny    City     @relation(fields: [destinyId], references: [id], "Destiny")
   Travel     Travel[]
@@ -104,10 +103,8 @@ model PricesBetweenStops {
 
 model TripStops {
   id                 String               @id @default(uuid())
-  cityIdOrigin       String
-  cityIdDestiny      String
-  CityDestiny        City                 @relation(fields: [cityIdDestiny], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
-  CityOrigin         City                 @relation(fields: [cityIdOrigin], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityOrigin")
+  cityid             String
+  City               City                 @relation(fields: [cityid], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
   travelId           String
   Travel             Travel               @relation(fields: [travelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   tripStopOrder      Int

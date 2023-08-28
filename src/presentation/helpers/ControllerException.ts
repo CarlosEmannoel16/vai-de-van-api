@@ -11,6 +11,7 @@ export interface ControllerExceptionResult {
 
 class ControllerException {
   handleError(error: Error): ControllerExceptionResult {
+    console.log(error);
     if (error instanceof ValidationError) {
       return {
         statusCode: 400,
@@ -28,10 +29,11 @@ class ControllerException {
       };
     }
 
+   
     return {
       statusCode: 500,
       status: ResponseStatus.INTERNAL_SERVER_ERROR,
-      message: error?.message || 'Erro no servidor',
+      message: 'Erro no servidor',
     };
   }
 }
