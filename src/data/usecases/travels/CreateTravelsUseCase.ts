@@ -34,6 +34,7 @@ export class CreateTravels implements ICreateTravels {
 
     const resultTravel = await this.travelRepository.create({
       ...data,
+      description: data.description,
       arrivalDate: new Date(data.arrivalDate),
       departureDate: new Date(data.departureDate),
     });

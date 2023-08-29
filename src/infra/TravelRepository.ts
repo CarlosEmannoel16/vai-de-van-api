@@ -12,6 +12,7 @@ export class TravelRepository implements ITravelProtocolRepository {
       select: {
         id: true,
         departureDate: true,
+        description: true,
         arrivalDate: true,
         Driver: {
           select: {
@@ -44,11 +45,13 @@ export class TravelRepository implements ITravelProtocolRepository {
     console.log(data);
     return travel.create({
       data: {
+        description: data.description,
         arrivalDate: data.arrivalDate,
         departureDate: data.arrivalDate,
         idVehicle: data.idVehicle,
         routeId: data.routeId,
         driverId: data.driverId,
+
       },
     });
   }

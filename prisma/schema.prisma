@@ -132,6 +132,7 @@ model Vehicle {
 model Travel {
   id            String      @id @default(uuid())
   Vechicle      Vehicle     @relation(fields: [idVehicle], references: [id])
+  description   String      @default("Viagem Padrao")
   idVehicle     String
   Route         Route       @relation(fields: [routeId], references: [id])
   routeId       String

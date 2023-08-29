@@ -10,4 +10,4 @@ export class GetAllCitiesUseCase implements IGetAllCitiesUseCase{
       return cities
     }
 
-}
+} 
