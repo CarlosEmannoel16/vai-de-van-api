@@ -10,15 +10,32 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
     console.log(data);
     const tripStops = await this.travelRepository.search(data);
     console.log(tripStops);
-    const result: ISearchTravelsUseCaseProtocol.Result[] = tripStops.map((tripStop) => {
-    console.log(result);
-    return {
-        dateOfDeparture: tripStop.departureDate,
-        nameOrigin: tripStop.TripStops[0].City.name,
-        nameDestiny:'',
-        value: tripStop.TripStops[0].PricesBetweenStops[0].price,
-    }
-    });
+    const result: ISearchTravelsUseCaseProtocol.Result[] = tripStops.map(
+      (travel): ISearchTravelsUseCaseProtocol.Result => {
+        let value = 0
+        let nameDestiny = ''
+        travel.TripStops.forEach(ts => {
+          if (ts.City.id === data.origin && !value) {
+            return ts.PricesBetweenStops.forEach(p => {
+             
+              if (p.idDestiny === data.destiny && !value) {
+                console.log('____===>', p);
+                value = p.price;
+                nameDestiny = p.City.name
+              }
+            });
+          }
+        });
+        return {
+          driver: travel.Driver.User.name,
+          vehicle: travel.Vechicle.description,
+          dateOfDeparture: travel.departureDate,
+          nameOrigin: travel.TripStops[0].City.name,
+          nameDestiny: nameDestiny,
+          value: value,
+        };
+      },
+    );
     return result;
   }
 }

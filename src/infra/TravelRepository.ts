@@ -27,7 +27,17 @@ export class TravelRepository implements ITravelProtocolRepository {
     });
   }
   async findById(id: string): Promise<any> {
-    return travel.findUnique({ where: { id } });
+    return travel.findUnique({ where: { id },select: {
+      arrivalDate: true,
+      departureDate: true,
+      Driver: true,
+      driverId: true,
+      Vechicle: true,
+      TripStops: true,
+      id: true,
+      Route: true,
+      
+    } });
   }
 
   async create(data: ICreateTravelProtocolRepository.Params): Promise<any> {
@@ -58,12 +68,12 @@ export class TravelRepository implements ITravelProtocolRepository {
     const result = await travel.findMany({
       where: {
         departureDate: {
-          lte: `${data.dateOfTravel}T00:00:00.000Z`,
-          gte: `${data.dateOfTravel}T23:59:59.000Z`,
+          lte: new Date(`${data.dateOfTravel}T23:59:59.000Z`),
+          gte: new Date(`${data.dateOfTravel}T00:00:00.000Z`),
         },
         TripStops: {
-          every: {
-            cityid: data.origin,
+          some: {
+            cityid: data.origin
           },
         },
       },
@@ -71,22 +81,34 @@ export class TravelRepository implements ITravelProtocolRepository {
         arrivalDate: true,
         departureDate: true,
         Route: true,
+        Driver: {
+          select: {
+            User: {
+              select: {
+                name: true,
+              }
+            },
+          }
+        },
         TripStops: {
           select: {
             City: true,
             tripStopOrder: true,
             PricesBetweenStops: {
-              where: {
-                idDestiny: data.destiny,
-              },
+              select: {
+                City: true,
+                price: true,
+                idDestiny: true,
+
+              }
             },
+
           },
         },
         Vechicle: true,
       },
     });
 
-    console.log(result);
     return result;
   }
 }

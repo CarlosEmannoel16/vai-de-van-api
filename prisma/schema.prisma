@@ -65,16 +65,17 @@ model State {
 }
 
 model City {
-  id            String      @id @default(uuid())
-  name          String      @unique
-  coordinates   String
-  State         State?      @relation(fields: [stateId], references: [id])
-  stateId       String?
-  RoutesDistiny Route[]     @relation("Destiny")
-  RouteOrigin   Route[]     @relation("Origin")
-  created_at    DateTime    @default(now())
-  update_at     DateTime    @default(now()) @updatedAt
-  TripStops     TripStops[] @relation("CityDestiny")
+  id                 String               @id @default(uuid())
+  name               String               @unique
+  coordinates        String
+  State              State?               @relation(fields: [stateId], references: [id])
+  stateId            String?
+  RoutesDistiny      Route[]              @relation("Destiny")
+  RouteOrigin        Route[]              @relation("Origin")
+  created_at         DateTime             @default(now())
+  update_at          DateTime             @default(now()) @updatedAt
+  TripStops          TripStops[]          @relation("CityDestiny")
+  PricesBetweenStops PricesBetweenStops[]
 }
 
 model Route {
@@ -99,6 +100,7 @@ model PricesBetweenStops {
   Payment    Payment[]
   Ticket     Ticket[]
   TripStops  TripStops @relation(fields: [tripStopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  City       City      @relation(fields: [idDestiny], references: [id])
 }
 
 model TripStops {

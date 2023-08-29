@@ -6,6 +6,7 @@ import {
   TripStops,
   Vehicle,
 } from '@prisma/client';
+import { Driver } from 'typeorm';
 
 export interface ISearchTravelProtocolRepository {
   search(
@@ -24,11 +25,20 @@ export namespace ISearchTravelProtocolRepository {
     departureDate: Date;
     arrivalDate: Date;
     Route: Route;
+    Driver: {
+      User: {
+        name: string;
+      };
+    };
     Vechicle: Vehicle;
     TripStops: {
       City: City;
       tripStopOrder: number;
-      PricesBetweenStops: PricesBetweenStops[];
+      PricesBetweenStops: {
+        City: City;
+        price: number;
+        idDestiny: string;
+      }[];
     }[];
-  }
+  };
 }

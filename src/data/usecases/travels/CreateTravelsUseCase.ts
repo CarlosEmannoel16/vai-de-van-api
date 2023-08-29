@@ -6,8 +6,6 @@ import { IGetByIdRouteProtocolRepository } from '@/infra/protocols/route/GetById
 import { ITravelProtocolRepository } from '@/infra/protocols/travel';
 import { ICreateTripStopsProtocolRepository } from '@/infra/protocols/tripStops/CreateTripStopsProtocolRepository';
 import { PricesBetweenStops, TripStops } from '@prisma/client';
-import { compareSync } from 'bcrypt';
-import { valid } from 'joi';
 import { v4 } from 'uuid';
 export class CreateTravels implements ICreateTravels {
   constructor(

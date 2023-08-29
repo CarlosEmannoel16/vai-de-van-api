@@ -1,7 +1,7 @@
 import { Travel } from "@prisma/client";
 
 export interface  ISearchTravelsUseCaseProtocol {
-    execute(data: ISearchTravelsUseCaseProtocol.Params):  Promise<ISearchTravelsUseCaseProtocol.Result | undefined> ;
+    execute(data: ISearchTravelsUseCaseProtocol.Params):  Promise<ISearchTravelsUseCaseProtocol.Result[] | undefined> ;
 }
 
 export namespace ISearchTravelsUseCaseProtocol{
@@ -16,6 +16,8 @@ export namespace ISearchTravelsUseCaseProtocol{
         nameOrigin: string;
         dateOfDeparture: Date;
         value: number;
-    }[]
+        driver: string
+        vehicle: string
+    }
 
 }

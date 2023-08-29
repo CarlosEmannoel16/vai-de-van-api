@@ -2,7 +2,7 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
 import routes from './routes';
-import config from './config/developmet'
+import config from './config/development'
 import { Server, Socket } from 'socket.io';
 import { createServer } from 'http';
 import morgan from 'morgan';
@@ -30,8 +30,8 @@ io.on('connection', (socket: Socket) => {
   socket.on('chat-message', (msg: string) => {
     io.emit('chat message', msg); 
   });
-});
-
+});   
+ 
 
 server.listen(config.server.port, () => {
   console.log(`Server started in port ${config.server.port} ✅🎃🚀🇧🇷`);

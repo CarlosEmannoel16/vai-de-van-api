@@ -103,7 +103,22 @@ export class UserRepository
   async getById(idUser: string): Promise<any> {
     return await prisma.user.findFirst({
       where: { id: idUser },
-      include: { Driver: true, Vehicle: true },
+      select: {
+          cpf: true,
+          date_of_birth: true,
+          Driver: true,
+          email: true,
+          name: true,
+          id: true,
+          password: true,
+          phone: true,
+          type: true,
+          Vehicle: true,
+          created_at: true,
+          update_at: true,
+      },
+    
+     
     });
   }
 

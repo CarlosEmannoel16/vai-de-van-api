@@ -12,6 +12,7 @@ export namespace IGetUserByIdProtocolRepository{
     User & {
       Driver: Driver[];
       Vehicle: Vehicle[];
+     
     }
 }
 
