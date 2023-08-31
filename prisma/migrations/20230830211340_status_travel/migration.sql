@@ -1,0 +1,5 @@
+-- CreateEnum
+CREATE TYPE "StatusTravel" AS ENUM ('EM_ANDAMENTO', 'CONCLUIDA', 'CANCELADA', 'DESABILITADA', 'ABERTA');
+
+-- AlterTable
+ALTER TABLE "Travel" ADD COLUMN     "status" "StatusTravel" NOT NULL DEFAULT 'ABERTA';

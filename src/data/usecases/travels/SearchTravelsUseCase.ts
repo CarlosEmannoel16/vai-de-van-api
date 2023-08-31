@@ -1,5 +1,6 @@
 import { ISearchTravelsUseCaseProtocol } from '@/domain/usecases/travels/SearchTravels';
 import { ITravelProtocolRepository } from '@/infra/protocols/travel';
+import { tr } from 'date-fns/locale';
 
 export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
   constructor(private readonly travelRepository: ITravelProtocolRepository) {}
@@ -7,35 +8,68 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
   async execute(
     data: ISearchTravelsUseCaseProtocol.Params,
   ): Promise<ISearchTravelsUseCaseProtocol.Result[] | undefined> {
-    console.log(data);
     const tripStops = await this.travelRepository.search(data);
-    console.log(tripStops);
-    const result: ISearchTravelsUseCaseProtocol.Result[] = tripStops.map(
-      (travel): ISearchTravelsUseCaseProtocol.Result => {
-        let value = 0
-        let nameDestiny = ''
-        travel.TripStops.forEach(ts => {
-          if (ts.City.id === data.origin && !value) {
-            return ts.PricesBetweenStops.forEach(p => {
-             
-              if (p.idDestiny === data.destiny && !value) {
-                console.log('____===>', p);
-                value = p.price;
-                nameDestiny = p.City.name
+    const result: ISearchTravelsUseCaseProtocol.Result[] = [];
+    tripStops.forEach(travel => {
+      let value = 0;
+      let nameDestiny = '';
+      let nameOrigin = '';
+      let amount_of_accents_free = travel.Vechicle.amount_of_accents;
+      let accentsTotal = travel.Vechicle.amount_of_accents;
+      let tripStopDestiny;
+      let ticketsSales
+      travel.TripStops.forEach(ts => {
+        //Pega a Parada correta
+        if (ts.City.id === data.origin && !value) {
+          const orderOrigin = ts.tripStopOrder;
+          if(travel.Tickets.length > 0) {
+          if (orderOrigin === 0) {
+            ticketsSales = travel.Tickets.length;
+            amount_of_accents_free = accentsTotal - ticketsSales;
+          } else {
+            travel.TripStops.forEach(tsDestiny => {
+              if (
+                tsDestiny.City.id === data.destiny &&
+                tsDestiny.tripStopOrder > orderOrigin
+              ) {
+                travel.Tickets.forEach(ticketsToOrigin => {
+                  if (
+                    ticketsToOrigin.PricesBetweenStops.TripStops.tripStopOrder >
+                    orderOrigin
+                  ) {
+                    ticketsSales+=1
+                  }
+                });
               }
             });
+            amount_of_accents_free = accentsTotal - ticketsSales;
           }
-        });
-        return {
+        }else{
+          amount_of_accents_free = accentsTotal
+        }
+
+          nameOrigin = ts.City.name;
+          return ts.PricesBetweenStops.forEach(p => {
+            if (p.idDestiny === data.destiny && !value) {
+              value = p.price;
+              nameDestiny = p.City.name;
+            }
+          });
+        }
+      });
+      if (nameDestiny || nameDestiny !== '')
+        result.push({
           driver: travel.Driver.User.name,
           vehicle: travel.Vechicle.description,
           dateOfDeparture: travel.departureDate,
-          nameOrigin: travel.TripStops[0].City.name,
+          nameOrigin,
           nameDestiny: nameDestiny,
           value: value,
-        };
-      },
-    );
-    return result;
+          quantity: amount_of_accents_free,
+        });
+    });
+
+    console.log(result); 
+    return result; 
   }
 }

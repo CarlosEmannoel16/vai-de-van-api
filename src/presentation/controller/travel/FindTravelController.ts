@@ -13,7 +13,6 @@ export class FindAllTravelController implements IController {
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
     try {
       const data = await this.listAllTravel.execute();
-      console.log(data);
       return res.status(200).json(data);
     } catch (error) {
       const { message, status, statusCode } =

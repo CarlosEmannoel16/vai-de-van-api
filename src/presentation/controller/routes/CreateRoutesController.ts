@@ -1,4 +1,4 @@
-import { ICreateRoute } from '@/domain/usecases/routes/CreateRoutes';
+import { ICreateRouteUseCase } from '@/domain/usecases/routes/CreateRoutes';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';
@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
 
 
 export class CreateRoutesController implements IController {
-  constructor(private readonly createRouterUseCase: ICreateRoute) {}
+  constructor(private readonly createRouterUseCase: ICreateRouteUseCase) {}
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
     try {
       const data = req.body;

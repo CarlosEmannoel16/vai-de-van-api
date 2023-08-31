@@ -1,6 +1,7 @@
 import { ICreateTravelProtocolRepository } from "./CreateTravelProtocolRepository";
 import { IDeleteTravelProtocolRepository } from "./DeleteTravelProtocolRepository";
 import { IFindAllTravelsProtocolRepository } from "./FindAllTravelsProtocolRepository";
+import { IFindTravelByIdRouteProtocolRepository } from "./FindTravelByIdRouteRepository";
 import { IFindTravelByIdProtocolRepository } from "./GetTravelByIdProtocolRepository";
 import { ISearchTravelProtocolRepository } from "./SearchTravelProtocolRepository";
 import { IUpdateTravelProtocolRepository } from "./UpdateTravelProtocolRepository";
@@ -11,4 +12,5 @@ IFindTravelByIdProtocolRepository,
 IUpdateTravelProtocolRepository, 
 IDeleteTravelProtocolRepository,
 ISearchTravelProtocolRepository,
-IFindAllTravelsProtocolRepository {}
+IFindAllTravelsProtocolRepository,
+IFindTravelByIdRouteProtocolRepository {}

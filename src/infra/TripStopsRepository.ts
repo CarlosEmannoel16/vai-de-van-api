@@ -11,8 +11,7 @@ export class TripStopsRepository implements ICreateTripStopsProtocolRepository {
     const result2 = await prisma.pricesBetweenStops.createMany({
       data: data2,
     });
-    console.log('result=>', result);
-    console.log('result2=>', result2);
+
 
     return result;
   }

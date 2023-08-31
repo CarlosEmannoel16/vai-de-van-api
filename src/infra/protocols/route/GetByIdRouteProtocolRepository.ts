@@ -1,7 +1,7 @@
+import { City, Route } from '@prisma/client';
+
 export interface IGetByIdRouteProtocolRepository {
-  getById: (
-    data: IGetByIdRouteProtocolRepository.Params,
-  ) => Promise<IGetByIdRouteProtocolRepository.Result>;
+  getById: (data: IGetByIdRouteProtocolRepository.Params) => Promise<IGetByIdRouteProtocolRepository.Result>;
 }
 
 export namespace IGetByIdRouteProtocolRepository {
@@ -16,5 +16,10 @@ export namespace IGetByIdRouteProtocolRepository {
     kmValue: string | null;
     originId: string;
     destinyId: string;
+    disabled: boolean;
+    Destiny: City;
+    Origin: City;
+    created_at: Date;
+    update_at: Date;
   };
 }

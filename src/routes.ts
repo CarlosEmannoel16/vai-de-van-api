@@ -29,6 +29,8 @@ import { makeGetVehicleByIdController } from './main/factories/controllers/Vehic
 import { makeUpdateVehicleController } from './main/factories/controllers/Vehicles/makeUpdateVehicleController';
 import { makeGetTravelByIdController } from './main/factories/controllers/Travel/makeGetTravelByIdController';
 import { makeSearchTravelClientController } from './main/factories/controllers/Travel/makeSearchTravelClientController';
+import { makeUpdateRouteController } from './main/factories/controllers/Route/makeUpdateRouteController';
+import { makeDashboardController } from './main/factories/controllers/Dashboard/makeDashboardController';
 
 const routes = Router();
 
@@ -60,13 +62,13 @@ routes
 routes.get('/route/:id', adpterRouter(makeGetByIdController()))
 routes.get('/route', adpterRouter(makeGetAllRouteController()))
 routes.post('/route', adpterRouter(makeCreateRouteController()))
-// routes.put('/route')
+ routes.put('/route', adpterRouter(makeUpdateRouteController()))
 // routes.delete('/route/:id')
 
 
 
 //Relatorios
-// routes.get('/report/routes/:idRouter')
+ routes.get('/dashboard', adpterRouter(makeDashboardController()))
 // routes.get('/report/routes/:idDriver')
 // routes.get('/report/routes/:idCity')
 // routes.get('/report/routes/all')

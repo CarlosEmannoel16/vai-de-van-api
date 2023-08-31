@@ -7,6 +7,13 @@ import { PrismaClient, Travel, TripStops } from '@prisma/client';
 
 const travel = new PrismaClient().travel;
 export class TravelRepository implements ITravelProtocolRepository {
+  async findByIdRoute(id: string): Promise<any> {
+    return travel.findMany({
+      where: {
+        routeId: id,
+      }
+    })
+  }
   async findAll(): Promise<IFindAllTravelsProtocolRepository.Params[]> {
     return travel.findMany({
       select: {
@@ -14,6 +21,22 @@ export class TravelRepository implements ITravelProtocolRepository {
         departureDate: true,
         description: true,
         arrivalDate: true,
+        TripStops: {
+          select: {
+            tripStopOrder: true,
+            City: {
+              select: {
+                name: true,
+              }
+            },
+            cityid: true,
+            id: true,
+          }
+        },
+        driverId: true,
+        idVehicle: true,
+        routeId: true,
+        status: true,
         Driver: {
           select: {
             id: true,
@@ -42,7 +65,6 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async create(data: ICreateTravelProtocolRepository.Params): Promise<any> {
-    console.log(data);
     return travel.create({
       data: {
         description: data.description,
@@ -92,6 +114,18 @@ export class TravelRepository implements ITravelProtocolRepository {
               }
             },
           }
+        },
+        Tickets: {
+          select:{
+            pricesBetweenStopsId: true,
+            PricesBetweenStops: {
+              select:{
+                TripStops: true
+
+              }
+            },
+          },
+
         },
         TripStops: {
           select: {

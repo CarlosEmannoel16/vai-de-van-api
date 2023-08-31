@@ -2,6 +2,7 @@ import {
   City,
   PricesBetweenStops,
   Route,
+  Ticket,
   Travel,
   TripStops,
   Vehicle,
@@ -25,6 +26,12 @@ export namespace ISearchTravelProtocolRepository {
     departureDate: Date;
     arrivalDate: Date;
     Route: Route;
+    Tickets: {
+      pricesBetweenStopsId: string;
+      PricesBetweenStops: {
+        TripStops: TripStops;
+      }
+    }[]
     Driver: {
       User: {
         name: string;

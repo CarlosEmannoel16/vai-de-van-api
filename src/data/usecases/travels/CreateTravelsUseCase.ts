@@ -45,7 +45,6 @@ export class CreateTravels implements ICreateTravels {
     data.tripStops.forEach(async tripStop => {
       if(tripStop.tripStopOrder !== 0 && tripStop.tripStopOrder !== 999 ){
        km +=  Number(tripStop.distanceFromLastStop) 
-       console.log('km=>', km);
       }
 
 
@@ -83,6 +82,8 @@ export class CreateTravels implements ICreateTravels {
         tripStopOrder: tripStopOrigin.tripStopOrder || index,
         update_at: new Date(),
         id: idTripStop,
+        distanceFromLastStop: Number(tripStopOrigin.distanceFromLastStop)
+
       });
       value = 0
       data.tripStops.forEach(tripStopDestiny => {

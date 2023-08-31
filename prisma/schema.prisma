@@ -16,6 +16,14 @@ enum StatusPayment {
   CANCELADO
 }
 
+enum StatusTravel {
+  EM_ANDAMENTO
+  CONCLUIDA
+  CANCELADA
+  DESABILITADA
+  ABERTA
+}
+
 enum StatusTicket {
   USADO
   CANCELADO
@@ -82,6 +90,7 @@ model Route {
   id         String   @id @default(uuid())
   name       String   @unique
   km         Int
+  disabled   Boolean  @default(false)
   kmValue    String?
   Origin     City     @relation(fields: [originId], references: [id], name: "Origin")
   originId   String
@@ -104,15 +113,16 @@ model PricesBetweenStops {
 }
 
 model TripStops {
-  id                 String               @id @default(uuid())
-  cityid             String
-  City               City                 @relation(fields: [cityid], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
-  travelId           String
-  Travel             Travel               @relation(fields: [travelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  tripStopOrder      Int
-  created_at         DateTime             @default(now())
-  update_at          DateTime             @default(now()) @updatedAt
-  PricesBetweenStops PricesBetweenStops[]
+  id                   String               @id @default(uuid())
+  cityid               String
+  City                 City                 @relation(fields: [cityid], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
+  travelId             String
+  Travel               Travel               @relation(fields: [travelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  tripStopOrder        Int
+  distanceFromLastStop Int                  @default(0)
+  created_at           DateTime             @default(now())
+  update_at            DateTime             @default(now()) @updatedAt
+  PricesBetweenStops   PricesBetweenStops[]
 }
 
 model Vehicle {
@@ -130,19 +140,20 @@ model Vehicle {
 }
 
 model Travel {
-  id            String      @id @default(uuid())
-  Vechicle      Vehicle     @relation(fields: [idVehicle], references: [id])
-  description   String      @default("Viagem Padrao")
+  id            String       @id @default(uuid())
+  Vechicle      Vehicle      @relation(fields: [idVehicle], references: [id])
+  description   String       @default("Viagem Padrao")
   idVehicle     String
-  Route         Route       @relation(fields: [routeId], references: [id])
+  Route         Route        @relation(fields: [routeId], references: [id])
   routeId       String
   Payment       Payment[]
-  Driver        Driver?     @relation(fields: [driverId], references: [idUser])
+  Driver        Driver?      @relation(fields: [driverId], references: [idUser])
   driverId      String?
   departureDate DateTime
   arrivalDate   DateTime
-  created_at    DateTime    @default(now())
-  update_at     DateTime    @default(now()) @updatedAt
+  status        StatusTravel @default(ABERTA)
+  created_at    DateTime     @default(now())
+  update_at     DateTime     @default(now()) @updatedAt
   TripStops     TripStops[]
   Tickets       Ticket[]
 }

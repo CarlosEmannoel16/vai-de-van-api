@@ -2,13 +2,28 @@ import { ICreateRouteProtocolRepository } from './protocols/route/CreateRoutePro
 import { PrismaClient, Route } from '@prisma/client';
 import { IGetAllRouteProtocolRepository } from './protocols/route/GetAllRouteProtocolRepository';
 import { IGetByIdRouteProtocolRepository } from './protocols/route/GetByIdRouteProtocolRepository';
+import { IUpdateRouteProtocolRepository } from './protocols/route/UpdateRouteProtocolRepository';
+import { IRouteRepository } from './protocols/route';
 const prisma = new PrismaClient();
 export class RouteRepository
   implements
-    IGetAllRouteProtocolRepository,
-    IGetByIdRouteProtocolRepository,
-    ICreateRouteProtocolRepository
+  IRouteRepository
 {
+  async update(data: IUpdateRouteProtocolRepository.Params): Promise<Route>{
+   return prisma.route.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        km: data.km,
+        kmValue: data.kmValue,
+        name: data.name,
+        originId: data.originId,
+        destinyId: data.destinyId,
+        update_at: new Date(),
+      }
+    })
+  };
   async getById(
     data: IGetByIdRouteProtocolRepository.Params,
   ): Promise<IGetByIdRouteProtocolRepository.Result> {
@@ -23,6 +38,11 @@ export class RouteRepository
         kmValue: true,
         originId: true,
         destinyId: true,
+        Destiny: true,
+        Origin: true,
+        disabled: true,
+        created_at: true,
+        update_at: true,
       },
     });
     return route;
@@ -55,5 +75,9 @@ export class RouteRepository
         kmValue,
       },
     });
+  }
+
+  async getCountAll(): Promise<number> {
+   return prisma.route.count();
   }
 }

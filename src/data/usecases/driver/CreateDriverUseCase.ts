@@ -9,7 +9,6 @@ export class CreateDriverUseCase implements ICreateDriver {
     private readonly getUser: IGetUserByParamsProtocolRepository,
   ) {}
   async create(data: ICreateDriver.resquest): Promise<User> {
-    console.log(data)
     const existsCpf = await this.getUser.getUserByParams({ cpf: data.cpf })
     const existsEmail = await this.getUser.getUserByParams({ email: data.email })
 

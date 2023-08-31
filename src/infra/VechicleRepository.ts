@@ -77,4 +77,8 @@ export class VechicleRepository
       }
     });
   }
+
+  async countAll(): Promise<number> {
+    return prisma.vehicle.count();
+  }
 }

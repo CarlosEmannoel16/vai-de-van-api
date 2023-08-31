@@ -1,8 +1,8 @@
-export interface ICreateRoute {
-    execute: (data: ICreateRoute.Params) => Promise<ICreateRoute.Result>;
+export interface ICreateRouteUseCase {
+    execute: (data: ICreateRouteUseCase.Params) => Promise<ICreateRouteUseCase.Result>;
   }
   
-  export namespace ICreateRoute {
+  export namespace ICreateRouteUseCase {
     export type Params = {
       destinyId: string,
       km: number,
