@@ -6,7 +6,7 @@ import { Route } from '@prisma/client';
 export class UpdateRouteUseCase implements IUpdateRoute {
   constructor(private readonly updateRoute: IUpdateRouteProtocolRepository) {}
   async execute(data: Route): Promise<Route> {
-
+ 
     const route = await this.updateRoute.update({...data});
     return route;
   }

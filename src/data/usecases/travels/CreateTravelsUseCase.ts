@@ -1,7 +1,7 @@
 import { InvalidGenericError } from '@/data/errors/InvalidGenericError';
 import { BaseError } from '@/data/errors/baseError';
 import { ICreateTravels } from '@/domain/usecases/travels/CreateTravels';
-import { IGetAllCitiesRepository } from '@/infra/protocols/city/getAllCitisRepository';
+import { IGetAllCitiesRepository } from '@/infra/protocols/city/GetAllCitiesRepository';
 import { IGetByIdRouteProtocolRepository } from '@/infra/protocols/route/GetByIdRouteProtocolRepository';
 import { ITravelProtocolRepository } from '@/infra/protocols/travel';
 import { ICreateTripStopsProtocolRepository } from '@/infra/protocols/tripStops/CreateTripStopsProtocolRepository';
@@ -43,23 +43,25 @@ export class CreateTravels implements ICreateTravels {
 
     let km = 0;
     data.tripStops.forEach(async tripStop => {
-      if(tripStop.tripStopOrder !== 0 && tripStop.tripStopOrder !== 999 ){
-       km +=  Number(tripStop.distanceFromLastStop) 
+      if (tripStop.tripStopOrder !== 0 && tripStop.tripStopOrder !== 999) {
+        km += Number(tripStop.distanceFromLastStop);
       }
 
-
-      if(tripStop.tripStopOrder === 999) {
-      if(km >= kmTotal) throw new InvalidGenericError('A soma das paradas deve ser igual a km total da rota')
-       km +=  (kmTotal - km)
+      if (tripStop.tripStopOrder === 999) {
+        if (km >= kmTotal)
+          throw new InvalidGenericError(
+            'A soma das paradas deve ser igual a km total da rota',
+          );
+        km += kmTotal - km;
       }
-      if(km > kmTotal) throw new InvalidGenericError('A soma das paradas deve ser igual a km total da rota')
-
+      if (km > kmTotal)
+        throw new InvalidGenericError(
+          'A soma das paradas deve ser igual a km total da rota',
+        );
     });
 
-
-
-
     let kmResponse = 0;
+    let kmAcc = 0;
     data.tripStops.map(tripStop => {
       if (tripStop.distanceFromLastStop)
         kmResponse = Number(tripStop?.distanceFromLastStop) + kmResponse;
@@ -75,6 +77,14 @@ export class CreateTravels implements ICreateTravels {
         Number(distanciaTotal) -
         Number(tripStopOrigin.distanceFromLastStop || 0);
       const idTripStop = v4();
+      kmAcc += Number(tripStopOrigin?.distanceFromLastStop || 0);
+      console.log(kmAcc);
+      const a =
+        tripStopOrigin.tripStopOrder === 0
+          ? 0
+          : tripStopOrigin.tripStopOrder === 999
+          ? Number(route.km) - Number(kmAcc)
+          : tripStopOrigin.distanceFromLastStop;
       DTOTripStops.push({
         cityid: tripStopOrigin.cityIdFromTo,
         travelId: resultTravel.id,
@@ -82,24 +92,25 @@ export class CreateTravels implements ICreateTravels {
         tripStopOrder: tripStopOrigin.tripStopOrder || index,
         update_at: new Date(),
         id: idTripStop,
-        distanceFromLastStop: Number(tripStopOrigin.distanceFromLastStop)
-
+        distanceFromLastStop: Number(a),
       });
-      value = 0
+      value = 0;
       data.tripStops.forEach(tripStopDestiny => {
-        
         if (
           tripStopOrigin.name === tripStopDestiny.name ||
           tripStopDestiny.tripStopOrder < tripStopOrigin.tripStopOrder
         )
           return;
 
-          const lastTripstopKmValue = value
+        const lastTripstopKmValue = value;
 
-          value = value + Number(tripStopDestiny.distanceFromLastStop || distanciaTotal)
-       
-          if(tripStopDestiny.tripStopOrder === 999) value = value - lastTripstopKmValue
-  
+        value =
+          value +
+          Number(tripStopDestiny.distanceFromLastStop || distanciaTotal);
+
+        if (tripStopDestiny.tripStopOrder === 999)
+          value = value - lastTripstopKmValue;
+
         DTOPricesBetweenStops.push({
           idDestiny: tripStopDestiny.cityIdFromTo,
           price: value * Number(route.kmValue),

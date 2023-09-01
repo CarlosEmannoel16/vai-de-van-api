@@ -74,7 +74,8 @@ model State {
 
 model City {
   id                 String               @id @default(uuid())
-  name               String               @unique
+  name               String
+  disabled           Boolean              @default(false)
   coordinates        String
   State              State?               @relation(fields: [stateId], references: [id])
   stateId            String?

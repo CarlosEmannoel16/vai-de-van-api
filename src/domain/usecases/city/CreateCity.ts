@@ -1,5 +1,5 @@
 import { City } from "@prisma/client";
 
-export interface IGetAllCitiesUseCase {
+export interface ICreateCityUseCase {
     execute(): Promise<City[]>
 }
