@@ -88,18 +88,19 @@ model City {
 }
 
 model Route {
-  id         String   @id @default(uuid())
-  name       String   @unique
+  id         String      @id @default(uuid())
+  name       String      @unique
   km         Int
-  disabled   Boolean  @default(false)
+  disabled   Boolean     @default(false)
   kmValue    String?
-  Origin     City     @relation(fields: [originId], references: [id], name: "Origin")
+  Origin     City        @relation(fields: [originId], references: [id], name: "Origin")
   originId   String
   destinyId  String
-  Destiny    City     @relation(fields: [destinyId], references: [id], "Destiny")
+  Destiny    City        @relation(fields: [destinyId], references: [id], "Destiny")
   Travel     Travel[]
-  created_at DateTime @default(now())
-  update_at  DateTime @default(now()) @updatedAt
+  created_at DateTime    @default(now())
+  update_at  DateTime    @default(now()) @updatedAt
+  TripStops  TripStops[]
 }
 
 model PricesBetweenStops {
@@ -117,13 +118,13 @@ model TripStops {
   id                   String               @id @default(uuid())
   cityid               String
   City                 City                 @relation(fields: [cityid], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
-  travelId             String
-  Travel               Travel               @relation(fields: [travelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   tripStopOrder        Int
   distanceFromLastStop Int                  @default(0)
   created_at           DateTime             @default(now())
   update_at            DateTime             @default(now()) @updatedAt
   PricesBetweenStops   PricesBetweenStops[]
+  Route                Route?               @relation(fields: [routeId], references: [id])
+  routeId              String?
 }
 
 model Vehicle {
@@ -155,7 +156,6 @@ model Travel {
   status        StatusTravel @default(ABERTA)
   created_at    DateTime     @default(now())
   update_at     DateTime     @default(now()) @updatedAt
-  TripStops     TripStops[]
   Tickets       Ticket[]
 }
 

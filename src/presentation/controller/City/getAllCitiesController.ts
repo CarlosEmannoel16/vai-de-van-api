@@ -8,7 +8,7 @@ export class GetAllCitiesController implements IController {
   constructor(private readonly getAllCities: GetAllCitiesUseCase) {}
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
     try {
-      const data = await this.getAllCities.hadle();
+      const data = await this.getAllCities.execute();
       return res.status(200).json(data);
     } catch (error) {
       const { message, status, statusCode } =

@@ -1,2 +1,2 @@
-export * from './adpterMiddlewaredRouter'
-export * from './adpterRouter'
+export * from './adapterMiddlewaredRouter'
+export * from './adapterRouter'
