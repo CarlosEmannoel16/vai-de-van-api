@@ -1,31 +1,22 @@
 import { Prisma, PrismaClient, User } from '@prisma/client';
 import {
-  IGetUserByIdProtocolRepository,
-  ICreateUserProtocolRepository,
-  IGetUserByCpfProtocolRepository,
-  IGetUserByNameProtocolRepository,
-  IGetUserByEmailProtocolRepository,
-  IGetAllUsersProtocolRepository,
-  IDeleteUserProtocolRepository,
+IUserProtocolRepository
 } from '@/infra/protocols';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
 import { UserModel } from '@/domain/models';
 import { ICreateDriverProtocolRepository } from '@infra/protocols/drivers';
 import { IGetUserByParamsProtocolRepository } from './protocols/user/GetUserByParamsProtocolRepository';
+import { ICreateUserProtocolRepository } from './protocols/user/CreateUserProtocolRepository';
+import { IGetUserByNameProtocolRepository } from './protocols/user/GetUserByNameProtocolRepository';
+import { IGetUserByCpfProtocolRepository } from './protocols/user/GetUserByCpfProtocolRepository';
+import { IGetUserByEmailProtocolRepository } from './protocols/user/GetUserByEmailProtocolRepository';
+import { IGetAllUsersProtocolRepository } from './protocols/user/GetAllUsersProtocolRepository';
 
 const prisma = new PrismaClient();
 export class UserRepository
   implements
-    ICreateUserProtocolRepository,
-    IGetUserByIdProtocolRepository,
-    IGetUserByNameProtocolRepository,
-    IGetUserByCpfProtocolRepository,
-    IGetUserByEmailProtocolRepository,
-    IGetAllUsersProtocolRepository,
-    ICreateDriverProtocolRepository,
-    IUpdateUserProtocolRepository,
-    IDeleteUserProtocolRepository,
-    IGetUserByParamsProtocolRepository
+  IUserProtocolRepository
+   
 {
   async getUserByParams(data: IGetUserByParamsProtocolRepository.Params): Promise<User> {
    return prisma.user.findFirst({where: data});

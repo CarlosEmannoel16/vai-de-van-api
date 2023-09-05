@@ -112,7 +112,7 @@ export class TravelRepository implements ITravelProtocolRepository {
               select: {
                 name: true,
               }
-            },
+            }, 
           }
         },
         Tickets: {

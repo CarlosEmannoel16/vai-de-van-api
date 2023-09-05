@@ -44,11 +44,11 @@ routes
 routes
   //.use(adpterMiddleware(makeMiddlewareAuth()))
   .post('/user/upload/profile', multer({storage: upload.storage}).single('avatar'), adapterRouter(makeUpdateProfileUserController()))
+  .post('/user/driver', adapterRouter(makeCreateDriverController()))
   .get('/user/:id', adapterRouter(makeGetUserByIdController()))
   .get('/users',  adapterRouter(makeGetAllUserController()))
   .post('/user', adapterRouter(makeCreateUserController()))
   .delete('/user/:id', adapterRouter(makeDeleteUserController()))
-  .post('/user/driver', adapterRouter(makeCreateDriverController()))
   .put('/user/driver', adapterRouter(makeUpdateUserController()))
   .post('/vehicle', adapterRouter(makeCreateVehicleController()) )
   .get('/vehicle',  adapterRouter(makeGetAllVehiclesController()))

@@ -8,12 +8,11 @@ export class CreateDriverUseCase implements ICreateDriver {
     private readonly createDriver: ICreateDriverProtocolRepository,
     private readonly getUser: IGetUserByParamsProtocolRepository,
   ) {}
-  async create(data: ICreateDriver.resquest): Promise<User> {
+  async create(data: ICreateDriver.request): Promise<User> {
     const existsCpf = await this.getUser.getUserByParams({ cpf: data.cpf })
-    const existsEmail = await this.getUser.getUserByParams({ email: data.email })
-
-
     if(existsCpf) throw new Error('CPF já cadastrado')
+
+    const existsEmail = await this.getUser.getUserByParams({ email: data.email })
     if(existsEmail) throw new Error('Email já cadastrado')
    
 

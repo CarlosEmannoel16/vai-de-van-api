@@ -1,22 +1,19 @@
 import { InvalidGenericError } from '@/data/errors/InvalidGenericError';
 import {
-  ICreateUserProtocolRepository,
-  IGetUserByCpfProtocolRepository,
-  IGetUserByEmailProtocolRepository,
+
+  IUserProtocolRepository,
 } from '@/infra/protocols/user';
 import { ICreateUser } from '@/domain/usecases/user/CreateUser';
 
 export class CreateUserUseCase implements ICreateUser {
   constructor(
-    private readonly createUserRepository: ICreateUserProtocolRepository,
-    private readonly getUserByCPFRepository: IGetUserByCpfProtocolRepository,
-    private readonly getUserByEmailRepository: IGetUserByEmailProtocolRepository,
+    private readonly userRepository: IUserProtocolRepository,
   ) {}
 
   async execute(data: ICreateUser.Params): Promise<ICreateUser.Result> {    
-    const existsUser = await this.getUserByCPFRepository.getByCpf(data.cpf);
+    const existsUser = await this.userRepository.getByCpf(data.cpf);
     const existsUserWithEmail =
-      await this.getUserByEmailRepository.getUserByEmail(data.email);
+      await this.userRepository.getUserByEmail(data.email);
     
     if (existsUserWithEmail.email)
       throw new InvalidGenericError('E-mail Já cadastrado');
@@ -32,7 +29,7 @@ export class CreateUserUseCase implements ICreateUser {
       password,
       date_of_birth,
     } = data;
-    const user = await this.createUserRepository.create({
+    const user = await this.userRepository.create({
       cpf,
       name,
       password,
