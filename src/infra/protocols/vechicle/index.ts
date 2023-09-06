@@ -1,14 +1,16 @@
-import { IAssociateAndCreateVechileDriverRepository } from './AssociateAndCrreateVechicleDriverRepository';
-import { IAssociateVechileDriverRepository } from './AssociateVechileDriverRepository';
-import { ICreateVechileProtocolRepository } from './CreateVechileProtocolRepository';
+import { IAssociateAndCreateVehicleDriverRepository } from './AssociateAndCrreateVechicleDriverRepository';
+import { IAssociateVehicleDriverRepository } from './AssociateVechileDriverRepository';
+import { ICreateVehicleProtocolRepository } from './CreateVechileProtocolRepository';
 import { IDeleteVehicleRepository } from './DeleteVehicleRepository';
-import { GetVechicleByIdProtocolRepository } from './GetVechicleByIdProtocolRepository';
-import { GetVechicleProtocolRepository } from './GetVechileProtocolRepository';
+import { GetVehicleByIdProtocolRepository } from './GetVechicleByIdProtocolRepository';
+import { GetVehicleProtocolRepository } from './GetVechileProtocolRepository';
+import { GetVehicleByParamsProtocolRepository } from './GetVehicleByParamsProtocolRepository';
 
 export interface IVehicleProtocolRepository
-  extends IAssociateAndCreateVechileDriverRepository,
-    IAssociateVechileDriverRepository,
-    ICreateVechileProtocolRepository,
-    GetVechicleByIdProtocolRepository,
-    GetVechicleProtocolRepository,
-    IDeleteVehicleRepository {}
+  extends IAssociateAndCreateVehicleDriverRepository,
+    IAssociateVehicleDriverRepository,
+    ICreateVehicleProtocolRepository,
+    GetVehicleByIdProtocolRepository,
+    GetVehicleProtocolRepository,
+    IDeleteVehicleRepository,
+    GetVehicleByParamsProtocolRepository {}

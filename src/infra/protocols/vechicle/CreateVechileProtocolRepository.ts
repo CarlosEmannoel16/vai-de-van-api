@@ -1,12 +1,12 @@
 import { Vehicle } from "@prisma/client";
 
-export interface ICreateVechileProtocolRepository {
+export interface ICreateVehicleProtocolRepository {
   create(
-    data: ICreateVechileProtocolRepository.params,
+    data: ICreateVehicleProtocolRepository.params,
   ): Promise<Vehicle>;
 }
 
-export namespace ICreateVechileProtocolRepository {
+export namespace ICreateVehicleProtocolRepository {
   export type params = {
     amount_of_accents: number;
     plate: string;

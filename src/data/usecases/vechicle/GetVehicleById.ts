@@ -1,8 +1,8 @@
-import { GetVechicleByIdProtocolRepository } from '@/infra/protocols/vechicle/GetVechicleByIdProtocolRepository';
+import { GetVehicleByIdProtocolRepository } from '@/infra/protocols/vechicle/GetVechicleByIdProtocolRepository';
 
 export class GetVehicleByIdUseCase {
   constructor(
-    private readonly getVehicleById: GetVechicleByIdProtocolRepository,
+    private readonly getVehicleById: GetVehicleByIdProtocolRepository,
   ) {}
 
   execute(id: string) {

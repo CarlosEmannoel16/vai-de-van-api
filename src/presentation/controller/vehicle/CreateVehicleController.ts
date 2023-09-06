@@ -1,4 +1,4 @@
-import { ICreateVechicle } from '@/domain/usecases/vechicle/CreateVechicleUseCase';
+import { ICreateVehicle } from '@/domain/usecases/vechicle/CreateVechicleUseCase';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { ResponseStatus } from '@/presentation/utils/response';
@@ -6,7 +6,7 @@ import { IResponse } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 
 export class CreateVehicleController implements IController {
-  constructor(private readonly createVehicleUseCase: ICreateVechicle) {}
+  constructor(private readonly createVehicleUseCase: ICreateVehicle) {}
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
     try {
       const result = await this.createVehicleUseCase.execute(req.body);

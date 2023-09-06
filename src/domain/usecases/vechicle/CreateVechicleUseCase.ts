@@ -1,10 +1,10 @@
 import { Vehicle } from "@prisma/client";
 
-export interface ICreateVechicle {
-    execute(data: ICreateVechicle.Params): Promise<Vehicle>;
+export interface ICreateVehicle {
+    execute(data: ICreateVehicle.Params): Promise<Vehicle>;
   }
   
-  export namespace ICreateVechicle {
+  export namespace ICreateVehicle {
     export type Params = {
         amount_of_accents: number;
         plate: string;

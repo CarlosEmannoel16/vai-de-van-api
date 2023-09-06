@@ -1,5 +1,5 @@
 import { Vehicle } from "@prisma/client"
 
-export interface GetVechicleProtocolRepository{
+export interface GetVehicleProtocolRepository{
     getAll(): Promise<Vehicle[]>
 }

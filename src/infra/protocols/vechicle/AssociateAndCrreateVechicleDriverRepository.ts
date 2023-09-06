@@ -1,10 +1,10 @@
 import { Vehicle } from "@prisma/client";
 
-export interface IAssociateAndCreateVechileDriverRepository {
-  associateAndCreate(data: IAssociateAndCreateVechileDriverRepository.Params): Promise<Vehicle>;
+export interface IAssociateAndCreateVehicleDriverRepository {
+  associateAndCreate(data: IAssociateAndCreateVehicleDriverRepository.Params): Promise<Vehicle>;
 }
 
-export namespace IAssociateAndCreateVechileDriverRepository {
+export namespace IAssociateAndCreateVehicleDriverRepository {
 
   export type Params = {
     amount_of_accents: number;

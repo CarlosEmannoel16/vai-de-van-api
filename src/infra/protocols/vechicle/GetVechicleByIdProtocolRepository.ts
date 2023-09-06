@@ -1,7 +1,7 @@
-export interface GetVechicleByIdProtocolRepository{
-    getById(id: string): Promise<GetVechicleByIdProtocolRepository.Result>
+export interface GetVehicleByIdProtocolRepository{
+    getById(id: string): Promise<GetVehicleByIdProtocolRepository.Result>
 }
 
-export namespace GetVechicleByIdProtocolRepository {
+export namespace GetVehicleByIdProtocolRepository {
     export type Result = {}
 }
