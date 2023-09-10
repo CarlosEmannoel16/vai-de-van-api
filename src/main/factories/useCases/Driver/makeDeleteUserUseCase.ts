@@ -1,7 +1,7 @@
 import { DeleteUserById } from "@/data/usecases/user";
 import { IDeleteUser } from "@/domain/usecases/user/DeleteUser";
-import { makeUserRepository } from "../../repositories/makeUserRepositories";
+import { UserRepository } from "@/infra/UserRepository";
 
 export const makeDeleteUserUseCase = (): IDeleteUser =>{
-    return new DeleteUserById(makeUserRepository(), makeUserRepository())
+    return new DeleteUserById(new UserRepository())
 }

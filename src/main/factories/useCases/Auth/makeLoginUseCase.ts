@@ -1,7 +1,6 @@
-import { IAuthLogin } from "@/infra/protocols/auth/AuthLogin";
 import {AuthLogin} from '@/data/usecases/auth/AuthLogin'
-import {makeUserRepository} from '../../repositories/makeUserRepositories'
+import { UserRepository } from "@/infra/UserRepository";
 
-export const makeLoginUseCase = (): IAuthLogin=>{
-    return new AuthLogin(makeUserRepository())
+export const makeLoginUseCase = ()=>{
+    return new AuthLogin(new UserRepository())
 }

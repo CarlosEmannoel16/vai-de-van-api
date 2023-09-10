@@ -1,17 +1,16 @@
 import { InvalidGenericError } from "@/data/errors/InvalidGenericError";
 import { IUpdateUser } from "@/domain/usecases/user/UpdateUser";
-import { IGetUserByIdProtocolRepository } from "@/infra/protocols";
+import { IUserProtocolRepository } from "@/infra/protocols";
 
 import { IUpdateUserProtocolRepository } from "@/infra/protocols/user/UpdateUserProtocolRepository";
 
 export class UpdateUserUseCase implements IUpdateUser {
     constructor(
-        private readonly updateUserRepository: IUpdateUserProtocolRepository,
-        private readonly getUserByIdRepository: IGetUserByIdProtocolRepository
+        private readonly userRepository: IUserProtocolRepository,
     ) { }
 
     async execute(data: IUpdateUser.Params): Promise<IUpdateUser.Result> {
-        const userExist = await this.getUserByIdRepository.getById(data.id);
+        const userExist = await this.userRepository.getById(data.id);
 
         if (!userExist.id) throw new InvalidGenericError('Usuário não encontrado');
         
@@ -28,7 +27,7 @@ export class UpdateUserUseCase implements IUpdateUser {
             cnhExpirationDate,
         } = data;
 
-        const user = await this.updateUserRepository.update({
+        const user = await this.userRepository.update({
             id,
             cpf,
             name,

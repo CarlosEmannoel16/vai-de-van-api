@@ -1,6 +1,6 @@
 import { FindAllVehiclesUseCase } from "@/data/usecases/vechicle/FindAllVehicles";
-import { VechicleRepository } from "@/infra/VechicleRepository";
+import { VehicleRepository } from "@/infra/VehicleRepository";
 
 export const makeGetAllVehiclesUseCase = () => {
-    return new FindAllVehiclesUseCase(new VechicleRepository());
+    return new FindAllVehiclesUseCase( new VehicleRepository());
 }

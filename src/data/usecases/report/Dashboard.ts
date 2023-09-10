@@ -1,7 +1,7 @@
 import { IDashboardUseCase } from '@/domain/usecases/dashboard/DashboardInterface';
 import { RouteRepository } from '@/infra/RouteRepository';
 import { TravelRepository } from '@/infra/TravelRepository';
-import { VechicleRepository } from '@/infra/VechicleRepository';
+import { VechicleRepository } from '@/infra/VehicleRepository';
 
 export class DashboardUseCase  implements IDashboardUseCase{
   constructor(

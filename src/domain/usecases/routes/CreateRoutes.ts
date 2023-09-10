@@ -1,3 +1,5 @@
+import { TripStops } from "@prisma/client";
+
 export interface ICreateRouteUseCase {
     execute: (data: ICreateRouteUseCase.Params) => Promise<ICreateRouteUseCase.Result>;
   }
@@ -5,10 +7,11 @@ export interface ICreateRouteUseCase {
   export namespace ICreateRouteUseCase {
     export type Params = {
       destinyId: string,
+      originId :string
       km: number,
       name: string,
-      originId :string
       kmValue: string
+      TripStops: TripStops[]
     };
   
     export type Result = {

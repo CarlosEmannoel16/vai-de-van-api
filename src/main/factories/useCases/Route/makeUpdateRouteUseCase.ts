@@ -1,6 +1,6 @@
 import { UpdateRouteUseCase } from "@/data/usecases/routes/UpdateRoutesUseCase";
-import { makeRoutesRepositories } from "../../repositories/makeRouteRepositories";
+import { RouteRepository } from "@/infra/RouteRepository";
 
 export const makeUpdateRouteUseCase = () => {
-    return new UpdateRouteUseCase(makeRoutesRepositories());
+    return new UpdateRouteUseCase(new RouteRepository());
 }

@@ -1,7 +1,8 @@
-import { CreateVechicleUseCase } from "@/data/usecases/vechicle/CreateVechicle"
-import { makeVehicleRepository } from "../../repositories/makeVehicleRepository"
+import { CreateVehicleUseCase } from "@/data/usecases/vechicle/CreateVechicle"
+import { UserRepository } from "@/infra/UserRepository"
+import { VehicleRepository } from "@/infra/VehicleRepository"
 
 export const makeCreateVehicleUseCase = ()=>{
-    return new CreateVechicleUseCase(makeVehicleRepository())
+    return new CreateVehicleUseCase(new VehicleRepository(), new UserRepository())
 }
 

@@ -21,18 +21,6 @@ export class TravelRepository implements ITravelProtocolRepository {
         departureDate: true,
         description: true,
         arrivalDate: true,
-        TripStops: {
-          select: {
-            tripStopOrder: true,
-            City: {
-              select: {
-                name: true,
-              }
-            },
-            cityid: true,
-            id: true,
-          }
-        },
         driverId: true,
         idVehicle: true,
         routeId: true,
@@ -57,7 +45,6 @@ export class TravelRepository implements ITravelProtocolRepository {
       Driver: true,
       driverId: true,
       Vechicle: true,
-      TripStops: true,
       id: true,
       Route: true,
       
@@ -96,11 +83,6 @@ export class TravelRepository implements ITravelProtocolRepository {
           lte: new Date(`${data.dateOfTravel}T23:59:59.000Z`),
           gte: new Date(`${data.dateOfTravel}T00:00:00.000Z`),
         },
-        TripStops: {
-          some: {
-            cityid: data.origin
-          },
-        },
       },
       select: {
         arrivalDate: true,
@@ -126,21 +108,6 @@ export class TravelRepository implements ITravelProtocolRepository {
             },
           },
 
-        },
-        TripStops: {
-          select: {
-            City: true,
-            tripStopOrder: true,
-            PricesBetweenStops: {
-              select: {
-                City: true,
-                price: true,
-                idDestiny: true,
-
-              }
-            },
-
-          },
         },
         Vechicle: true,
       },

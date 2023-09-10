@@ -1,7 +1,7 @@
 import { GetAllRoutesUseCase } from "@/data/usecases/routes/GetAllRouterUseCase";
 import { IGetAllRoutes } from "@/domain/usecases/routes/GetAllRoutes";
-import { makeRoutesRepositories } from "../../repositories/makeRouteRepositories";
+import { RouteRepository } from "@/infra/RouteRepository";
 
 export const makeGetAllRoutesUseCase = (): IGetAllRoutes => {
-    return new GetAllRoutesUseCase(makeRoutesRepositories());
+    return new GetAllRoutesUseCase(new RouteRepository());
 }

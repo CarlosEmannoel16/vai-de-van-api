@@ -1,6 +1,6 @@
 import { UpdateUserUseCase } from '@/data/usecases/user/UpdateUserUseCase';
 import { IUpdateUser } from '@/domain/usecases/user/UpdateUser';
-import { makeUserRepository } from '../../repositories/makeUserRepositories';
+import { UserRepository } from '@/infra/UserRepository';
 export const makeUpdateUserUseCase = (): IUpdateUser => {
-  return new UpdateUserUseCase(makeUserRepository(), makeUserRepository());
+  return new UpdateUserUseCase(new UserRepository());
 };

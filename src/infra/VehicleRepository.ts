@@ -10,7 +10,7 @@ import { IAssociateVehicleDriverRepository } from './protocols/vechicle/Associat
 
 const prisma = new PrismaClient();
 
-export default class VehicleRepository
+export  class VehicleRepository
   implements
   IVehicleProtocolRepository
 {

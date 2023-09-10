@@ -38,14 +38,5 @@ export namespace ISearchTravelProtocolRepository {
       };
     };
     Vechicle: Vehicle;
-    TripStops: {
-      City: City;
-      tripStopOrder: number;
-      PricesBetweenStops: {
-        City: City;
-        price: number;
-        idDestiny: string;
-      }[];
-    }[];
   };
 }

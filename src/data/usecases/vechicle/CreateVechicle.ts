@@ -1,12 +1,11 @@
 import { ICreateVehicle } from '@/domain/usecases/vechicle/CreateVechicleUseCase';
 import { IUserProtocolRepository } from '@/infra/protocols';
 import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle';
-import { ICreateVehicleProtocolRepository } from '@/infra/protocols/vechicle/CreateVechileProtocolRepository';
 import { Vehicle } from '@prisma/client';
 
 export class CreateVehicleUseCase implements ICreateVehicle {
   constructor(
-    private vehicleRepository: IVehicleProtocolRepository,
+    private readonly vehicleRepository: IVehicleProtocolRepository,
     private readonly userRepository: IUserProtocolRepository,
   ) {}
   async execute(data: ICreateVehicle.Params): Promise<Vehicle> {

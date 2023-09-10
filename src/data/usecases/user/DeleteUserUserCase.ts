@@ -1,11 +1,14 @@
-import { IDeleteUserProtocolRepository, IGetUserByIdProtocolRepository } from '@/infra/protocols';
+
 import { IDeleteUser } from '@/domain/usecases/user/DeleteUser';
 import { UserNotFoundError } from '@/data/errors/UserNotFound';
+import { IUserProtocolRepository } from '@/infra/protocols';
 export class DeleteUserById implements IDeleteUser {
-  constructor(private readonly deteUserById: IDeleteUserProtocolRepository, private readonly getUserById: IGetUserByIdProtocolRepository) {}
+  constructor(
+    private readonly userRepository: IUserProtocolRepository,
+  ) {}
   async execute(id: string): Promise<Boolean> {
-    const user = await this.getUserById.getById(id)
-    if(!user) throw new UserNotFoundError('Usuário nao encontrado')
-    return await this.deteUserById.delete(id);
+    const user = await this.userRepository.getById(id);
+    if (!user) throw new UserNotFoundError('Usuário nao encontrado');
+    return await this.userRepository.delete(id);
   }
 }

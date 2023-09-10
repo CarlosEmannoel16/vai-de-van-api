@@ -79,8 +79,6 @@ model City {
   coordinates        String
   State              State?               @relation(fields: [stateId], references: [id])
   stateId            String?
-  RoutesDistiny      Route[]              @relation("Destiny")
-  RouteOrigin        Route[]              @relation("Origin")
   created_at         DateTime             @default(now())
   update_at          DateTime             @default(now()) @updatedAt
   TripStops          TripStops[]          @relation("CityDestiny")
@@ -93,10 +91,6 @@ model Route {
   km         Int
   disabled   Boolean     @default(false)
   kmValue    String?
-  Origin     City        @relation(fields: [originId], references: [id], name: "Origin")
-  originId   String
-  destinyId  String
-  Destiny    City        @relation(fields: [destinyId], references: [id], "Destiny")
   Travel     Travel[]
   created_at DateTime    @default(now())
   update_at  DateTime    @default(now()) @updatedAt

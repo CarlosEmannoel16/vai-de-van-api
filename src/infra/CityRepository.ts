@@ -13,7 +13,7 @@ export class CityRepository implements ICityProtocolRepository {
     return prisma.city.create({ data });
   }
   async disable(id: string): Promise<City> {
-    return prisma.city.update({  where: { id }, data: { disable: true }});
+    return prisma.city.update({  where: { id }, data: { disabled: true }});
   }
   async update({City,id}: IUpdateCityRepository.Params): Promise<City> {
     return prisma.city.update({  where: { id }, data: { ...City }});
