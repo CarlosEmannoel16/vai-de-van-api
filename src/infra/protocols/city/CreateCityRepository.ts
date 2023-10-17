@@ -1,6 +1,5 @@
-import { City } from "@prisma/client";
+import { City } from '@prisma/client';
 
 export interface ICreateCityRepository {
-    create(data: City): Promise<City>
-
+  create(data: Omit<City, 'id' | 'created_at' | 'update_at'>): Promise<City>;
 }

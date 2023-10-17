@@ -8,3 +8,4 @@ export class CreateRouteUseCase implements ICreateRouteUseCase {
     return this.CreateRoute.create({...data, kmValue: data.kmValue, km: Number(data.km)});
   }
 }
+ 

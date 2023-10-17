@@ -47,7 +47,7 @@ export class TravelRepository implements ITravelProtocolRepository {
       Vechicle: true,
       id: true,
       Route: true,
-      
+
     } });
   }
 
@@ -60,7 +60,7 @@ export class TravelRepository implements ITravelProtocolRepository {
         idVehicle: data.idVehicle,
         routeId: data.routeId,
         driverId: data.driverId,
-
+        status: 'DESABILITADA',
       },
     });
   }
@@ -94,7 +94,7 @@ export class TravelRepository implements ITravelProtocolRepository {
               select: {
                 name: true,
               }
-            }, 
+            },
           }
         },
         Tickets: {

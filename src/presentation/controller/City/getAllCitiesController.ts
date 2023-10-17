@@ -1,4 +1,4 @@
-import { GetAllCitiesUseCase } from '@/data/usecases/city/getCityUsCase';
+import { GetAllCitiesUseCase } from '@/data/usecases/city/getCityUseCase';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';

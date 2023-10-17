@@ -1,10 +1,23 @@
 import { ICreateCityUseCase } from '@/domain/usecases/city/CreateCity';
-import { IGetAllCitiesRepository } from '@/infra/protocols/city/GetAllCitiesRepository';
+import { IGetStateByIdProtocolRepository } from '@/infra/protocols';
+import { ICityProtocolRepository } from '@/infra/protocols/city';
 import { City } from '@prisma/client';
+import { createCitySchemaValidation } from './validation';
 
 export class CreateCityUseCase implements ICreateCityUseCase {
-  constructor(private readonly cityRepository: IGetAllCitiesRepository) {}
-  async execute(): Promise<City[]> {
-    throw new Error('Method not implemented.');
+  constructor(
+    private readonly cityRepository: ICityProtocolRepository,
+    private readonly stateRepository: IGetStateByIdProtocolRepository,
+  ) {}
+  async execute(data: ICreateCityUseCase.Params): Promise<City> {
+    await createCitySchemaValidation.validate(data, { abortEarly: false });
+
+    const existsState = await this.stateRepository.getById(data.stateId);
+
+    if (!existsState) throw new Error('Estado não encontrado');
+
+    const result = await this.cityRepository.create(data);
+    if(result) return result;
+
   }
 }

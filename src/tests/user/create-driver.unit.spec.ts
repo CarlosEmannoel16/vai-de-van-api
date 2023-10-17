@@ -3,8 +3,8 @@ import { ICreateDriverProtocolRepository } from '../../infra/protocols/drivers/i
 import { IGetUserByParamsProtocolRepository } from '../../infra/protocols/user/GetUserByParamsProtocolRepository';
 import { ICreateDriver } from '../../domain/usecases/driver/CreateDriver';
 import { CreateDriverUseCase } from '../../data/usecases/driver/CreateDriverUseCase';
-
-
+import { type } from 'os';
+import { IUserProtocolRepository } from '@/infra/protocols';
 
 const userByParams: IGetUserByParamsProtocolRepository.Params = {
   cnh: 'any_cnh',
@@ -28,43 +28,55 @@ const userInput: ICreateDriver.request = {
   phone: 'any_phone',
 };
 
-
-
-const makeUserRepository = (): ICreateDriverProtocolRepository => {
+const makeUserRepository = (): IUserProtocolRepository => {
   return {
-    createDriver: jest.fn()
+    create: jest.fn().mockResolvedValue(null),
+    delete: jest.fn().mockResolvedValue(null),
+    getAll: jest.fn().mockResolvedValue(null),
+    getByCpf: jest.fn().mockResolvedValue(null),
+    getById: jest.fn().mockResolvedValue(null),
+    getUserByEmail: jest.fn().mockResolvedValue(null),
+    getUserByName: jest.fn().mockResolvedValue(null),
+    getUserByParams: jest.fn().mockResolvedValue(null),
+    update: jest.fn().mockResolvedValue(null),
   };
 };
 
-const makeUserRepositoryParams = (): IGetUserByParamsProtocolRepository => {
+const makeCreateDriverRepository = (): ICreateDriverProtocolRepository => {
   return {
-    getUserByParams: jest.fn().mockResolvedValue(null),
+    createDriver: jest.fn().mockResolvedValue(null),
+  };
+};
+
+export type SutTypes = {
+  sut: ICreateDriver;
+  userRepository: IUserProtocolRepository;
+  createDriverRepository: ICreateDriverProtocolRepository;
+};
+
+const makeSut = (): SutTypes => {
+  const userRepository = makeUserRepository();
+  const createDriverRepository = makeCreateDriverRepository();
+
+  const sut = new CreateDriverUseCase(userRepository, createDriverRepository);
+
+  return {
+    sut,
+    createDriverRepository,
+    userRepository,
   };
 };
 
 describe('Unit Create Driver Use Case ', () => {
   test('Deve retornar erro se cpf ja estiver cadastrado', async () => {
-    const makeMockerUserRepository = makeUserRepository();
-    const makeMockerUserRepositoryParams = makeUserRepositoryParams();
-    const sut = new CreateDriverUseCase(
-      makeMockerUserRepository,
-      makeMockerUserRepositoryParams,
-    );
-
-    makeMockerUserRepositoryParams.getUserByParams = jest
-      .fn()
-      .mockResolvedValue(userByParams);
+    const { sut, createDriverRepository, userRepository } = makeSut();
+    userRepository.getUserByParams = jest.fn().mockResolvedValue(userByParams);
     await expect(sut.create(userInput)).rejects.toThrow('CPF já cadastrado');
   });
   test('Deve retornar erro se email ja estiver cadastrado', async () => {
-    const makeMockerUserRepository = makeUserRepository();
-    const makeMockerUserRepositoryParams = makeUserRepositoryParams();
-    const sut = new CreateDriverUseCase(
-      makeMockerUserRepository,
-      makeMockerUserRepositoryParams,
-    );
+    const { sut, createDriverRepository, userRepository } = makeSut();
 
-    makeMockerUserRepositoryParams.getUserByParams = jest
+    userRepository.getUserByParams = jest
       .fn()
       .mockResolvedValueOnce(undefined)
       .mockResolvedValueOnce(userByParams);
@@ -83,20 +95,21 @@ describe('Unit Create Driver Use Case ', () => {
     const returnCreateUser: User = {
       cpf: 'any_cpf',
       created_at: expect.any(Date),
-      date_of_birth:  expect.any(Date),
+      date_of_birth: expect.any(Date),
       email: userInput.email,
       id: expect.any(String),
       name: userInput.name,
       password: userInput.password,
       phone: userInput.phone,
       type: 'driver',
-      update_at:  expect.any(Date),
+      update_at: expect.any(Date),
     };
 
-    makeMockerUserRepository.createDriver = jest.fn().mockResolvedValue(returnCreateUser);
+    makeMockerUserRepository.createDriver = jest
+      .fn()
+      .mockResolvedValue(returnCreateUser);
 
-
-    const output =  await sut.create(userInput) 
+    const output = await sut.create(userInput);
     expect(output).toEqual(returnCreateUser);
   });
 });

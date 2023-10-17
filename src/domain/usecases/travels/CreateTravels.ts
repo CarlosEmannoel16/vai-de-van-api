@@ -6,11 +6,11 @@ export interface ICreateTravels {
 
 export namespace ICreateTravels {
   export type Params = {
-    arrivalDate: string;
+    arrivalDate: Date;
     departureDate: Date;
     description: string;
     driverId: string;
-    idVehicle: string; 
+    idVehicle: string;
     routeId: string;
     tripStops: {
       cityIdFromTo: string;

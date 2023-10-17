@@ -1,17 +1,5 @@
-export interface IGetStateByIdProtocolRepository {
-  create(
-    data: IGetStateByIdProtocolRepository.Params,
-  ): Promise<IGetStateByIdProtocolRepository.Result>;
-}
+import { State } from '@prisma/client';
 
-export namespace IGetStateByIdProtocolRepository {
-  export type Params = {
-    name: string;
-    uf: string;
-  };
-  export type Result = {
-    id: string;
-    name: string;
-    uf: string;
-  };
+export interface IGetStateByIdProtocolRepository {
+  getById(id: string): Promise<State>;
 }
