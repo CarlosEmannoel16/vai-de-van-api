@@ -1,6 +1,6 @@
 import { ISearchTravelsUseCaseProtocol } from '@/domain/usecases/travels/SearchTravels';
 import { ITravelProtocolRepository } from '@/infra/protocols/travel';
-import { tr } from 'date-fns/locale';
+
 
 export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
   constructor(private readonly travelRepository: ITravelProtocolRepository) {}
@@ -69,7 +69,7 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
         });
     });
 
-    console.log(result); 
-    return result; 
+    console.log(result);
+    return result;
   }
 }

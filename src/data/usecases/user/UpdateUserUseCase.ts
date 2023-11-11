@@ -13,7 +13,7 @@ export class UpdateUserUseCase implements IUpdateUser {
         const userExist = await this.userRepository.getById(data.id);
 
         if (!userExist.id) throw new InvalidGenericError('Usuário não encontrado');
-        
+
         const {
             id,
             name,

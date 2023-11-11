@@ -1,11 +1,11 @@
 import { IAuthLogin } from '@/infra/protocols/auth/AuthLogin';
-import { IGetUserByEmailProtocolRepository } from '@/infra/protocols/user';
+import { IUserProtocolRepository } from '@/infra/protocols/user';
 import { NotAuthorizedError } from '@/data/errors/NotAuthorizedError';
 import jwt from 'jsonwebtoken';
 import config from '@/config/auth';
 export class AuthLogin implements IAuthLogin {
   constructor(
-    private readonly getUserByEmail: IGetUserByEmailProtocolRepository,
+    private readonly getUserByEmail: IUserProtocolRepository,
   ) {}
   async verify(data: IAuthLogin.request): Promise<IAuthLogin.response> {
     const user = await this.getUserByEmail.getUserByEmail(data.email);
