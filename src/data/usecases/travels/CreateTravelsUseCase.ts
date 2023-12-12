@@ -1,9 +1,5 @@
-import { InvalidGenericError } from '@/data/errors/InvalidGenericError';
-import { BaseError } from '@/data/errors/baseError';
 import { ICreateTravels } from '@/data/protocols/usecases/travels/CreateTravels';
 import { IUserProtocolRepository } from '@/infra/protocols';
-import { IGetAllCitiesRepository } from '@/infra/protocols/city/GetAllCitiesRepository';
-import { IGetCityRepository } from '@/infra/protocols/city/GetCityRepository';
 import { IGetByIdRouteProtocolRepository } from '@/infra/protocols/route/GetByIdRouteProtocolRepository';
 import { ITravelProtocolRepository } from '@/infra/protocols/travel';
 import { ICreateTripStopsProtocolRepository } from '@/infra/protocols/tripStops/CreateTripStopsProtocolRepository';

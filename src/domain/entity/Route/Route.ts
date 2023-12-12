@@ -1,3 +1,4 @@
+import { Vehicle } from '../Vehicle/Vehicle';
 import { TripStop } from './TripStop';
 import { v4 } from 'uuid';
 
@@ -9,6 +10,7 @@ export class Route {
   private destinyId: string;
   private originId: string;
   private stops: TripStop[];
+  private vehicle: Vehicle;
 
   constructor(
     id = v4(),
@@ -43,6 +45,11 @@ export class Route {
     }
   }
 
+  setVehicle(vehicle: Vehicle) {
+    if (this.vehicle) throw new Error('Vehicle already exists');
+    this.vehicle = vehicle;
+  }
+
   getName(): string {
     return this.name;
   }
@@ -68,7 +75,10 @@ export class Route {
         throw new Error('TripStopOrder already exists');
     });
 
-    if (data.getTripStopOrder() + 1 > lastTripStop.getTripStopOrder() || !data.getTripStopOrder()) {
+    if (
+      data.getTripStopOrder() + 1 > lastTripStop.getTripStopOrder() ||
+      !data.getTripStopOrder()
+    ) {
       data.setTripStopOrder(lastTripStop.getTripStopOrder() + 1);
     }
     this.stops.push(data);
