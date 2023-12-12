@@ -7,6 +7,7 @@ export class SearchTravelController implements IController {
   constructor(private readonly searchTravelUseCase: SearchTravelsUseCase) {}
   async handle(req: Request, res: Response) {
     try {
+      console.log(req.query);
       const data = await this.searchTravelUseCase.execute(req.query as any);
       return res.status(200).json({ data });
     } catch (error) {

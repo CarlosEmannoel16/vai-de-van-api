@@ -8,7 +8,9 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
   async execute(
     data: ISearchTravelsUseCaseProtocol.Params,
   ): Promise<ISearchTravelsUseCaseProtocol.Result[] | undefined> {
+    console.log(data);
     const tripStops = await this.travelRepository.search(data);
+    console.log(tripStops);
     const result: ISearchTravelsUseCaseProtocol.Result[] = [];
     tripStops.forEach(travel => {
      result.push({

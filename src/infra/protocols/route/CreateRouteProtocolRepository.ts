@@ -11,5 +11,6 @@ export namespace ICreateRouteProtocolRepository {
     kmValue: string;
     destinyId: string;
     originId: string;
+
   };
 }

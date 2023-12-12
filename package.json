@@ -7,7 +7,7 @@
     "lint": "eslint . --ext .ts",
     "seed": "ts-node prisma/seed.ts",
     "lint-fix": "eslint . --ext .ts --fix",
-    "start": "ts-node-dev --respawn --files -r    tsconfig-paths/register dist/server.js",
+    "start": "ts-node-dev --respawn --files -r  tsconfig-paths/register dist/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify --exit-child src/server.ts",
     "test": "jest"
   },
@@ -24,6 +24,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/multer": "^1.4.7",
     "@types/node": "^16.11.10",
+    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "eslint": "^8.32.0",
@@ -57,7 +58,7 @@
     "redis": "^4.6.6",
     "socket.io": "^4.6.1",
     "typeorm": "0.3.12",
-    "uuid": "^9.0.0",
+    "uuid": "^9.0.1",
     "yup": "^1.0.2"
   },
   "_resolveFilename": [
