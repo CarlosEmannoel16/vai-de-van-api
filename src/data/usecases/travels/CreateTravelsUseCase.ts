@@ -1,6 +1,7 @@
 import { InvalidGenericError } from '@/data/errors/InvalidGenericError';
 import { BaseError } from '@/data/errors/baseError';
-import { ICreateTravels } from '@/domain/usecases/travels/CreateTravels';
+import { ICreateTravels } from '@/data/protocols/usecases/travels/CreateTravels';
+import { IUserProtocolRepository } from '@/infra/protocols';
 import { IGetAllCitiesRepository } from '@/infra/protocols/city/GetAllCitiesRepository';
 import { IGetCityRepository } from '@/infra/protocols/city/GetCityRepository';
 import { IGetByIdRouteProtocolRepository } from '@/infra/protocols/route/GetByIdRouteProtocolRepository';
@@ -13,14 +14,12 @@ export class CreateTravels implements ICreateTravels {
     private readonly travelRepository: ITravelProtocolRepository,
     private readonly createTripStops: ICreateTripStopsProtocolRepository,
     private readonly routesRepository: IGetByIdRouteProtocolRepository,
-    private readonly cityRepository: IGetCityRepository,
+    private readonly userRepository: IUserProtocolRepository,
   ) {}
   async execute(data: ICreateTravels.Params): Promise<any> {
     const route = await this.routesRepository.getById({ id: data.routeId });
 
     if (!route.id) throw new Error('Rota não encontrada');
-
-
 
     await this.travelRepository.create({
       arrivalDate: data.arrivalDate,

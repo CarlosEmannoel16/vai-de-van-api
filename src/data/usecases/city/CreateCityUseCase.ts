@@ -1,4 +1,4 @@
-import { ICreateCityUseCase } from '@/domain/usecases/city/CreateCity';
+import { ICreateCityUseCase } from '@/data/protocols/usecases/city/CreateCity';
 import { IGetStateByIdProtocolRepository } from '@/infra/protocols';
 import { ICityProtocolRepository } from '@/infra/protocols/city';
 import { City } from '@prisma/client';

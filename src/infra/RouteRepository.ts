@@ -5,12 +5,9 @@ import { IGetByIdRouteProtocolRepository } from './protocols/route/GetByIdRouteP
 import { IUpdateRouteProtocolRepository } from './protocols/route/UpdateRouteProtocolRepository';
 import { IRouteRepository } from './protocols/route';
 const prisma = new PrismaClient();
-export class RouteRepository
-  implements
-  IRouteRepository
-{
-  async update(data: IUpdateRouteProtocolRepository.Params): Promise<Route>{
-   return prisma.route.update({
+export class RouteRepository implements IRouteRepository {
+  async update(data: IUpdateRouteProtocolRepository.Params): Promise<Route> {
+    return prisma.route.update({
       where: {
         id: data.id,
       },
@@ -21,9 +18,9 @@ export class RouteRepository
         originId: data.originId,
         destinyId: data.destinyId,
         update_at: new Date(),
-      }
-    })
-  };
+      },
+    });
+  }
   async getById(
     data: IGetByIdRouteProtocolRepository.Params,
   ): Promise<IGetByIdRouteProtocolRepository.Result> {
@@ -73,12 +70,11 @@ export class RouteRepository
         originId,
         destinyId,
         kmValue,
-
       },
     });
   }
 
   async getCountAll(): Promise<number> {
-   return prisma.route.count();
+    return prisma.route.count();
   }
 }

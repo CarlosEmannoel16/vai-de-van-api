@@ -1,6 +1,6 @@
 import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle';
 import { CreateVehicleUseCase } from '@/data/usecases/vechicle/CreateVechicle';
-import { ICreateVehicle } from '@/domain/usecases/vechicle/CreateVechicleUseCase';
+import { ICreateVehicle } from '@/data/protocols/usecases/vechicle/CreateVechicleUseCase';
 import { IGetUserByIdProtocolRepository } from '@/infra/protocols/user/GetUserByIdProtocolRepository';
 import { IUserProtocolRepository } from '@/infra/protocols';
 import { Vehicle } from '@prisma/client';

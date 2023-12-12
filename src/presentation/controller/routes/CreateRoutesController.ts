@@ -1,4 +1,4 @@
-import { ICreateRouteUseCase } from '@/domain/usecases/routes/CreateRoutes';
+import { ICreateRouteUseCase } from '@/data/protocols/usecases/routes/CreateRoutes';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';

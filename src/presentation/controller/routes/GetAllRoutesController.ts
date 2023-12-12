@@ -1,4 +1,4 @@
-import { IGetAllRoutes } from '@/domain/usecases/routes/GetAllRoutes';
+import { IGetAllRoutes } from '@/data/protocols/usecases/routes/GetAllRoutes';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse, ResponseStatus } from '@/presentation/utils/response';

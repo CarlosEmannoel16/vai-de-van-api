@@ -1,4 +1,4 @@
-import { IUpdateRoute } from '@/domain/usecases/routes/UpdateRoutes';
+import { IUpdateRoute } from '@/data/protocols/usecases/routes/UpdateRoutes';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';

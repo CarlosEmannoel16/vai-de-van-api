@@ -1,5 +1,5 @@
 import { GetAllUsersUseCase } from '@/data/usecases/user/GetAllUsersUseCase';
-import { IGetAllUsers } from '@/domain/usecases/user/GetAllUsers';
+import { IGetAllUsers } from '@/data/protocols/usecases/user/GetAllUsers';
 import { UserRepository } from '@/infra/UserRepository';
 
 export const makeGetAllUsersUseCase = (): IGetAllUsers => {

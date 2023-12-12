@@ -11,8 +11,8 @@ export class TravelRepository implements ITravelProtocolRepository {
     return travel.findMany({
       where: {
         routeId: id,
-      }
-    })
+      },
+    });
   }
   async findAll(): Promise<IFindAllTravelsProtocolRepository.Params[]> {
     return travel.findMany({
@@ -39,16 +39,18 @@ export class TravelRepository implements ITravelProtocolRepository {
     });
   }
   async findById(id: string): Promise<any> {
-    return travel.findUnique({ where: { id },select: {
-      arrivalDate: true,
-      departureDate: true,
-      Driver: true,
-      driverId: true,
-      Vechicle: true,
-      id: true,
-      Route: true,
-
-    } });
+    return travel.findUnique({
+      where: { id },
+      select: {
+        arrivalDate: true,
+        departureDate: true,
+        Driver: true,
+        driverId: true,
+        Vechicle: true,
+        id: true,
+        Route: true,
+      },
+    });
   }
 
   async create(data: ICreateTravelProtocolRepository.Params): Promise<any> {
@@ -83,31 +85,42 @@ export class TravelRepository implements ITravelProtocolRepository {
           lte: new Date(`${data.dateOfTravel}T23:59:59.000Z`),
           gte: new Date(`${data.dateOfTravel}T00:00:00.000Z`),
         },
+        Route: {
+          TripStops: {
+            every: {
+              cityid: { in: [data.origin, data.destiny] },
+            },
+          },
+        },
       },
       select: {
         arrivalDate: true,
         departureDate: true,
-        Route: true,
+        Route: {
+          select: {
+            TripStops: {select:{PricesBetweenStops: true}},
+            Origin: { select: { name: true } },
+            Destiny: { select: { name: true } },
+          },
+        },
         Driver: {
           select: {
             User: {
               select: {
                 name: true,
-              }
-            },
-          }
-        },
-        Tickets: {
-          select:{
-            pricesBetweenStopsId: true,
-            PricesBetweenStops: {
-              select:{
-                TripStops: true
-
-              }
+              },
             },
           },
-
+        },
+        Tickets: {
+          select: {
+            pricesBetweenStopsId: true,
+            PricesBetweenStops: {
+              select: {
+                TripStops: true,
+              },
+            },
+          },
         },
         Vechicle: true,
       },

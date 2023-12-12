@@ -1,4 +1,4 @@
-import { IDashboardUseCase } from '@/domain/usecases/dashboard/DashboardInterface';
+import { IDashboardUseCase } from '@/data/protocols/usecases/dashboard/DashboardInterface';
 import { RouteRepository } from '@/infra/RouteRepository';
 import { TravelRepository } from '@/infra/TravelRepository';
 import { VehicleRepository } from '@/infra/VehicleRepository';

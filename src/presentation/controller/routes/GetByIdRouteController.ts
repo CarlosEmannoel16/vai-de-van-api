@@ -1,4 +1,4 @@
-import { IGetByIdRoutes } from '@/domain/usecases/routes/GetByIdRoutes';
+import { IGetByIdRoutes } from '@/data/protocols/usecases/routes/GetByIdRoutes';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';

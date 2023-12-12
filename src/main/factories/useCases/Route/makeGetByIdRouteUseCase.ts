@@ -1,5 +1,5 @@
 import { GetByIdRouterUseCase } from "@/data/usecases/routes/GetBuIdRouterUseCase";
-import { IGetByIdRoutes } from "@/domain/usecases/routes/GetByIdRoutes";
+import { IGetByIdRoutes } from "@/data/protocols/usecases/routes/GetByIdRoutes";
 import { RouteRepository } from "@/infra/RouteRepository";
 
 export const makeGetByIdRouteUseCase = (): IGetByIdRoutes => {

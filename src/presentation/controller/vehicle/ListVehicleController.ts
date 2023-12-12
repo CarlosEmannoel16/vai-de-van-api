@@ -1,4 +1,4 @@
-import { IFindAllVehiclesUseCase } from "@/domain/usecases/vechicle/FindAllVehicleUseCase";
+import { IFindAllVehiclesUseCase } from "@/data/protocols/usecases/vechicle/FindAllVehicleUseCase";
 import ControllerException from "@/presentation/helpers/ControllerException";
 import { IController } from "@/presentation/protocols/IController";
 import { IResponse } from "@/presentation/utils/response";

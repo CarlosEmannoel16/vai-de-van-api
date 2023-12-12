@@ -1,4 +1,4 @@
-import { IDeleteUser } from '@/domain/usecases/user/DeleteUser';
+import { IDeleteUser } from '@/data/protocols/usecases/user/DeleteUser';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';
 import { Request, Response } from 'express';

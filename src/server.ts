@@ -28,12 +28,13 @@ app.use(routes);
 
 io.on('connection', (socket: Socket) => {
   socket.on('chat-message', (msg: string) => {
-    io.emit('chat message', msg); 
+    io.emit('chat message', msg);
   });
-});   
- 
+});
+
 
 server.listen(config.server.port, () => {
   console.log(`Server started in port ${config.server.port} ✅🎃🚀🇧🇷`);
+  console.log(`http://localhost:${config.server.port}`);
+  console.log(`process id: ${process.pid}`);
 });
- 

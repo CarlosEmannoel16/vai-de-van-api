@@ -1,5 +1,5 @@
 import { IGetUserByNameProtocolRepository } from '@/infra/protocols/user/GetUserByNameProtocolRepository';
-import { IGetUserByName } from '@/domain/usecases/user/GetUserByName';
+import { IGetUserByName } from '@/data/protocols/usecases/user/GetUserByName';
 import { formatCpfForReturn } from '@/data/utils/formatCpfForReturn';
 export class GetUserByNameUsecase implements IGetUserByName {
   constructor(

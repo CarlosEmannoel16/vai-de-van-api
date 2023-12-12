@@ -1,6 +1,6 @@
 import { InvalidGenericError } from '@/data/errors/InvalidGenericError';
 import { IUserProtocolRepository } from '@/infra/protocols/user';
-import { IGetUserById } from '@domain/usecases/user/GetUserByid';
+import { IGetUserById } from '@/data/protocols/usecases/user/GetUserByid';
 import { formatCpfForReturn } from '../../utils/formatCpfForReturn';
 
 export class GetUserByIdUseCase implements IGetUserById {

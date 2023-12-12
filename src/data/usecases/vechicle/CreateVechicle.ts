@@ -1,4 +1,4 @@
-import { ICreateVehicle } from '@/domain/usecases/vechicle/CreateVechicleUseCase';
+import { ICreateVehicle } from '@/data/protocols/usecases/vechicle/CreateVechicleUseCase';
 import { IUserProtocolRepository } from '@/infra/protocols';
 import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle';
 import { Vehicle } from '@prisma/client';

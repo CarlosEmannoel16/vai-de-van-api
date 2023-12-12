@@ -1,4 +1,4 @@
-import { IGetAllRoutes } from "@/domain/usecases/routes/GetAllRoutes";
+import { IGetAllRoutes } from "@/data/protocols/usecases/routes/GetAllRoutes";
 import { IGetAllRouteProtocolRepository } from "@/infra/protocols/route/GetAllRouteProtocolRepository";
 
 export class GetAllRoutesUseCase implements IGetAllRoutes{

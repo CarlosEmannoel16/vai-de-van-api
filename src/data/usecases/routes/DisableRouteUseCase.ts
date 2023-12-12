@@ -1,7 +1,5 @@
-import { IDisableRouteUseCase } from '@/domain/usecases/routes/DisableRoutes';
+import { IDisableRouteUseCase } from '@/data/protocols/usecases/routes/DisableRoutes';
 import { IRouteRepository } from '@/infra/protocols/route';
-import { ICreateRouteProtocolRepository } from '@/infra/protocols/route/CreateRouteProtocolRepository';
-import { IUpdateRouteProtocolRepository } from '@/infra/protocols/route/UpdateRouteProtocolRepository';
 import { ITravelProtocolRepository } from '@/infra/protocols/travel';
 
 export class DisableRouteUseCase implements IDisableRouteUseCase {

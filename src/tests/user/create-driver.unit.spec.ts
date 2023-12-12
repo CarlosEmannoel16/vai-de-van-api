@@ -1,7 +1,7 @@
 import { User } from '@prisma/client';
 import { ICreateDriverProtocolRepository } from '../../infra/protocols/drivers/index';
 import { IGetUserByParamsProtocolRepository } from '../../infra/protocols/user/GetUserByParamsProtocolRepository';
-import { ICreateDriver } from '../../domain/usecases/driver/CreateDriver';
+import { ICreateDriver } from '../../data/protocols/usecases/driver/CreateDriver';
 import { CreateDriverUseCase } from '../../data/usecases/driver/CreateDriverUseCase';
 import { type } from 'os';
 import { IUserProtocolRepository } from '@/infra/protocols';

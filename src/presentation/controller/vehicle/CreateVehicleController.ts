@@ -1,4 +1,4 @@
-import { ICreateVehicle } from '@/domain/usecases/vechicle/CreateVechicleUseCase';
+import { ICreateVehicle } from '@/data/protocols/usecases/vechicle/CreateVechicleUseCase';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { ResponseStatus } from '@/presentation/utils/response';

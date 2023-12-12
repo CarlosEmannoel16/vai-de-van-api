@@ -1,5 +1,5 @@
 import { InvalidGenericError } from "@/data/errors/InvalidGenericError";
-import { IUpdateUser } from "@/domain/usecases/user/UpdateUser";
+import { IUpdateUser } from "@/data/protocols/usecases/user/UpdateUser";
 import { IUserProtocolRepository } from "@/infra/protocols";
 
 import { IUpdateUserProtocolRepository } from "@/infra/protocols/user/UpdateUserProtocolRepository";

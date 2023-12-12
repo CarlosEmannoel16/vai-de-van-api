@@ -1,4 +1,4 @@
-import { ISearchTravelsUseCaseProtocol } from '@/domain/usecases/travels/SearchTravels';
+import { ISearchTravelsUseCaseProtocol } from '@/data/protocols/usecases/travels/SearchTravels';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { Request, Response } from 'express';

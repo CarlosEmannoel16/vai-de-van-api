@@ -4,7 +4,7 @@ import {
   IGetStateByNameProtocolRepository,
 } from '@/infra/protocols/state';
 
-import { ICreateState } from '@/domain/usecases/state/CreateState';
+import { ICreateState } from '@/data/protocols/usecases/state/CreateState';
 
 export class CreateStateUseCase implements ICreateState {
   constructor(

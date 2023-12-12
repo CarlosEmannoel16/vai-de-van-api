@@ -1,5 +1,5 @@
 import { DashboardUseCase } from "@/data/usecases/report/Dashboard";
-import { IDashboardUseCase } from "@/domain/usecases/dashboard/DashboardInterface";
+import { IDashboardUseCase } from "@/data/protocols/usecases/dashboard/DashboardInterface";
 import ControllerException from "@/presentation/helpers/ControllerException";
 import { IController } from "@/presentation/protocols/IController";
 import { IResponse } from "@/presentation/utils/response";

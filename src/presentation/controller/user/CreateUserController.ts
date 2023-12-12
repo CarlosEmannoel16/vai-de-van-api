@@ -3,7 +3,7 @@ import { IResponse, ResponseStatus } from '../../utils/response';
 import { createUserYupValidation } from './validation/yupValidationUser';
 import ControllerException from '../../helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
-import { ICreateUser } from '@/domain/usecases/user';
+import { ICreateUser } from '@/data/protocols/usecases/user';
 
 export class CreateUserController implements IController {
   private readonly createUserUseCase: ICreateUser;

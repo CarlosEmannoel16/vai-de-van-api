@@ -1,4 +1,4 @@
-import { ICreateTravels } from '@/domain/usecases/travels/CreateTravels';
+import { ICreateTravels } from '@/data/protocols/usecases/travels/CreateTravels';
 import { IGetByIdRouteProtocolRepository } from '@/infra/protocols/route/GetByIdRouteProtocolRepository';
 import { ICreateTripStopsProtocolRepository } from '@/infra/protocols/tripStops/CreateTripStopsProtocolRepository';
 import ControllerException from '@/presentation/helpers/ControllerException';

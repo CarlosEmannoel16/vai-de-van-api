@@ -1,4 +1,4 @@
-import { ICreateUser } from '@/domain/usecases/user';
+import { ICreateUser } from '@/data/protocols/usecases/user';
 import { CreateUserUseCase } from '../../../../data/usecases/user/CreateUserUseCase';
 import { UserRepository } from '@/infra/UserRepository';
 

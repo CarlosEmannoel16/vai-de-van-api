@@ -1,5 +1,5 @@
 import { IUserProtocolRepository } from '@/infra/protocols/user';
-import { IGetAllUsers } from '@/domain/usecases/user/GetAllUsers';
+import { IGetAllUsers } from '@/data/protocols/usecases/user/GetAllUsers';
 
 export class GetAllUsersUseCase implements IGetAllUsers {
   constructor(private readonly getAllUsers: IUserProtocolRepository) {}

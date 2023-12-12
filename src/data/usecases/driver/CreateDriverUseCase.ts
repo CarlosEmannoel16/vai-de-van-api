@@ -1,4 +1,4 @@
-import { ICreateDriver } from '@/domain/usecases/driver/CreateDriver';
+import { ICreateDriver } from '@/data/protocols/usecases/driver/CreateDriver';
 import { IUserProtocolRepository } from '@/infra/protocols';
 import { ICreateDriverProtocolRepository } from '@/infra/protocols/drivers';
 import { IGetUserByParamsProtocolRepository } from '@/infra/protocols/user/GetUserByParamsProtocolRepository';
@@ -15,7 +15,7 @@ export class CreateDriverUseCase implements ICreateDriver {
 
     const existsEmail = await this.userRepository.getUserByParams({ email: data.email })
     if(existsEmail) throw new Error('Email já cadastrado')
-   
+
 
     return this.driverRepository.createDriver({
       ...data,

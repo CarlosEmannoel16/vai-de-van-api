@@ -1,4 +1,4 @@
-import { IUpdateUser } from "@/domain/usecases/user/UpdateUser";
+import { IUpdateUser } from "@/data/protocols/usecases/user/UpdateUser";
 import ControllerException from "@/presentation/helpers/ControllerException";
 import { IController } from "@/presentation/protocols/IController";
 import { IResponse, ResponseStatus } from "@/presentation/utils/response";

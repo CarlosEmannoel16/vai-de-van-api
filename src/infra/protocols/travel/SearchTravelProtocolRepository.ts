@@ -25,13 +25,23 @@ export namespace ISearchTravelProtocolRepository {
   export type Result = {
     departureDate: Date;
     arrivalDate: Date;
-    Route: Route;
+    Route: {
+      TripStops: {
+        PricesBetweenStops: PricesBetweenStops[];
+      }[];
+      Origin: {
+        name: string;
+      };
+      Destiny: {
+        name: string;
+      };
+    };
     Tickets: {
       pricesBetweenStopsId: string;
       PricesBetweenStops: {
         TripStops: TripStops;
-      }
-    }[]
+      };
+    }[];
     Driver: {
       User: {
         name: string;

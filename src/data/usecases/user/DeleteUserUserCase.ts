@@ -1,5 +1,5 @@
 
-import { IDeleteUser } from '@/domain/usecases/user/DeleteUser';
+import { IDeleteUser } from '@/data/protocols/usecases/user/DeleteUser';
 import { UserNotFoundError } from '@/data/errors/UserNotFound';
 import { IUserProtocolRepository } from '@/infra/protocols';
 export class DeleteUserById implements IDeleteUser {
