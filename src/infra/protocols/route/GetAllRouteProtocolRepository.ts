@@ -8,7 +8,5 @@ export namespace IGetAllRouteProtocolRepository {
     name: string;
     km: number;
     kmValue: string | null;
-    originId: string;
-    destinyId: string;
   };
 }

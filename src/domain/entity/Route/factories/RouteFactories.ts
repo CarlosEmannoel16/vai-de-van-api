@@ -10,8 +10,6 @@ export namespace IRouteFactories {
     name: string;
     km: number;
     kmValue: number;
-    destinyId: string;
-    originId: string;
   };
 }
 export class RouteFactories {
@@ -21,8 +19,6 @@ export class RouteFactories {
       data.name,
       data.km,
       data.kmValue,
-      data.destinyId,
-      data.originId,
     );
   }
 }

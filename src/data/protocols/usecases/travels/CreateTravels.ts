@@ -12,12 +12,6 @@ export namespace ICreateTravels {
     driverId: string;
     idVehicle: string;
     routeId: string;
-    tripStops: {
-      cityIdFromTo: string;
-      tripStopOrder: number;
-      distanceFromLastStop: number;
-      name: string;
-    }[];
   };
 
   export type Result = {

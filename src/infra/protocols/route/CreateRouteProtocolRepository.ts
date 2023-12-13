@@ -1,16 +1,7 @@
-import { Route } from '@prisma/client';
+import { Route } from "@/domain/entity/Route/Route";
 
 export interface ICreateRouteProtocolRepository {
-  create: (data: ICreateRouteProtocolRepository.Params) => Promise<Route>;
+  create: (data: Route) => Promise<Route>;
 }
 
-export namespace ICreateRouteProtocolRepository {
-  export type Params = {
-    name: string;
-    km: number;
-    kmValue: string;
-    destinyId: string;
-    originId: string;
 
-  };
-}

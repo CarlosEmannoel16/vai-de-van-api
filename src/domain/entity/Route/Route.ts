@@ -7,9 +7,7 @@ export class Route {
   private name: string;
   private km: number;
   private kmValue: number;
-  private destinyId: string;
-  private originId: string;
-  private stops: TripStop[];
+  private stops: TripStop[] = [];
   private vehicle: Vehicle;
 
   constructor(
@@ -17,14 +15,10 @@ export class Route {
     name: string,
     km: number,
     kmValue: number,
-    destinyId: string,
-    originId: string,
   ) {
     this.name = name;
     this.km = km;
     this.kmValue = kmValue;
-    this.destinyId = destinyId;
-    this.originId = originId;
     this.id = id;
 
     this.validate();
@@ -36,8 +30,6 @@ export class Route {
     if (!this.name) fieldsMessage.push('name is required');
     if (!this.km) fieldsMessage.push('km is required');
     if (!this.kmValue) fieldsMessage.push('kmValue is required');
-    if (!this.destinyId) fieldsMessage.push('destinyId is required');
-    if (!this.originId) fieldsMessage.push('originId is required');
     if (!this.id) fieldsMessage.push('id is required');
 
     if (fieldsMessage.length > 0) {
@@ -50,18 +42,18 @@ export class Route {
     this.vehicle = vehicle;
   }
 
-  getName(): string {
+  get Name(): string {
     return this.name;
   }
 
-  getKm(): number {
+  get Km(): number {
     return this.km;
   }
 
-  getKmValue(): number {
+  get KmValue(): number {
     return this.kmValue;
   }
-  getKmValueInReal(): string {
+  get KmValueInReal(): string {
     return this.kmValue.toLocaleString('pt-BR', {
       style: 'currency',
       currency: 'BRL',
@@ -69,27 +61,49 @@ export class Route {
   }
 
   addStop(data: TripStop) {
-    const lastTripStop = this.getLastStop();
+    const lastTripStop = this.LastStop;
+    if (!this.stops.length) {
+      data.setTripStopOrder(1);
+      this.stops.push(data);
+      return;
+    }
+
     this.stops.map(stop => {
-      if (stop.getTripStopOrder() === data.getTripStopOrder())
+      if (stop.TripStopOrder === data.TripStopOrder)
         throw new Error('TripStopOrder already exists');
     });
 
     if (
-      data.getTripStopOrder() + 1 > lastTripStop.getTripStopOrder() ||
-      !data.getTripStopOrder()
+      data.TripStopOrder + 1 > lastTripStop.TripStopOrder ||
+      !data.TripStopOrder
     ) {
-      data.setTripStopOrder(lastTripStop.getTripStopOrder() + 1);
+      data.setTripStopOrder(lastTripStop.TripStopOrder + 1);
     }
     this.stops.push(data);
   }
+  get Id(): string {
+    return this.id;
+  }
 
-  getStops(): TripStop[] {
+  get Stops(): TripStop[] {
     return this.stops;
   }
 
-  getLastStop(): TripStop {
-    if (this.stops.length === 0) throw new Error('Stops is empty');
-    return this.stops[this.stops.length - 1];
+  get LastStop(): TripStop {
+    let lastStop = this.stops[0];
+    this.stops.map(stop => {
+      if (stop.TripStopOrder > lastStop.TripStopOrder) lastStop = stop;
+    });
+    return lastStop;
   }
+
+  get AmountOfStops(): number {
+    return this.stops.length;
+  }
+
+  get QuantityOfPassengers(): number {
+    return 1;
+  }
+
+
 }

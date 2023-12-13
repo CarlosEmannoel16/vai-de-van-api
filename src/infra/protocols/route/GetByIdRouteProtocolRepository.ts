@@ -14,11 +14,7 @@ export namespace IGetByIdRouteProtocolRepository {
     name: string;
     km: number;
     kmValue: string | null;
-    originId: string;
-    destinyId: string;
     disabled: boolean;
-    Destiny: City;
-    Origin: City;
     created_at: Date;
     update_at: Date;
   };

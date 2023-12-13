@@ -111,9 +111,11 @@ model PricesBetweenStops {
 model TripStops {
   id                   String               @id @default(uuid())
   cityid               String
+  initialStop          Boolean              @default(false)
+  finalStop            Boolean              @default(false)
   City                 City                 @relation(fields: [cityid], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
   tripStopOrder        Int
-  distanceFromLastStop Int                  @default(0)
+  distanceFromLastStop Float                @default(0)
   created_at           DateTime             @default(now())
   update_at            DateTime             @default(now()) @updatedAt
   PricesBetweenStops   PricesBetweenStops[]

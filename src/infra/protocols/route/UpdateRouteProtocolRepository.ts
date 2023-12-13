@@ -1,13 +1,5 @@
-import { Route} from "@prisma/client";
+import { Route } from '@/domain/entity/Route/Route';
 
 export interface IUpdateRouteProtocolRepository {
-  update: (
-    data: IUpdateRouteProtocolRepository.Params,
-  ) => Promise<Route>;
-}
-
-export namespace IUpdateRouteProtocolRepository {
-  export type Params = Route
-
-
+  update: (data: Route) => Promise<Route>;
 }

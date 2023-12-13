@@ -1,23 +1,5 @@
-import { Travel, TripStops } from "@prisma/client";
-
+import { Travel } from '@/domain/entity/Travel/Travel';
 export interface ICreateTravelProtocolRepository {
-  create(
-    data: ICreateTravelProtocolRepository.Params,
-  ): Promise<ICreateTravelProtocolRepository.Result>;
+  create(data: Travel): Travel;
 }
 
-export namespace ICreateTravelProtocolRepository {
-  export type Result = Travel;
-  export type Params = {
-    arrivalDate: Date
-    departureDate: Date
-    description: string
-    driverId: string
-    idVehicle: string;
-    routeId: string;
-    tripStops: {
-      cityIdFromTo: string
-      tripStopOrder: number
-    }[]
-  };
-}
