@@ -14,7 +14,7 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
      result.push({
       dateOfDeparture: travel.departureDate,
       driver: travel.Driver.User.name,
-      vehicle: travel.Vechicle.description,
+      vehicle: travel.Vehicle.description,
       nameDestiny: travel.Route.Destiny.name,
       nameOrigin: travel.Route.Origin.name,
       value: travel.Route.TripStops.map(ts => {
@@ -28,12 +28,12 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
      })
     });
 
-    // tripStops.forEach(travel => {
+
     //   let value = 0;
     //   let nameDestiny = '';
     //   let nameOrigin = '';
-    //   let amount_of_accents_free = travel.Vechicle.amount_of_accents;
-    //   let accentsTotal = travel.Vechicle.amount_of_accents;
+    //   let amount_of_accents_free = travel.Vehicle.amount_of_accents;
+    //   let accentsTotal = travel.Vehicle.amount_of_accents;
     //   let tripStopDestiny;
     //   let ticketsSales
     //   // travel.TripStops.forEach(ts => {
@@ -78,7 +78,7 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
     //   if (nameDestiny || nameDestiny !== '')
     //     result.push({
     //       driver: travel.Driver.User.name,
-    //       vehicle: travel.Vechicle.description,
+    //       vehicle: travel.Vehicle.description,
     //       dateOfDeparture: travel.departureDate,
     //       nameOrigin,
     //       nameDestiny: nameDestiny,

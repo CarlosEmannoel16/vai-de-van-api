@@ -7,6 +7,7 @@ import { IGetUserByIdProtocolRepository } from '@/infra/protocols/user/GetUserBy
 import { IGetUserByNameProtocolRepository } from '@/infra/protocols/user/GetUserByNameProtocolRepository';
 import { IGetUserByParamsProtocolRepository } from '@/infra/protocols/user/GetUserByParamsProtocolRepository';
 import { IUpdateUserProtocolRepository } from '@/infra/protocols/user/UpdateUserProtocolRepository';
+import { IGetDriverByIdProtocolRepository } from './GetDriverByIdProtocolRepository';
 
 export interface IUserProtocolRepository
   extends ICreateUserProtocolRepository,
@@ -17,4 +18,5 @@ export interface IUserProtocolRepository
     IGetUserByIdProtocolRepository,
     IGetUserByNameProtocolRepository,
     IGetUserByParamsProtocolRepository,
-    IUpdateUserProtocolRepository {}
+    IUpdateUserProtocolRepository,
+    IGetDriverByIdProtocolRepository {}

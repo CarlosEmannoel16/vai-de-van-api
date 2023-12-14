@@ -73,16 +73,15 @@ model State {
 }
 
 model City {
-  id                 String               @id @default(uuid())
-  name               String
-  disabled           Boolean              @default(false)
-  coordinates        String
-  State              State?               @relation(fields: [stateId], references: [id])
-  stateId            String?
-  created_at         DateTime             @default(now())
-  update_at          DateTime             @default(now()) @updatedAt
-  TripStops          TripStops[]          @relation("CityDestiny")
-  PricesBetweenStops PricesBetweenStops[]
+  id          String      @id @default(uuid())
+  name        String
+  disabled    Boolean     @default(false)
+  coordinates String
+  State       State?      @relation(fields: [stateId], references: [id])
+  stateId     String?
+  created_at  DateTime    @default(now())
+  update_at   DateTime    @default(now()) @updatedAt
+  TripStops   TripStops[] @relation("CityDestiny")
 }
 
 model Route {
@@ -97,30 +96,20 @@ model Route {
   TripStops  TripStops[]
 }
 
-model PricesBetweenStops {
-  id         String    @id @default(uuid())
-  idDestiny  String
-  price      Float
-  tripStopId String
-  Payment    Payment[]
-  Ticket     Ticket[]
-  TripStops  TripStops @relation(fields: [tripStopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  City       City      @relation(fields: [idDestiny], references: [id])
-}
-
 model TripStops {
-  id                   String               @id @default(uuid())
+  id                   String   @id @default(uuid())
   cityid               String
-  initialStop          Boolean              @default(false)
-  finalStop            Boolean              @default(false)
-  City                 City                 @relation(fields: [cityid], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
+  initialStop          Boolean  @default(false)
+  finalStop            Boolean  @default(false)
+  City                 City     @relation(fields: [cityid], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
   tripStopOrder        Int
-  distanceFromLastStop Float                @default(0)
-  created_at           DateTime             @default(now())
-  update_at            DateTime             @default(now()) @updatedAt
-  PricesBetweenStops   PricesBetweenStops[]
-  Route                Route?               @relation(fields: [routeId], references: [id])
+  distanceFromLastStop Float    @default(0)
+  created_at           DateTime @default(now())
+  update_at            DateTime @default(now()) @updatedAt
+  Route                Route?   @relation(fields: [routeId], references: [id])
   routeId              String?
+  TicketOrigin         Ticket[] @relation("TripStopOrigin")
+  TicketDestiny        Ticket[] @relation("TripStopDestiny")
 }
 
 model Vehicle {
@@ -139,7 +128,7 @@ model Vehicle {
 
 model Travel {
   id            String       @id @default(uuid())
-  Vechicle      Vehicle      @relation(fields: [idVehicle], references: [id])
+  Vehicle       Vehicle      @relation(fields: [idVehicle], references: [id])
   description   String       @default("Viagem Padrao")
   idVehicle     String
   Route         Route        @relation(fields: [routeId], references: [id])
@@ -156,31 +145,31 @@ model Travel {
 }
 
 model Payment {
-  id                   String              @id @unique
-  Travel               Travel              @relation(fields: [travelId], references: [id])
-  status               StatusPayment
-  Ticket               Ticket[]
-  travelId             String
-  created_at           DateTime            @default(now())
-  update_at            DateTime            @default(now()) @updatedAt
-  PricesBetweenStops   PricesBetweenStops? @relation(fields: [pricesBetweenStopsId], references: [id])
-  pricesBetweenStopsId String?
+  id         String        @id @unique
+  Travel     Travel        @relation(fields: [travelId], references: [id])
+  status     StatusPayment
+  Ticket     Ticket[]
+  travelId   String
+  created_at DateTime      @default(now())
+  update_at  DateTime      @default(now()) @updatedAt
 }
 
 model Ticket {
-  id                   String             @id @default(uuid())
-  amount               Float
-  Customer             Custumer           @relation(fields: [custumerId], references: [id])
-  status               StatusTicket
-  Payment              Payment?           @relation(fields: [paymentId], references: [id])
-  paymentId            String?
-  created_at           DateTime           @default(now())
-  update_at            DateTime           @default(now()) @updatedAt
-  custumerId           String
-  Travel               Travel?            @relation(fields: [travelId], references: [id])
-  travelId             String?
-  PricesBetweenStops   PricesBetweenStops @relation(fields: [pricesBetweenStopsId], references: [id])
-  pricesBetweenStopsId String
+  id              String       @id @default(uuid())
+  amount          Float
+  Customer        Custumer     @relation(fields: [custumerId], references: [id])
+  status          StatusTicket
+  Payment         Payment?     @relation(fields: [paymentId], references: [id])
+  paymentId       String?
+  created_at      DateTime     @default(now())
+  update_at       DateTime     @default(now()) @updatedAt
+  custumerId      String
+  originId        String       @map("TripStopOrigin")
+  destinyId       String       @map("TripStopDestiny")
+  TripStopOrigin  TripStops    @relation(fields: [originId], references: [id], name: "TripStopOrigin")
+  TripStopDestiny TripStops    @relation(fields: [destinyId], references: [id], name: "TripStopDestiny")
+  Travel          Travel       @relation(fields: [travelId], references: [id])
+  travelId        String
 }
 
 model Custumer {

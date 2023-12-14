@@ -4,6 +4,9 @@ export class Vehicle {
   private id: string;
   private name: string;
   private quantitySeats: number;
+  private color: string;
+  private situation: string;
+  private plate: string;
 
   constructor(
     id = v4(),

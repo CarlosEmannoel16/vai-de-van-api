@@ -1,20 +1,19 @@
-import { TripStop } from '../TripStop';
+import { Ticket } from '@/domain/Ticket/entity/Ticket';
+import { TripStop } from '../entity/TripStop';
 
 export type ParamsTripStopFactoryCreate = {
   id?: string;
-  routeId: string;
+  cityId: string;
   tripStopOrder: number;
   distanceFromLast: number;
-  cityId: string;
 };
 export class TripStopFactory {
   static create({
-    distanceFromLast,
+    cityId,
     tripStopOrder,
     id = undefined,
-    routeId,
-    cityId,
+    distanceFromLast,
   }: ParamsTripStopFactoryCreate) {
-    return new TripStop(id, routeId, tripStopOrder, distanceFromLast, cityId);
+    return new TripStop(id, cityId, tripStopOrder, distanceFromLast);
   }
 }

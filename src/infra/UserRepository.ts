@@ -1,7 +1,5 @@
 import { Prisma, PrismaClient, User } from '@prisma/client';
-import {
-IUserProtocolRepository
-} from '@/infra/protocols';
+import { IUserProtocolRepository } from '@/infra/protocols';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
 import { UserModel } from '@/domain/models';
 import { ICreateDriverProtocolRepository } from '@infra/protocols/drivers';
@@ -11,15 +9,14 @@ import { IGetUserByNameProtocolRepository } from './protocols/user/GetUserByName
 import { IGetUserByCpfProtocolRepository } from './protocols/user/GetUserByCpfProtocolRepository';
 import { IGetUserByEmailProtocolRepository } from './protocols/user/GetUserByEmailProtocolRepository';
 import { IGetAllUsersProtocolRepository } from './protocols/user/GetAllUsersProtocolRepository';
+import { Driver } from '@/domain/Driver/entity/Driver';
 
 const prisma = new PrismaClient();
-export class UserRepository
-  implements
-  IUserProtocolRepository
-   
-{
-  async getUserByParams(data: IGetUserByParamsProtocolRepository.Params): Promise<User> {
-   return prisma.user.findFirst({where: data});
+export class UserRepository implements IUserProtocolRepository {
+  async getUserByParams(
+    data: IGetUserByParamsProtocolRepository.Params,
+  ): Promise<User> {
+    return prisma.user.findFirst({ where: data });
   }
   async delete(id: string): Promise<boolean> {
     const result = await prisma.user.delete({
@@ -95,21 +92,19 @@ export class UserRepository
     return await prisma.user.findFirst({
       where: { id: idUser },
       select: {
-          cpf: true,
-          date_of_birth: true,
-          Driver: true,
-          email: true,
-          name: true,
-          id: true,
-          password: true,
-          phone: true,
-          type: true,
-          Vehicle: true,
-          created_at: true,
-          update_at: true,
+        cpf: true,
+        date_of_birth: true,
+        Driver: true,
+        email: true,
+        name: true,
+        id: true,
+        password: true,
+        phone: true,
+        type: true,
+        Vehicle: true,
+        created_at: true,
+        update_at: true,
       },
-    
-     
     });
   }
 
@@ -177,5 +172,24 @@ export class UserRepository
       },
     });
     return data;
+  }
+
+  async getDriverById(id: string): Promise<Driver> {
+    const driver = await prisma.driver.findFirst({
+      where: {
+        idUser: id,
+      },
+      select: {
+        id: true,
+        User: {
+          select: {
+            email: true,
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+    return new Driver(driver.id, driver.User.name);
   }
 }

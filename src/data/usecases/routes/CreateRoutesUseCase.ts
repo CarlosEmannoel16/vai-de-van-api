@@ -1,6 +1,6 @@
 import { ICreateRouteUseCase } from '@/data/protocols/usecases/routes/CreateRoutes';
-import { RouteFactories } from '@/domain/entity/Route/factories/RouteFactories';
-import { TripStopFactory } from '@/domain/entity/Route/factories/TripStopFactory';
+import {  RouteFactory} from '@/domain/Route/factories/RouteFactories';
+import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
 import { ICreateRouteProtocolRepository } from '@/infra/protocols/route/CreateRouteProtocolRepository';
 
 export class CreateRouteUseCase implements ICreateRouteUseCase {
@@ -8,7 +8,8 @@ export class CreateRouteUseCase implements ICreateRouteUseCase {
   async execute(
     data: ICreateRouteUseCase.Params,
   ): Promise<ICreateRouteUseCase.Result> {
-    const route = RouteFactories.create({
+
+    const route = RouteFactory.create({
       km: data.km,
       kmValue: data.kmValue,
       name: data.name,
@@ -19,11 +20,7 @@ export class CreateRouteUseCase implements ICreateRouteUseCase {
         const tripStopCreated = TripStopFactory.create({
           cityId: tripStop.cityId,
           distanceFromLast: tripStop.distanceFromLast,
-          routeId: route.Id,
           tripStopOrder: tripStop.tripStopOrder,
-        });
-        tripStop.pricesBetweenStops.forEach(price => {
-          tripStopCreated.setPricesBetweenStops(price);
         });
 
         if (tripStop.initialStop) {

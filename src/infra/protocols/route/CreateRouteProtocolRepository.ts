@@ -1,4 +1,4 @@
-import { Route } from "@/domain/entity/Route/Route";
+import { Route } from "@/domain/Route/Route";
 
 export interface ICreateRouteProtocolRepository {
   create: (data: Route) => Promise<Route>;

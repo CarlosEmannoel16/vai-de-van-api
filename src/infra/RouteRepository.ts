@@ -3,7 +3,9 @@ import { IGetAllRouteProtocolRepository } from './protocols/route/GetAllRoutePro
 import { IGetByIdRouteProtocolRepository } from './protocols/route/GetByIdRouteProtocolRepository';
 import { IUpdateRouteProtocolRepository } from './protocols/route/UpdateRouteProtocolRepository';
 import { IRouteRepository } from './protocols/route';
-import { Route } from '@/domain/entity/Route/Route';
+import { Route } from '@/domain/Route/Route';
+import { RouteFactory } from '@/domain/Route/factories/RouteFactories';
+import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
 const prisma = new PrismaClient();
 export class RouteRepository implements IRouteRepository {
   async update(data: Route): Promise<Route> {
@@ -21,12 +23,10 @@ export class RouteRepository implements IRouteRepository {
 
     return data;
   }
-  async getById(
-    data: IGetByIdRouteProtocolRepository.Params,
-  ): Promise<IGetByIdRouteProtocolRepository.Result> {
-    const route = prisma.route.findFirst({
+  async getById(id: string): Promise<Route> {
+    const route = await prisma.route.findFirst({
       where: {
-        id: data.id,
+        id: id,
       },
       select: {
         id: true,
@@ -36,9 +36,35 @@ export class RouteRepository implements IRouteRepository {
         disabled: true,
         created_at: true,
         update_at: true,
+        TripStops: {
+          select: {
+            id: true,
+            cityid: true,
+            finalStop: true,
+            initialStop: true,
+            tripStopOrder: true,
+            distanceFromLastStop: true,
+            created_at: true,
+            update_at: true,
+          },
+        },
       },
     });
-    return route;
+
+    return RouteFactory.create({
+      km: route.km,
+      kmValue: Number(route.kmValue),
+      name: route.name,
+      id: route.id,
+      tripStops: route.TripStops.map(tripStop => {
+        return TripStopFactory.create({
+          cityId: tripStop.cityid,
+          distanceFromLast: Number(tripStop.distanceFromLastStop),
+          tripStopOrder: tripStop.tripStopOrder,
+          id: tripStop.id,
+        });
+      }),
+    });
   }
 
   async getAll(): Promise<IGetAllRouteProtocolRepository.Result[]> {
@@ -73,14 +99,6 @@ export class RouteRepository implements IRouteRepository {
               distanceFromLastStop: tripStop.DistanceFromLast,
               cityid: tripStop.CityId,
               update_at: new Date(),
-              PricesBetweenStops: {
-                create: tripStop.PricesBetweenStops.map(price => {
-                  return {
-                    idDestiny: price.destinyId,
-                    price: price.value,
-                  };
-                }),
-              },
             };
           }),
         },

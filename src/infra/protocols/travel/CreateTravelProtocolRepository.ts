@@ -1,5 +1,5 @@
-import { Travel } from '@/domain/entity/Travel/Travel';
+import { Travel } from '@/domain/Travel/entity/Travel';
 export interface ICreateTravelProtocolRepository {
-  create(data: Travel): Travel;
+  create(data: Travel): Promise<Travel>;
 }
 

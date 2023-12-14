@@ -15,7 +15,7 @@ export namespace IListAllTravels{
           User: User
         },
         Route: Route,
-        Vechicle: Vehicle,
+        Vehicle: Vehicle,
         update_at: Date,
         created_at: Date,
     }

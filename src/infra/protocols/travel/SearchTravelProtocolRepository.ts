@@ -1,18 +1,8 @@
-import {
-  City,
-  PricesBetweenStops,
-  Route,
-  Ticket,
-  Travel,
-  TripStops,
-  Vehicle,
-} from '@prisma/client';
-import { Driver } from 'typeorm';
+import { Travel } from '@/domain/Travel/entity/Travel';
+
 
 export interface ISearchTravelProtocolRepository {
-  search(
-    data: ISearchTravelProtocolRepository.Params,
-  ): Promise<ISearchTravelProtocolRepository.Result[]>;
+  search(data: ISearchTravelProtocolRepository.Params): Promise<Travel[]>;
 }
 
 export namespace ISearchTravelProtocolRepository {
@@ -22,31 +12,5 @@ export namespace ISearchTravelProtocolRepository {
     dateOfTravel: Date;
   };
 
-  export type Result = {
-    departureDate: Date;
-    arrivalDate: Date;
-    Route: {
-      TripStops: {
-        PricesBetweenStops: PricesBetweenStops[];
-      }[];
-      Origin: {
-        name: string;
-      };
-      Destiny: {
-        name: string;
-      };
-    };
-    Tickets: {
-      pricesBetweenStopsId: string;
-      PricesBetweenStops: {
-        TripStops: TripStops;
-      };
-    }[];
-    Driver: {
-      User: {
-        name: string;
-      };
-    };
-    Vechicle: Vehicle;
-  };
+
 }
