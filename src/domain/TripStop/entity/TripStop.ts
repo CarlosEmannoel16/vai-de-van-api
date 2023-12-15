@@ -5,6 +5,7 @@ import { v4 } from 'uuid';
 export class TripStop {
   private stopId: string;
   private cityId: string;
+  private cityName: string;
   private tripStopOrder: number;
   private distanceFromLast: number;
   private isFinalStop: boolean = false;
@@ -13,6 +14,7 @@ export class TripStop {
   constructor(
     stopId = v4(),
     cityId: string,
+    cityName: string,
     tripStopOrder: number,
     distanceFromLast: number,
   ) {
@@ -20,6 +22,7 @@ export class TripStop {
     this.cityId = cityId;
     this.tripStopOrder = tripStopOrder;
     this.distanceFromLast = distanceFromLast;
+    this.cityName = cityName;
     this.validate();
   }
 
@@ -29,6 +32,7 @@ export class TripStop {
       fieldsMessage.push('tripStopOrder must be greater than 0');
     if (!this.stopId) fieldsMessage.push('stopId is required');
     if (!this.cityId) fieldsMessage.push('cityId is required');
+    if(!this.cityName) fieldsMessage.push('cityName is required');
     if (!this.tripStopOrder) fieldsMessage.push('tripStopOrder is required');
 
     if (fieldsMessage.length > 0) throw new Error(fieldsMessage.join(', '));
@@ -56,6 +60,10 @@ export class TripStop {
 
   get IsFinalStop(): boolean {
     return this.isFinalStop;
+  }
+
+  get CityName(): string {
+    return this.cityName;
   }
 
   setInitialStop(): void {

@@ -8,6 +8,8 @@ export class Route {
   private name: string;
   private kmValue: number;
   private stops: TripStop[] = [];
+  private initialStop: TripStop;
+  private finalStop: TripStop;
 
   constructor(id = v4(), km: number, name: string, kmValue: number) {
     this.id = id;
@@ -47,13 +49,20 @@ export class Route {
   }
 
   addStop(data: TripStop) {
-
-    this.stops.map(stop => {
+    let lastOrder = 1;
+    this.stops?.map(stop => {
+      if (stop.TripStopOrder === 1) this.initialStop = stop;
+      if (stop.TripStopOrder === this.stops.length) this.finalStop = stop;
       if (stop.TripStopOrder === data.TripStopOrder)
-        throw new Error('TripStopOrder already exists');
+        throw new Error('TripStopOrder already exists: order ' + stop.TripStopOrder);
     });
 
     this.stops.push(data);
+
+    this.stops?.map(stop => {
+      if (stop.TripStopOrder === 1) this.initialStop = stop;
+      if (stop.TripStopOrder === this.stops.length) this.finalStop = stop
+    });
   }
 
   get Id(): string {
@@ -70,5 +79,13 @@ export class Route {
 
   get QuantityOfPassengers(): number {
     return 1;
+  }
+
+  get InitialStop(): TripStop {
+    return this.initialStop;
+  }
+
+  get FinalStop(): TripStop {
+    return this.finalStop;
   }
 }

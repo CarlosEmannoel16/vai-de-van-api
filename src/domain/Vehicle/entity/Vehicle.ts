@@ -1,36 +1,38 @@
 import { v4 } from 'uuid';
 
 export class Vehicle {
-  private id: string;
-  private name: string;
-  private quantitySeats: number;
-  private color: string;
-  private situation: string;
-  private plate: string;
+  private _id: string;
+  private _name: string;
+  private _quantitySeats: number;
+  private _color: string;
+  private _situation: string;
+  private _plate: string;
+  private _classification = 0;
+  private _withAir = false;
 
   constructor(
     id = v4(),
     name: string,
     quantitySeats: number,
   ) {
-    this.id = id;
-    this.name = name;
-    this.quantitySeats = quantitySeats;
+    this._id = id;
+    this._name = name;
+    this._quantitySeats = quantitySeats;
   }
 
   get Id(): string {
-    return this.id;
+    return this._id;
   }
 
   get Name(): string {
-    return this.name;
+    return this._name;
   }
 
   get QuantitySeats(): number {
-    return this.quantitySeats;
+    return this._quantitySeats;
   }
 
-  get IsAvailable(): boolean {
-    return true
+  get classification(): number {
+    return this._classification;
   }
 }

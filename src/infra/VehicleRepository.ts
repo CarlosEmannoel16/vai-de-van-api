@@ -58,13 +58,14 @@ export class VehicleRepository implements IVehicleProtocolRepository {
     return prisma.vehicle.findMany();
   }
   async getById(id: string): Promise<Vehicle> {
-    const vehicle = await prisma.vehicle.findUnique({ where: { id } });
-
+    const vehicle = await prisma.vehicle.findFirst({ where: { id } });
     return VehicleFactory.create({
       id: vehicle.id,
       name: vehicle.description,
       quantitySeats: vehicle.amount_of_accents,
-    })
+      color: vehicle.cor,
+      withAir: vehicle.with_air,
+    });
   }
   async create(
     data: ICreateVehicleProtocolRepository.params,

@@ -46,6 +46,11 @@ export class RouteRepository implements IRouteRepository {
             distanceFromLastStop: true,
             created_at: true,
             update_at: true,
+            City: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
       },
@@ -56,12 +61,13 @@ export class RouteRepository implements IRouteRepository {
       kmValue: Number(route.kmValue),
       name: route.name,
       id: route.id,
-      tripStops: route.TripStops.map(tripStop => {
+      tripStops: route.TripStops?.map(tripStop => {
         return TripStopFactory.create({
           cityId: tripStop.cityid,
           distanceFromLast: Number(tripStop.distanceFromLastStop),
           tripStopOrder: tripStop.tripStopOrder,
           id: tripStop.id,
+          cityName: tripStop.City.name,
         });
       }),
     });
@@ -89,7 +95,7 @@ export class RouteRepository implements IRouteRepository {
         kmValue: String(data.KmValue),
         id: data.Id,
         TripStops: {
-          create: data.Stops.map(tripStop => {
+          create: data.Stops?.map(tripStop => {
             return {
               id: tripStop.StopId,
               finalStop: tripStop.IsFinalStop,
@@ -97,8 +103,8 @@ export class RouteRepository implements IRouteRepository {
               tripStopOrder: tripStop.TripStopOrder,
               created_at: new Date(),
               distanceFromLastStop: tripStop.DistanceFromLast,
-              cityid: tripStop.CityId,
               update_at: new Date(),
+              cityid: tripStop.CityId,
             };
           }),
         },

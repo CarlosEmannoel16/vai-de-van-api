@@ -18,7 +18,7 @@ export class RouteFactory {
     const route = new Route(data.id, data.km, data.name, data.kmValue);
 
     if (data.tripStops) {
-      data.tripStops.map(tripStop => {
+      data.tripStops?.map(tripStop => {
         route.addStop(tripStop);
       });
     }

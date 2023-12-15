@@ -190,6 +190,9 @@ export class UserRepository implements IUserProtocolRepository {
         },
       },
     });
-    return new Driver(driver.id, driver.User.name);
+
+
+   if(!driver) throw new Error('Motorista não encontrado');
+    return new Driver(driver?.User.id, driver?.User?.name);
   }
 }

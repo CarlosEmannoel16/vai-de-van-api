@@ -4,6 +4,7 @@ import { TripStop } from '../entity/TripStop';
 export type ParamsTripStopFactoryCreate = {
   id?: string;
   cityId: string;
+  cityName: string;
   tripStopOrder: number;
   distanceFromLast: number;
 };
@@ -11,9 +12,11 @@ export class TripStopFactory {
   static create({
     cityId,
     tripStopOrder,
-    id = undefined,
+    id,
     distanceFromLast,
+    cityName,
   }: ParamsTripStopFactoryCreate) {
-    return new TripStop(id, cityId, tripStopOrder, distanceFromLast);
+
+    return new TripStop(id, cityId, cityName, tripStopOrder, distanceFromLast);
   }
 }

@@ -21,6 +21,7 @@ export class CreateRouteUseCase implements ICreateRouteUseCase {
           cityId: tripStop.cityId,
           distanceFromLast: tripStop.distanceFromLast,
           tripStopOrder: tripStop.tripStopOrder,
+          cityName: '-',
         });
 
         if (tripStop.initialStop) {

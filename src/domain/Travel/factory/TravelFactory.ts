@@ -25,6 +25,7 @@ export class TravelFactory {
     arrivalDate,
     departureDate,
   }: CreateTravelFactoryParams) {
+
     const travel = new Travel(
       id,
       name,

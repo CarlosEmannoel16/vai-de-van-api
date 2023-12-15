@@ -9,7 +9,6 @@ export class GetAllUsersController implements IController {
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
     try {
       const users = await this.getAllUsersUseCase.execute();
-      console.log(users);
       return res.status(200).json({ status: ResponseStatus.OK, data: users });
     } catch (error) {
       const { message, status, statusCode } = ControllerException.handleError(

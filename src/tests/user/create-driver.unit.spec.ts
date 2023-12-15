@@ -39,6 +39,7 @@ const makeUserRepository = (): IUserProtocolRepository => {
     getUserByName: jest.fn().mockResolvedValue(null),
     getUserByParams: jest.fn().mockResolvedValue(null),
     update: jest.fn().mockResolvedValue(null),
+    getDriverById: jest.fn().mockResolvedValue(null),
   };
 };
 

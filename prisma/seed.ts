@@ -22,7 +22,7 @@ async function main() {
     'https://brasilapi.com.br/api/ibge/municipios/v1/CE?providers=dados-abertos-br,gov,wikipedia',
   );
 
-  const data = cities.data.map((city: CityAxios) => {
+  const data = cities.data?.map((city: CityAxios) => {
     return {
       coordinates: '0t',
       name: city.nome ,

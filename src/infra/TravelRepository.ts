@@ -96,8 +96,8 @@ export class TravelRepository implements ITravelProtocolRepository {
         },
         Route: {
           TripStops: {
-            every: {
-              cityid: { in: [data.origin, data.destiny] },
+            some: {
+              cityid: data.origin,
             },
           },
         },
@@ -108,12 +108,24 @@ export class TravelRepository implements ITravelProtocolRepository {
         Route: {
           select: {
             TripStops: {
-              include: {},
+              select: {
+                id: true,
+                cityid: true,
+                finalStop: true,
+                initialStop: true,
+                tripStopOrder: true,
+                distanceFromLastStop: true,
+                City: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
             },
             id: true,
             km: true,
-            kmValue: true,
             name: true,
+            kmValue: true,
           },
         },
         Driver: {
@@ -126,49 +138,50 @@ export class TravelRepository implements ITravelProtocolRepository {
             id: true,
           },
         },
+        id: true,
         Vehicle: true,
         Tickets: true,
         description: true,
-        id: true,
       },
     });
 
-    return result.map(travel => {
+    return result?.map(travel => {
       const driver = new Driver(travel.Driver.User.name, travel.Driver.id);
       const route = RouteFactory.create({
         km: travel.Route.km,
         kmValue: Number(travel.Route.kmValue),
         name: travel.Route.name,
         id: travel.Route.id,
-        tripStops: travel.Route.TripStops.map(tripStop => {
+        tripStops: travel.Route.TripStops?.map(tripStop => {
           return TripStopFactory.create({
-            cityId: tripStop.cityid,
-            distanceFromLast: tripStop.distanceFromLastStop,
-            tripStopOrder: tripStop.tripStopOrder,
             id: tripStop.id,
+            cityId: tripStop.cityid,
+            cityName: tripStop.City.name,
+            tripStopOrder: tripStop.tripStopOrder,
+            distanceFromLast: tripStop.distanceFromLastStop,
           });
         }),
       });
 
       const vehicle = VehicleFactory.create({
-        color: travel.Vehicle.cor,
-        name: travel.Vehicle.description,
         id: travel.Vehicle.id,
-        quantitySeats: travel.Vehicle.amount_of_accents,
+        color: travel.Vehicle.cor,
         withAir: travel.Vehicle.with_air,
+        name: travel.Vehicle.description,
+        quantitySeats: travel.Vehicle.amount_of_accents,
       });
 
-     return  TravelFactory.createTravel({
-        arrivalDate: travel.arrivalDate,
+      return TravelFactory.createTravel({
         departureDate: travel.departureDate,
+        arrivalDate: travel.arrivalDate,
         name: travel.description,
+        id: travel.id,
+        vehicle,
         driver,
         route,
-        vehicle,
-        id: travel.id,
-        tickets: travel.Tickets.map(ticket => {
+        tickets: travel?.Tickets?.map(ticket => {
           return new Ticket(ticket.id, ticket.originId, ticket.destinyId);
-        }),
+        }) || [],
       });
     });
   }
