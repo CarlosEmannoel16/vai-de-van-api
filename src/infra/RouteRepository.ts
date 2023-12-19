@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client';
-import { IGetAllRouteProtocolRepository } from './protocols/route/GetAllRouteProtocolRepository';
-import { IGetByIdRouteProtocolRepository } from './protocols/route/GetByIdRouteProtocolRepository';
-import { IUpdateRouteProtocolRepository } from './protocols/route/UpdateRouteProtocolRepository';
-import { IRouteRepository } from './protocols/route';
 import { Route } from '@/domain/Route/Route';
+import { PrismaClient } from '@prisma/client';
+import { IRouteRepository } from './protocols/route';
 import { RouteFactory } from '@/domain/Route/factories/RouteFactories';
 import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
+import { IGetAllRouteProtocolRepository } from './protocols/route/GetAllRouteProtocolRepository';
 const prisma = new PrismaClient();
 export class RouteRepository implements IRouteRepository {
   async update(data: Route): Promise<Route> {
@@ -15,9 +13,9 @@ export class RouteRepository implements IRouteRepository {
       },
       data: {
         km: data.Km,
-        kmValue: String(data.KmValue),
         name: data.Name,
         update_at: new Date(),
+        kmValue: String(data.KmValue),
       },
     });
 
@@ -30,8 +28,8 @@ export class RouteRepository implements IRouteRepository {
       },
       select: {
         id: true,
-        name: true,
         km: true,
+        name: true,
         kmValue: true,
         disabled: true,
         created_at: true,
@@ -41,11 +39,11 @@ export class RouteRepository implements IRouteRepository {
             id: true,
             cityid: true,
             finalStop: true,
+            update_at: true,
+            created_at: true,
             initialStop: true,
             tripStopOrder: true,
             distanceFromLastStop: true,
-            created_at: true,
-            update_at: true,
             City: {
               select: {
                 name: true,

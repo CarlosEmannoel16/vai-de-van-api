@@ -1,4 +1,4 @@
-import { Vehicle } from "@prisma/client";
+import { Vehicle } from "@/domain/Vehicle/entity/Vehicle";
 
 export interface ICreateVehicleProtocolRepository {
   create(

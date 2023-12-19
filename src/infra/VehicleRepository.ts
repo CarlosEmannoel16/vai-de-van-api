@@ -1,14 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-
-import { IDeleteVehicleRepository } from './protocols/vechicle/DeleteVehicleRepository';
 import { IAssociateAndCreateVehicleDriverRepository } from './protocols/vechicle/AssociateAndCrreateVechicleDriverRepository';
 import { ICreateVehicleProtocolRepository } from './protocols/vechicle/CreateVechileProtocolRepository';
 import { IVehicleProtocolRepository } from './protocols/vechicle';
 import { GetVehicleByParamsProtocolRepository } from './protocols/vechicle/GetVehicleByParamsProtocolRepository';
-import { GetVehicleByIdProtocolRepository } from './protocols/vechicle/GetVechicleByIdProtocolRepository';
 import { IAssociateVehicleDriverRepository } from './protocols/vechicle/AssociateVechileDriverRepository';
 import { Vehicle } from '@/domain/Vehicle/entity/Vehicle';
-import { is } from 'sequelize/types/lib/operators';
 import { VehicleFactory } from '@/domain/Vehicle/factory/VehicleFactory';
 
 const prisma = new PrismaClient();
@@ -17,21 +13,30 @@ export class VehicleRepository implements IVehicleProtocolRepository {
   async getOneByParams(
     data: GetVehicleByParamsProtocolRepository.Params,
   ): Promise<Vehicle> {
-    return prisma.vehicle.findFirst({
+    const vehicle = await prisma.vehicle.findFirst({
       where: { ...data },
     });
+    return VehicleFactory.create({
+      id: vehicle.id,
+      name: vehicle.description,
+      quantitySeats: vehicle.amount_of_accents,
+      color: vehicle.cor,
+      withAir: vehicle.with_air,
+    });
   }
-  async deleteById(id: string): Promise<Vehicle> {
-    return prisma.vehicle.delete({
+  async deleteById(id: string): Promise<boolean> {
+    await prisma.vehicle.delete({
       where: { id },
     });
+
+    return true;
   }
   async associate({
     idDriver,
-    idVechile,
-  }: IAssociateVehicleDriverRepository.Params): Promise<Vehicle> {
-    return prisma.vehicle.update({
-      where: { id: idVechile },
+    idVehicle,
+  }: IAssociateVehicleDriverRepository.Params): Promise<any> {
+    await prisma.vehicle.update({
+      where: { id: idVehicle },
       data: { ownerId: idDriver },
     });
   }
@@ -43,7 +48,7 @@ export class VehicleRepository implements IVehicleProtocolRepository {
     ownerId,
     description,
   }: IAssociateAndCreateVehicleDriverRepository.Params): Promise<Vehicle> {
-    return prisma.vehicle.create({
+    const result = await prisma.vehicle.create({
       data: {
         amount_of_accents,
         cor,
@@ -53,9 +58,26 @@ export class VehicleRepository implements IVehicleProtocolRepository {
         description,
       },
     });
+
+    return VehicleFactory.create({
+      id: result.id,
+      name: result.description,
+      quantitySeats: result.amount_of_accents,
+      color: result.cor,
+      withAir: result.with_air,
+    });
   }
   async getAll(): Promise<Vehicle[]> {
-    return prisma.vehicle.findMany();
+    const result = await prisma.vehicle.findMany();
+    return result.map(vehicle =>
+      VehicleFactory.create({
+        id: vehicle.id,
+        name: vehicle.description,
+        quantitySeats: vehicle.amount_of_accents,
+        color: vehicle.cor,
+        withAir: vehicle.with_air,
+      }),
+    );
   }
   async getById(id: string): Promise<Vehicle> {
     const vehicle = await prisma.vehicle.findFirst({ where: { id } });
@@ -70,27 +92,28 @@ export class VehicleRepository implements IVehicleProtocolRepository {
   async create(
     data: ICreateVehicleProtocolRepository.params,
   ): Promise<Vehicle> {
-    const { amount_of_accents, cor, plate, with_air, ownerId, description } =
-      data;
-    return prisma.vehicle.create({
-      data: {
-        amount_of_accents,
-        cor,
-        plate,
-        with_air,
-        ownerId,
-        description,
-      },
+    const result = await prisma.vehicle.create({
+      data,
+    });
+
+    return VehicleFactory.create({
+      id: result.id,
+      name: result.description,
+      quantitySeats: result.amount_of_accents,
+      color: result.cor,
+      withAir: result.with_air,
     });
   }
 
   async update(data: Vehicle): Promise<Vehicle> {
-    return prisma.vehicle.update({
-      where: { id: data.id },
+    await prisma.vehicle.update({
+      where: { id: data.Id },
       data: {
         ...data,
       },
     });
+
+    return data;
   }
 
   async countAll(): Promise<number> {

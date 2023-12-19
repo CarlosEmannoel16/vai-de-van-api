@@ -77,7 +77,13 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async update(id: string, data: Travel): Promise<Travel> {
-    await travel.update({ where: { id }, data });
+    await travel.update({ where: { id }, data:{
+      arrivalDate: data.ArrivalDate,
+      departureDate: data.DepartureDate,
+      description: data.Name,
+      idVehicle: data.IdVehicle,
+    } });
+
     return data;
   }
 

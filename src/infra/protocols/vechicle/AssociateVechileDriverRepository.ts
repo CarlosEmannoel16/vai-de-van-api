@@ -1,13 +1,11 @@
-import { Vehicle } from "@prisma/client";
 
 export interface IAssociateVehicleDriverRepository {
-    associate(data: IAssociateVehicleDriverRepository.Params): Promise<Vehicle>;
+    associate(data: IAssociateVehicleDriverRepository.Params): Promise<any>;
   }
   export namespace IAssociateVehicleDriverRepository {
- 
+
     export type Params = {
-     idVechile: string
+     idVehicle: string
      idDriver: string
     };
   }
-  
