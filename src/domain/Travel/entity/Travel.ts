@@ -1,4 +1,4 @@
-import { Route } from '@/domain/Route/Route';
+import { Route } from '@/domain/Route/entity/Route';
 import { Vehicle } from '../../Vehicle/entity/Vehicle';
 import { Driver } from '@/domain/Driver/entity/Driver';
 import { Ticket } from '@/domain/Ticket/entity/Ticket';
@@ -69,15 +69,15 @@ export class Travel {
   }
 
   get IdRoute(): string {
-    return this.Route.Id;
+    return this.Route.id;
   }
 
   get IdDriver(): string {
-    return this.Driver.Id;
+    return this.Driver.id;
   }
 
   get nameDriver(): string {
-    return this.Driver.Name;
+    return this.Driver.name;
   }
 
   addTickets(ticket: Ticket[]) {
@@ -85,9 +85,9 @@ export class Travel {
   }
 
   getNameStopById(id: string): string {
-    const stop = this.Route.Stops.find(stop => stop.CityId === id);
+    const stop = this.Route.stops.find(stop => stop.cityId === id);
     if (!stop) throw new Error('Stop not found');
-    return stop.CityName;
+    return stop.cityName;
   }
 
   getDateOfDepartureInBr(): string {
@@ -95,22 +95,22 @@ export class Travel {
   }
 
   getValueBetweenStops(idStop1: string, idStop2: string): string {
-    const stop1 = this.Route.Stops.find(stop => stop.CityId === idStop1);
-    const stop2 = this.Route.Stops.find(stop => stop.CityId === idStop2);
+    const stop1 = this.Route.stops.find(stop => stop.cityId === idStop1);
+    const stop2 = this.Route.stops.find(stop => stop.cityId === idStop2);
     if (!stop1 || !stop2) throw new Error('Stop not found');
-    if (stop1.TripStopOrder >= stop2.TripStopOrder)
+    if (stop1.tripStopOrder >= stop2.tripStopOrder)
       throw new Error('Stop1 must be less than stop2');
 
 
     let distance = 0;
 
-    this.Route.Stops?.map(stop => {
-      if (stop.TripStopOrder > stop1.TripStopOrder && stop.TripStopOrder <= stop2.TripStopOrder) {
-        distance += stop.DistanceFromLast
+    this.Route.stops?.map(stop => {
+      if (stop.tripStopOrder > stop1.tripStopOrder && stop.tripStopOrder <= stop2.tripStopOrder) {
+        distance += stop.distanceFromLast
       }
     });
 
-    return toMoney(distance * this.Route.KmValue);
+    return toMoney(distance * this.Route.kmValue);
   }
 
   get classificationVehicle(): number {
@@ -121,11 +121,11 @@ export class Travel {
     stopIdOrigin: string,
     stopIdDestiny: string,
   ): number {
-    const stopOrigin = this.Route.Stops.find(
-      stop => stop.CityId === stopIdOrigin,
+    const stopOrigin = this.Route.stops.find(
+      stop => stop.cityId === stopIdOrigin,
     );
-    const stopDestiny = this.Route.Stops.find(
-      stop => stop.CityId === stopIdDestiny,
+    const stopDestiny = this.Route.stops.find(
+      stop => stop.cityId === stopIdDestiny,
     );
 
     let quantityMaxOfSeats = this.Vehicle.QuantitySeats;
@@ -134,8 +134,8 @@ export class Travel {
     //Removendo do total todas as viagens completas de ponto a ponto
     this.tickets?.map(ticket => {
       if (
-        ticket.Origin === this.Route.InitialStop.CityId &&
-        ticket.Destiny === this.Route.FinalStop.CityId
+        ticket.origin === this.Route.initialStop.cityId &&
+        ticket.destiny === this.Route.finalStop.cityId
       ) {
         travelFullQuantity += 1;
       }
@@ -146,23 +146,23 @@ export class Travel {
     //ver todas as origins anterior a origin atual
     // e ver todas as destinys posteriores a destiny atual
 
-    const routeAfterOrigin = this.Route.Stops.filter(stop => {
-      if (stop.TripStopOrder >= stopOrigin.TripStopOrder) return stop;
+    const routeAfterOrigin = this.Route.stops.filter(stop => {
+      if (stop.tripStopOrder >= stopOrigin.tripStopOrder) return stop;
     });
 
-    const routeBeforeDestiny = this.Route.Stops.filter(stop => {
-      if (stop.TripStopOrder < stopDestiny.TripStopOrder) return stop;
+    const routeBeforeDestiny = this.Route.stops.filter(stop => {
+      if (stop.tripStopOrder < stopDestiny.tripStopOrder) return stop;
     });
 
 
     if (routeAfterOrigin.length > 2) {
       routeAfterOrigin?.map(stop => {
         routeAfterOrigin?.map(stop2 => {
-          if (stop.CityId === stop2.CityId) return;
+          if (stop.cityId === stop2.cityId) return;
           this.tickets?.map(ticket => {
             if (
-              ticket.Origin === stop.CityId &&
-              ticket.Destiny === stop2.CityId
+              ticket.origin === stop.cityId &&
+              ticket.destiny === stop2.cityId
             )
               quantityMaxOfSeats -= 1;
           });
@@ -177,8 +177,8 @@ export class Travel {
         routeAfterOrigin?.map(stop2 => {
           this.tickets?.map(ticket => {
             if (
-              ticket.Origin === stop.CityId &&
-              ticket.Destiny === stop2.CityId
+              ticket.origin === stop.cityId &&
+              ticket.destiny === stop2.cityId
             )
               quantityMaxOfSeats -= 1;
           });

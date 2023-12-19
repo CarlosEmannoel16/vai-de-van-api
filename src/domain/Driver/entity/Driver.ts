@@ -4,13 +4,13 @@ export type TravelsActives = {
 };
 
 export class Driver {
-  private id: string;
-  private name: string;
+  private _id: string;
+  private _name: string;
   private travelsActives: TravelsActives[];
 
   constructor(id: string, name: string) {
-    this.id = id;
-    this.name = name;
+    this._id = id;
+    this._name = name;
     this.validate();
   }
 
@@ -21,11 +21,11 @@ export class Driver {
     if (errors.length > 0) throw new Error(errors.join(', '));
   }
 
-  get Id(): string {
-    return this.id;
+  get id(): string {
+    return this._id;
   }
 
-  get Name(): string {
-    return this.name;
+  get name(): string {
+    return this._name;
   }
 }

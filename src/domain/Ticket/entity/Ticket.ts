@@ -1,23 +1,23 @@
 export class Ticket {
-  private id: string;
-  private origin: string;
-  private destiny: string;
+  private _id: string;
+  private _origin: string;
+  private _destiny: string;
 
   constructor(id: string, destiny: string, origin: string) {
-    this.id = id;
-    this.origin = origin;
-    this.destiny = destiny;
+    this._id = id;
+    this._origin = origin;
+    this._destiny = destiny;
   }
 
-  get Id(): string {
-    return this.id;
+  get id(): string {
+    return this._id;
   }
 
-  get Origin(): string {
-    return this.origin;
+  get origin(): string {
+    return this._origin;
   }
 
-  get Destiny(): string {
-    return this.destiny;
+  get destiny(): string {
+    return this._destiny;
   }
 }

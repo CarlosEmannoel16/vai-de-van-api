@@ -1,4 +1,4 @@
-import { Route } from '@/domain/Route/Route';
+import { Route } from '@/domain/Route/entity/Route';
 import { PrismaClient } from '@prisma/client';
 import { IRouteRepository } from './protocols/route';
 import { RouteFactory } from '@/domain/Route/factories/RouteFactories';
@@ -9,13 +9,13 @@ export class RouteRepository implements IRouteRepository {
   async update(data: Route): Promise<Route> {
     await prisma.route.update({
       where: {
-        id: data.Id,
+        id: data.id,
       },
       data: {
-        km: data.Km,
-        name: data.Name,
+        km: data.km,
+        name: data.name,
         update_at: new Date(),
-        kmValue: String(data.KmValue),
+        kmValue: String(data.kmValue),
       },
     });
 
@@ -86,23 +86,23 @@ export class RouteRepository implements IRouteRepository {
   async create(data: Route): Promise<Route> {
     await prisma.route.create({
       data: {
-        km: data.Km,
-        name: data.Name,
+        km: data.km,
+        name: data.name,
         created_at: new Date(),
         disabled: false,
-        kmValue: String(data.KmValue),
-        id: data.Id,
+        kmValue: String(data.kmValue),
+        id: data.id,
         TripStops: {
-          create: data.Stops?.map(tripStop => {
+          create: data.stops?.map(tripStop => {
             return {
-              id: tripStop.StopId,
-              finalStop: tripStop.IsFinalStop,
-              initialStop: tripStop.IsInitialStop,
-              tripStopOrder: tripStop.TripStopOrder,
+              id: tripStop.stopId,
+              finalStop: tripStop.isFinalStop,
+              initialStop: tripStop.isInitialStop,
+              tripStopOrder: tripStop.tripStopOrder,
               created_at: new Date(),
-              distanceFromLastStop: tripStop.DistanceFromLast,
+              distanceFromLastStop: tripStop.distanceFromLast,
               update_at: new Date(),
-              cityid: tripStop.CityId,
+              cityid: tripStop.cityId,
             };
           }),
         },

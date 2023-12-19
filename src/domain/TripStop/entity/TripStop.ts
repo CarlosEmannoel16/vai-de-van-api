@@ -3,13 +3,13 @@ import { PricesBetweenStops } from '@/domain/models/PricesBetweenStops';
 import { v4 } from 'uuid';
 
 export class TripStop {
-  private stopId: string;
-  private cityId: string;
-  private cityName: string;
-  private tripStopOrder: number;
-  private distanceFromLast: number;
-  private isFinalStop: boolean = false;
-  private isInitialStop: boolean = false;
+  private _stopId: string;
+  private _cityId: string;
+  private _cityName: string;
+  private _tripStopOrder: number;
+  private _distanceFromLast: number;
+  private _isFinalStop: boolean = false;
+  private _isInitialStop: boolean = false;
 
   constructor(
     stopId = v4(),
@@ -18,52 +18,52 @@ export class TripStop {
     tripStopOrder: number,
     distanceFromLast: number,
   ) {
-    this.stopId = stopId;
-    this.cityId = cityId;
-    this.tripStopOrder = tripStopOrder;
-    this.distanceFromLast = distanceFromLast;
-    this.cityName = cityName;
+    this._stopId = stopId;
+    this._cityId = cityId;
+    this._tripStopOrder = tripStopOrder;
+    this._distanceFromLast = distanceFromLast;
+    this._cityName = cityName;
     this.validate();
   }
 
   private validate() {
     const fieldsMessage = [];
-    if (this.tripStopOrder < 0)
+    if (this._tripStopOrder < 0)
       fieldsMessage.push('tripStopOrder must be greater than 0');
-    if (!this.stopId) fieldsMessage.push('stopId is required');
-    if (!this.cityId) fieldsMessage.push('cityId is required');
-    if(!this.cityName) fieldsMessage.push('cityName is required');
-    if (!this.tripStopOrder) fieldsMessage.push('tripStopOrder is required');
+    if (!this._stopId) fieldsMessage.push('stopId is required');
+    if (!this._cityId) fieldsMessage.push('cityId is required');
+    if(!this._cityName) fieldsMessage.push('cityName is required');
+    if (!this._tripStopOrder) fieldsMessage.push('tripStopOrder is required');
 
     if (fieldsMessage.length > 0) throw new Error(fieldsMessage.join(', '));
   }
 
-  get StopId(): string {
-    return this.stopId;
+  get stopId(): string {
+    return this._stopId;
   }
 
-  get TripStopOrder(): number {
-    return this.tripStopOrder;
+  get tripStopOrder(): number {
+    return this._tripStopOrder;
   }
 
-  get DistanceFromLast(): number {
-    return this.distanceFromLast;
+  get distanceFromLast(): number {
+    return this._distanceFromLast;
   }
 
-  get CityId(): string {
-    return this.cityId;
+  get cityId(): string {
+    return this._cityId;
   }
 
-  get IsInitialStop(): boolean {
-    return this.isInitialStop;
+  get isInitialStop(): boolean {
+    return this._isInitialStop;
   }
 
-  get IsFinalStop(): boolean {
-    return this.isFinalStop;
+  get isFinalStop(): boolean {
+    return this._isFinalStop;
   }
 
-  get CityName(): string {
-    return this.cityName;
+  get cityName(): string {
+    return this._cityName;
   }
 
   setInitialStop(): void {
@@ -71,7 +71,7 @@ export class TripStop {
     const Messages = [];
     if (Messages.length > 0) throw new Error(Messages.join(', '));
 
-    this.isInitialStop = true;
+    this._isInitialStop = true;
   }
 
   setFinalStop(): void {
@@ -82,11 +82,11 @@ export class TripStop {
       Messages.push('distanceFromNext must be greater than 0');
 
     if (Messages.length > 0) throw new Error(Messages.join(', '));
-    this.isFinalStop = true;
+    this._isFinalStop = true;
   }
 
   setTripStopOrder(tripStopOrder: number): void {
-    this.tripStopOrder = tripStopOrder;
+    this._tripStopOrder = tripStopOrder;
   }
 
 

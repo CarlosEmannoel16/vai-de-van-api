@@ -37,8 +37,8 @@ export class CreateRouteUseCase implements ICreateRouteUseCase {
 
     await this.CreateRoute.create(route);
     return {
-      id: route.Id,
-      name: route.Name,
+      id: route.id,
+      name: route.name,
     };
   }
 }

@@ -1,7 +1,7 @@
 import { Vehicle } from '@/domain/Vehicle/entity/Vehicle';
 import { TripStops } from '@prisma/client';
 import { TripStop } from '../../TripStop/entity/TripStop';
-import { Route } from '../Route';
+import { Route } from '../entity/Route';
 
 
 
