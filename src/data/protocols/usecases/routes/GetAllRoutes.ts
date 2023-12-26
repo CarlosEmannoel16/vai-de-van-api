@@ -7,8 +7,13 @@ export namespace IGetAllRoutes {
     id: string;
     name: string;
     km: number;
-    kmValue: string | null;
-    originId: string;
-    destinyId: string;
+    kmValue: number | null;
+    tripStops : {
+      idCity: string;
+      nameCity: string;
+      distanceLastStop: number;
+      isInitialStop: boolean;
+      isFinalStop: boolean;
+    }[]
   };
 }

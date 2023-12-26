@@ -1,3 +1,4 @@
+import { HandlerErrorController } from '@/@shared/decorators/TryCatch';
 import { GetAllCitiesUseCase } from '@/data/usecases/city/getCityUseCase';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
@@ -6,6 +7,8 @@ import { Request, Response } from 'express';
 
 export class GetAllCitiesController implements IController {
   constructor(private readonly getAllCities: GetAllCitiesUseCase) {}
+
+  @HandlerErrorController
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
     try {
       const data = await this.getAllCities.execute();

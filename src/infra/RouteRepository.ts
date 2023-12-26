@@ -71,16 +71,50 @@ export class RouteRepository implements IRouteRepository {
     });
   }
 
-  async getAll(): Promise<IGetAllRouteProtocolRepository.Result[]> {
-    const routes = prisma.route.findMany({
+  async getAll(): Promise<Route[]> {
+    const routes = await prisma.route.findMany({
       select: {
         id: true,
         name: true,
         km: true,
         kmValue: true,
+        TripStops: {
+          select: {
+            id: true,
+            cityid: true,
+            finalStop: true,
+            initialStop: true,
+            tripStopOrder: true,
+            distanceFromLastStop: true,
+            City: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
       },
     });
-    return routes;
+    return routes.map(route => {
+      const routeEntity = RouteFactory.create({
+        km: route.km,
+        kmValue: Number(route.kmValue),
+        name: route.name,
+        id: route.id,
+      });
+
+      route.TripStops?.map(tripStop => {
+        const tripStopEntity = TripStopFactory.create({
+          cityId: tripStop.cityid,
+          cityName: tripStop.City.name,
+          distanceFromLast: Number(tripStop.distanceFromLastStop),
+          id: tripStop.id,
+          tripStopOrder: tripStop.tripStopOrder,
+        });
+        routeEntity.addStop(tripStopEntity);
+      });
+      return routeEntity;
+    });
   }
 
   async create(data: Route): Promise<Route> {

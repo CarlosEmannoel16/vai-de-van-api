@@ -1,12 +1,7 @@
+import { Route } from "@/domain/Route/entity/Route";
+
 export interface IGetAllRouteProtocolRepository {
-  getAll: () => Promise<IGetAllRouteProtocolRepository.Result[]>;
+  getAll: () => Promise<Route[]>;
 }
 
-export namespace IGetAllRouteProtocolRepository {
-  export type Result = {
-    id: string;
-    name: string;
-    km: number;
-    kmValue: string | null;
-  };
-}
+

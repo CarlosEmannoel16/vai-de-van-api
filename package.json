@@ -15,6 +15,7 @@
     "seed": "ts-node ./prisma/seed.ts"
   },
   "devDependencies": {
+    "@testcontainers/postgresql": "^10.4.0",
     "@types/axios": "^0.14.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",

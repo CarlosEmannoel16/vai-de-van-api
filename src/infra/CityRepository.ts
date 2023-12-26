@@ -1,5 +1,4 @@
 import { City, PrismaClient } from '@prisma/client';
-import { IGetAllCitiesRepository } from './protocols/city/GetAllCitiesRepository';
 import { ICityProtocolRepository } from './protocols/city';
 import { IUpdateCityRepository } from './protocols/city/UpdateCityRepository';
 
