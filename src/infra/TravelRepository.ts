@@ -1,6 +1,4 @@
-import { Between } from 'typeorm';
 import { ITravelProtocolRepository } from './protocols/travel';
-import { ICreateTravelProtocolRepository } from './protocols/travel/CreateTravelProtocolRepository';
 import { IFindAllTravelsProtocolRepository } from './protocols/travel/FindAllTravelsProtocolRepository';
 import { ISearchTravelProtocolRepository } from './protocols/travel/SearchTravelProtocolRepository';
 import { PrismaClient, TripStops, Vehicle } from '@prisma/client';
@@ -21,6 +19,7 @@ export class TravelRepository implements ITravelProtocolRepository {
       },
     });
   }
+
   async findAll(): Promise<IFindAllTravelsProtocolRepository.Params[]> {
     return travel.findMany({
       select: {
@@ -45,6 +44,7 @@ export class TravelRepository implements ITravelProtocolRepository {
       },
     });
   }
+
   async findById(id: string): Promise<any> {
     return travel.findUnique({
       where: { id },

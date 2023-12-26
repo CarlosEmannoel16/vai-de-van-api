@@ -64,9 +64,7 @@ export class Travel {
     return this.departureDate;
   }
 
-  changeDepartureDate(departureDate: Date) {
-    this.departureDate = departureDate;
-  }
+
 
   get IdRoute(): string {
     return this.Route.id;
@@ -84,6 +82,10 @@ export class Travel {
     this.tickets = [...this.tickets, ...ticket];
   }
 
+  changeDepartureDate(departureDate: Date) {
+    this.departureDate = departureDate;
+  }
+
   getNameStopById(id: string): string {
     const stop = this.Route.stops.find(stop => stop.cityId === id);
     if (!stop) throw new Error('Stop not found');
@@ -91,7 +93,9 @@ export class Travel {
   }
 
   getDateOfDepartureInBr(): string {
-    return this.departureDate.toLocaleDateString('pt-BR');
+    return this.departureDate.toLocaleDateString('pt-br', {
+      timeZone: 'America/Sao_Paulo',
+    })
   }
 
   getValueBetweenStops(idStop1: string, idStop2: string): string {
@@ -154,7 +158,6 @@ export class Travel {
       if (stop.tripStopOrder < stopDestiny.tripStopOrder) return stop;
     });
 
-
     if (routeAfterOrigin.length > 2) {
       routeAfterOrigin?.map(stop => {
         routeAfterOrigin?.map(stop2 => {
@@ -169,8 +172,6 @@ export class Travel {
         });
       });
     }
-
-
 
     if (routeBeforeDestiny.length > 1) {
       routeBeforeDestiny?.map(stop => {

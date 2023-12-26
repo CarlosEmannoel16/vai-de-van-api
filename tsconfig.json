@@ -32,6 +32,6 @@
       "@makeUseCases": ["main/factories/useCases/index.ts"]
     }
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "tests"],
   "exclude": []
 }

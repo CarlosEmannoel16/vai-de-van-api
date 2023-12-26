@@ -1,11 +1,10 @@
-import { CreateCityUseCase } from '../../data/usecases/city/CreateCityUseCase';
-import { ICityProtocolRepository } from '../../infra/protocols/city';
-export type SutTypes = {
-  sut: CreateCityUseCase;
-  cityRepository: ICityProtocolRepository;
-};
+import { CreateCityUseCase } from "@/data/usecases/city/CreateCityUseCase";
+import { IGetStateByIdProtocolRepository } from "@/infra/protocols";
+import { ICityProtocolRepository } from "@/infra/protocols/city";
 
-const makeSut = (): SutTypes => {
+
+
+const makeSut = () => {
   const makeCityRepository = (): ICityProtocolRepository => {
     return {
       create: jest.fn(),
@@ -16,13 +15,22 @@ const makeSut = (): SutTypes => {
     };
   };
 
-  const cityRepository = makeCityRepository();
 
-  const sut = new CreateCityUseCase(cityRepository);
+  const makeStateRepository = (): IGetStateByIdProtocolRepository => {
+    return {
+      getById: jest.fn(),
+    }
+  }
+
+  const cityRepository = makeCityRepository();
+  const stateRepository = makeStateRepository();
+
+  const sut = new CreateCityUseCase(cityRepository, stateRepository);
 
   return {
     sut,
     cityRepository: cityRepository,
+    stateRepository,
   };
 };
 
