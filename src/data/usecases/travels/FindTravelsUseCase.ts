@@ -1,5 +1,5 @@
 import { IListAllTravels } from '@/data/protocols/usecases/travels/LisatAllTravels';
-import { ITravelProtocolRepository } from '@/infra/protocols/travel';
+import { ITravelProtocolRepository } from '@/domain/Travel/repositories';
 import { Travel } from '@prisma/client';
 
 export class FindAllTravels implements IListAllTravels {

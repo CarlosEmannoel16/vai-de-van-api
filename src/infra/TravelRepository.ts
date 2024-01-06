@@ -1,6 +1,6 @@
-import { ITravelProtocolRepository } from './protocols/travel';
-import { IFindAllTravelsProtocolRepository } from './protocols/travel/FindAllTravelsProtocolRepository';
-import { ISearchTravelProtocolRepository } from './protocols/travel/SearchTravelProtocolRepository';
+import { ITravelProtocolRepository } from '../domain/Travel/repositories';
+import { IFindAllTravelsProtocolRepository } from '../domain/Travel/repositories/FindAllTravelsProtocolRepository';
+import { ISearchTravelProtocolRepository } from '../domain/Travel/repositories/SearchTravelProtocolRepository';
 import { PrismaClient, TripStops, Vehicle } from '@prisma/client';
 import { Travel } from '@/domain/Travel/entity/Travel';
 import { TravelFactory } from '@/domain/Travel/factory/TravelFactory';

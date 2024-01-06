@@ -1,5 +1,5 @@
 import { IUpdateRoute } from '@/data/protocols/usecases/routes/UpdateRoutes';
-import { IUpdateRouteProtocolRepository } from '@/infra/protocols/route/UpdateRouteProtocolRepository';
+import { IUpdateRouteProtocolRepository } from '@/domain/Route/repository/UpdateRouteProtocolRepository';
 import { Route } from '@prisma/client';
 
 export class UpdateRouteUseCase implements IUpdateRoute {

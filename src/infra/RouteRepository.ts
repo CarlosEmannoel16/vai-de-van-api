@@ -1,9 +1,8 @@
 import { Route } from '@/domain/Route/entity/Route';
 import { PrismaClient } from '@prisma/client';
-import { IRouteRepository } from './protocols/route';
+import { IRouteRepository } from '../domain/Route/repository';
 import { RouteFactory } from '@/domain/Route/factories/RouteFactories';
 import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
-import { IGetAllRouteProtocolRepository } from './protocols/route/GetAllRouteProtocolRepository';
 const prisma = new PrismaClient();
 export class RouteRepository implements IRouteRepository {
   async update(data: Route): Promise<Route> {

@@ -1,5 +1,5 @@
 import { ISearchTravelsUseCaseProtocol } from '@/data/protocols/usecases/travels/SearchTravels';
-import { ITravelProtocolRepository } from '@/infra/protocols/travel';
+import { ITravelProtocolRepository } from '@/domain/Travel/repositories';
 
 export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
   constructor(private readonly travelRepository: ITravelProtocolRepository) {}

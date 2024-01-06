@@ -1,6 +1,6 @@
 import { IDisableRouteUseCase } from '@/data/protocols/usecases/routes/DisableRoutes';
-import { IRouteRepository } from '@/infra/protocols/route';
-import { ITravelProtocolRepository } from '@/infra/protocols/travel';
+import { IRouteRepository } from '@/domain/Route/repository';
+import { ITravelProtocolRepository } from '@/domain/Travel/repositories';
 
 export class DisableRouteUseCase implements IDisableRouteUseCase {
   constructor(

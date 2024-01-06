@@ -1,6 +1,6 @@
 import { InvalidGenericError } from "@/data/errors/InvalidGenericError";
 import { IGetByIdRoutes } from "@/data/protocols/usecases/routes/GetByIdRoutes";
-import { IGetByIdRouteProtocolRepository } from "@/infra/protocols/route/GetByIdRouteProtocolRepository";
+import { IGetByIdRouteProtocolRepository } from "@/domain/Route/repository/GetByIdRouteProtocolRepository";
 
 export class GetByIdRouterUseCase{
     constructor(private readonly getByIdRoute: IGetByIdRouteProtocolRepository){}

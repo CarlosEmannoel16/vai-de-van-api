@@ -1,7 +1,7 @@
 import { ICreateTravels } from '@/data/protocols/usecases/travels/CreateTravels';
 import { IUserProtocolRepository } from '@/infra/protocols';
-import { IGetByIdRouteProtocolRepository } from '@/infra/protocols/route/GetByIdRouteProtocolRepository';
-import { ITravelProtocolRepository } from '@/infra/protocols/travel';
+import { IGetByIdRouteProtocolRepository } from '@/domain/Route/repository/GetByIdRouteProtocolRepository';
+import { ITravelProtocolRepository } from '@/domain/Travel/repositories';
 import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle';
 import { v4 } from 'uuid';
 import { TravelFactory } from '@/domain/Travel/factory/TravelFactory';

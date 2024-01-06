@@ -1,6 +1,6 @@
 import { IGetAllRoutes } from '@/data/protocols/usecases/routes/GetAllRoutes';
 import { Route } from '@/domain/Route/entity/Route';
-import { IGetAllRouteProtocolRepository } from '@/infra/protocols/route/GetAllRouteProtocolRepository';
+import { IGetAllRouteProtocolRepository } from '@/domain/Route/repository/GetAllRouteProtocolRepository';
 
 export class GetAllRoutesUseCase implements IGetAllRoutes {
   constructor(private readonly getAllRoutes: IGetAllRouteProtocolRepository) {}

@@ -1,7 +1,6 @@
-import { Prisma, PrismaClient, User } from '@prisma/client';
+import {  PrismaClient, User } from '@prisma/client';
 import { IUserProtocolRepository } from '@/infra/protocols';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
-import { UserModel } from '@/domain/models';
 import { ICreateDriverProtocolRepository } from '@infra/protocols/drivers';
 import { IGetUserByParamsProtocolRepository } from './protocols/user/GetUserByParamsProtocolRepository';
 import { ICreateUserProtocolRepository } from './protocols/user/CreateUserProtocolRepository';

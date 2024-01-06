@@ -1,7 +1,7 @@
 import { ICreateRouteUseCase } from '@/data/protocols/usecases/routes/CreateRoutes';
 import {  RouteFactory} from '@/domain/Route/factories/RouteFactories';
 import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
-import { ICreateRouteProtocolRepository } from '@/infra/protocols/route/CreateRouteProtocolRepository';
+import { ICreateRouteProtocolRepository } from '@/domain/Route/repository/CreateRouteProtocolRepository';
 
 export class CreateRouteUseCase implements ICreateRouteUseCase {
   constructor(private readonly CreateRoute: ICreateRouteProtocolRepository) {}

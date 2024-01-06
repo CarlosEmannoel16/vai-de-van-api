@@ -1,7 +1,7 @@
 import { ICreateTravels } from '@/data/protocols/usecases/travels/CreateTravels';
 import { IListAllTravels } from '@/data/protocols/usecases/travels/LisatAllTravels';
-import { IGetByIdRouteProtocolRepository } from '@/infra/protocols/route/GetByIdRouteProtocolRepository';
-import { ICreateTripStopsProtocolRepository } from '@/infra/protocols/tripStops/CreateTripStopsProtocolRepository';
+import { IGetByIdRouteProtocolRepository } from '@/domain/Route/repository/GetByIdRouteProtocolRepository';
+import { ICreateTripStopsProtocolRepository } from '@/domain/TripStop/repositories/CreateTripStopsProtocolRepository';
 import ControllerException from '@/presentation/helpers/ControllerException';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse } from '@/presentation/utils/response';
