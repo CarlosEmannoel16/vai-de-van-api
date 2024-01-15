@@ -1,41 +1,52 @@
-# Vai de Van
 
-Steps to run this project:
+# Vai de Van Back End
 
-1. Run `npm i` command
-2. Run `npm start` command
+Vai de van é um sistema para gerenciamento de rotas de viagens e vendas de passagens.
 
-# Sistema de Gerenciamento Viagens
+## Autores
 
-<strong> Funcionalidades: </strong>
-
-'*' - Futuras Implementações 
-
-CRUD de Veiculos </br>
-CRUD de Motoristas</br>
-CRUD de Viagens</br>
-CRUD de rotas</br>
-CRUD de Cidades* e Destritos*</br>
-Dashboard de Vendas*</br>
-Dashboard de Viagens*</br>
-Cadastro de Formas de Pagamentos*</br>
-
-@Carlos Emannoel
+- [@CarlosEmannoel16](https://www.github.com/CarlosEmannoel16)
 
 
+## Instalação
+
+Instale meu projeto com npm
+
+```bash
+  npm install 
+
+```
+    
+## Rodando os testes
+
+Para rodar os testes, rode o seguinte comando
+
+```bash
+  npm run test
+```
+
+
+## Funcionalidades
+
+- Cadastro de veiculos
+- Cadastro de clientes
+- Cadastro de rotas
+- Cadastro de viagens
+- Cadastro de motoristas
+- Relatório de vendas
+- Relatório de viagens
 
 
 
 
 
+## Stack utilizada
+
+**Front-end:** React
+
+**Back-end:** Node, Express, Postgres
 
 
-
-
-
-
-
-
-
-
+## 🛠 Habilidades
+Javascript, HTML, CSS, Node
 
