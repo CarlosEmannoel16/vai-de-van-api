@@ -4,6 +4,8 @@ export class Customer {
   private _email: string;
   private _password: string;
   private _cpf: string;
+  private _phone: string;
+  private _phone2: string;
 
   constructor(id: string, name: string, email: string, cpf: string) {
     this._id = id;
@@ -30,5 +32,17 @@ export class Customer {
 
   get password(): string {
     return this._password;
+  }
+
+  get cpf(): string {
+    return this._cpf;
+  }
+
+  get phone(): string {
+    return this._phone;
+  }
+
+  get phone2(): string {
+    return this._phone2;
   }
 }

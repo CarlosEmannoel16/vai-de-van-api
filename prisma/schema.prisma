@@ -157,7 +157,7 @@ model Payment {
 model Ticket {
   id              String       @id @default(uuid())
   amount          Float
-  Customer        Custumer     @relation(fields: [custumerId], references: [id])
+  Customer        Customer     @relation(fields: [custumerId], references: [id])
   status          StatusTicket
   Payment         Payment?     @relation(fields: [paymentId], references: [id])
   paymentId       String?
@@ -172,7 +172,7 @@ model Ticket {
   travelId        String
 }
 
-model Custumer {
+model Customer {
   id         String   @id @default(uuid())
   cpf        String
   name       String
