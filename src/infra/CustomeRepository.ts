@@ -21,12 +21,20 @@ export class CustomerRepository {
     });
     return data;
   }
-  async findCustomerByEmail(email: string) {
+  async findCustomerByEmail(email: string):Promise<Customer> {
     const database = new PrismaClient();
     const customer = await database.customer.findFirst({
       where: {
         email,
       },
+    });
+
+    return CustomerFactory.create({
+      id: customer.id,
+      name: customer.name,
+      email: customer.email,
+      cpf: customer.cpf,
+      password: customer.password,
     });
   }
   async findCustomerById(id: string): Promise<Customer> {
