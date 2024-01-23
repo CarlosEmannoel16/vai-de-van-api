@@ -1,4 +1,4 @@
-import { GetVehicleByIdProtocolRepository } from '@/infra/protocols/vechicle/GetVechicleByIdProtocolRepository';
+import { GetVehicleByIdProtocolRepository } from '@/infra/protocols/vechicle/GetVehicleByIdProtocolRepository';
 
 export class GetVehicleByIdUseCase {
   constructor(
