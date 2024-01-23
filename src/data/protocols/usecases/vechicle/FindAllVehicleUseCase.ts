@@ -1,5 +1,13 @@
-import { Vehicle } from "@prisma/client";
 
 export interface IFindAllVehiclesUseCase {
-  execure(): Promise<Vehicle[]>;
+  execute(): Promise<IFindAllVehiclesUseCase.Result[]>;
+}
+
+export namespace IFindAllVehiclesUseCase {
+  export type Result = {
+    id: string;
+    name: string;
+    color: string;
+    plate: string;
+  };
 }
