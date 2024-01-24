@@ -10,11 +10,9 @@ export class User {
   private _created_at: Date;
   private _updated_at: Date;
 
-  constructor(id: string, name: string, email: string) {
+  constructor(id: string, name: string) {
     this._id = id;
     this._name = name;
-    this._email = email;
-
     this.validate();
   }
 
@@ -22,7 +20,6 @@ export class User {
     const errors = [];
     if (!this._id) errors.push('[User] id is required');
     if (!this._name) errors.push('[User] name is required');
-    if (!this._email) errors.push('[User] email is required');
     if (errors.length > 0) throw new Error(errors.join(', '));
   }
 
@@ -50,5 +47,11 @@ export class User {
     return this._cpf;
   }
 
+  get email(): string {
+    return this._email;
+  }
 
+  set email(email: string) {
+    this._email = email;
+  }
 }

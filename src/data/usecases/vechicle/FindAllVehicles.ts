@@ -10,6 +10,9 @@ export class FindAllVehiclesUseCase implements IFindAllVehiclesUseCase {
       id: vehicle.id,
       name: vehicle.name,
       plate: vehicle.plate,
+      quantitySeats: vehicle.quantitySeats,
+      ownerId: vehicle.ownerId,
+
     }));
   }
 }

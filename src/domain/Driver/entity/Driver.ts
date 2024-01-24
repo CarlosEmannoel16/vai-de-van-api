@@ -14,24 +14,16 @@ export class Driver extends User {
   constructor(
     id: string,
     name: string,
-    email: string,
-    cnh: string,
-    date_of_birth: Date,
-    cnhDateOfIssue: Date,
-    cnhExpirationDate: Date,
     idUser: string,
   ) {
-    super(id, name, email);
-    this._cnh = cnh;
-    this._cnhDateOfIssue = cnhDateOfIssue;
-    this._cnhExpirationDate = cnhExpirationDate;
+    super(id, name);
+
   }
 
   validate() {
     const errors = [];
     if (!this.id) errors.push('[Driver] id is required');
     if (!this.name) errors.push('[Driver] name is required');
-    if (!this.id) errors.push('[Driver] idUser is required');
     if (errors.length > 0) throw new Error(errors.join(', '));
   }
 

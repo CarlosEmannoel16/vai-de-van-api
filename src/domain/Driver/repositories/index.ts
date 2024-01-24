@@ -1,4 +1,5 @@
 import { CreateDriverProtocolRepository } from './CreateDriverProtocolRepository';
+import { IFindAllDriversProtocolRepository } from './FindAllDriversProtocolRepository';
 
 export interface IDriverProtocolRepository
-  extends CreateDriverProtocolRepository {}
+  extends CreateDriverProtocolRepository, IFindAllDriversProtocolRepository {}

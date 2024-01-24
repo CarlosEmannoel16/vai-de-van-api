@@ -47,6 +47,8 @@ export class VehicleRepository implements IVehicleProtocolRepository {
       quantitySeats: vehicle.amount_of_accents,
       color: vehicle.cor,
       withAir: vehicle.with_air,
+      plate: vehicle.plate,
+      ownerId: vehicle.ownerId,
     });
   }
   async deleteById(id: string): Promise<boolean> {
@@ -90,6 +92,8 @@ export class VehicleRepository implements IVehicleProtocolRepository {
       quantitySeats: result.amount_of_accents,
       color: result.cor,
       withAir: result.with_air,
+      plate: result.plate,
+      ownerId: result.ownerId,
     });
   }
   async getAll(): Promise<Vehicle[]> {
@@ -101,6 +105,8 @@ export class VehicleRepository implements IVehicleProtocolRepository {
         quantitySeats: vehicle.amount_of_accents,
         color: vehicle.cor,
         withAir: vehicle.with_air,
+        plate: vehicle.plate,
+        ownerId: vehicle.ownerId,
       }),
     );
   }
@@ -112,6 +118,8 @@ export class VehicleRepository implements IVehicleProtocolRepository {
       quantitySeats: vehicle.amount_of_accents,
       color: vehicle.cor,
       withAir: vehicle.with_air,
+      plate: vehicle.plate,
+      ownerId: vehicle.ownerId,
     });
   }
   async create(
@@ -127,6 +135,8 @@ export class VehicleRepository implements IVehicleProtocolRepository {
       quantitySeats: result.amount_of_accents,
       color: result.cor,
       withAir: result.with_air,
+      plate: result.plate,
+      ownerId: result.ownerId,
     });
   }
 

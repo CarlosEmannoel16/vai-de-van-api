@@ -9,6 +9,7 @@ export class Vehicle {
   private _plate: string;
   private _classification = 0;
   private _withAir = false;
+  private _ownerId: string;
 
   constructor(id = v4(), name: string, quantitySeats: number) {
     this._id = id;
@@ -19,17 +20,28 @@ export class Vehicle {
   get Id(): string {
     return this._id;
   }
+  get ownerId(): string {
+    return this._ownerId;
+  }
+
+  set ownerId(ownerId: string) {
+    this._ownerId = ownerId;
+  }
 
   get name(): string {
     return this._name;
   }
 
-  get QuantitySeats(): number {
+  get quantitySeats(): number {
     return this._quantitySeats;
   }
 
   get classification(): number {
     return this._classification;
+  }
+
+  set color(color: string) {
+    this._color = color;
   }
 
   get color(): string {
@@ -42,6 +54,10 @@ export class Vehicle {
 
   get description(): string {
     return this._name;
+  }
+
+  set plate(plate: string) {
+    this._plate = plate;
   }
 
   get plate(): string {

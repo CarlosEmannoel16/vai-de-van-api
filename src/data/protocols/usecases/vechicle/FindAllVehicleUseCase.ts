@@ -9,5 +9,7 @@ export namespace IFindAllVehiclesUseCase {
     name: string;
     color: string;
     plate: string;
+    quantitySeats: number;
+    ownerId: string;
   };
 }
