@@ -7,15 +7,14 @@ export interface IListAllTravels {
 export namespace IListAllTravels{
     export type Params = {
         id: string,
-
         departureDate: Date,
         arrivalDate: Date,
-        Driver: {
-          id: string,
-          User: User
-        },
-        Route: Route,
-        Vehicle: Vehicle,
+        driverId: string,
+        driverName: string,
+        routeId: string,
+        vehicleId: string,
+        vehicleName: string,
+        amount_of_accents: number,
         update_at: Date,
         created_at: Date,
     }

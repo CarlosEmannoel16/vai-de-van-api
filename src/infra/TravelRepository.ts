@@ -20,8 +20,8 @@ export class TravelRepository implements ITravelProtocolRepository {
     });
   }
 
-  async findAll(): Promise<IFindAllTravelsProtocolRepository.Params[]> {
-    return travel.findMany({
+  async findAll(): Promise<Travel[]> {
+    const data = await travel.findMany({
       select: {
         id: true,
         departureDate: true,
@@ -43,6 +43,32 @@ export class TravelRepository implements ITravelProtocolRepository {
         created_at: true,
       },
     });
+
+    return TravelFactory.mapTravel(
+      data.map(travel => ({
+        arrivalDate: travel.arrivalDate,
+        departureDate: travel.departureDate,
+        driver: new Driver(travel.Driver.id, travel.Driver.User.name),
+        name: travel.description,
+        route: RouteFactory.create({
+          km: travel.Route.km,
+          kmValue: Number(travel.Route.kmValue),
+          name: travel.Route.name,
+          id: travel.Route.id,
+        }),
+        vehicle: VehicleFactory.create({
+          color: travel.Vehicle.cor,
+          id: travel.Vehicle.id,
+          name: travel.Vehicle.description,
+          ownerId: travel.Vehicle.ownerId,
+          plate: travel.Vehicle.plate,
+          quantitySeats: travel.Vehicle.amount_of_accents,
+          withAir: travel.Vehicle.with_air,
+        }),
+        id: travel.id,
+        tickets: [] as any,
+      })),
+    );
   }
 
   async findById(id: string): Promise<any> {
@@ -77,12 +103,15 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async update(id: string, data: Travel): Promise<Travel> {
-    await travel.update({ where: { id }, data:{
-      arrivalDate: data.ArrivalDate,
-      departureDate: data.DepartureDate,
-      description: data.Name,
-      idVehicle: data.IdVehicle,
-    } });
+    await travel.update({
+      where: { id },
+      data: {
+        arrivalDate: data.ArrivalDate,
+        departureDate: data.DepartureDate,
+        description: data.Name,
+        idVehicle: data.IdVehicle,
+      },
+    });
 
     return data;
   }
@@ -175,6 +204,8 @@ export class TravelRepository implements ITravelProtocolRepository {
         withAir: travel.Vehicle.with_air,
         name: travel.Vehicle.description,
         quantitySeats: travel.Vehicle.amount_of_accents,
+        ownerId: travel.Vehicle.ownerId,
+        plate: travel.Vehicle.plate,
       });
 
       return TravelFactory.createTravel({
@@ -185,9 +216,10 @@ export class TravelRepository implements ITravelProtocolRepository {
         vehicle,
         driver,
         route,
-        tickets: travel?.Tickets?.map(ticket => {
-          return new Ticket(ticket.id, ticket.originId, ticket.destinyId);
-        }) || [],
+        tickets:
+          travel?.Tickets?.map(ticket => {
+            return new Ticket(ticket.id, ticket.originId, ticket.destinyId);
+          }) || [],
       });
     });
   }

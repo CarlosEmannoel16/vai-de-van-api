@@ -25,7 +25,6 @@ export class TravelFactory {
     arrivalDate,
     departureDate,
   }: CreateTravelFactoryParams) {
-
     const travel = new Travel(
       id,
       name,
@@ -41,5 +40,11 @@ export class TravelFactory {
     }
 
     return travel;
+  }
+
+  static mapTravel(travels: CreateTravelFactoryParams[]) {
+    return travels.map(travel => {
+      return this.createTravel(travel);
+    });
   }
 }

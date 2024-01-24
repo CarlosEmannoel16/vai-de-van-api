@@ -11,13 +11,8 @@ export class Driver extends User {
   private _cnhExpirationDate: Date;
   private _travelsActives: TravelsActives[];
 
-  constructor(
-    id: string,
-    name: string,
-    idUser: string,
-  ) {
+  constructor(id: string, name: string) {
     super(id, name);
-
   }
 
   validate() {
