@@ -1,0 +1,16 @@
+@startuml
+    entity Customer
+
+    Customer : uuid id
+    Customer : string name
+    Customer : string cpf
+    Customer : boolean is_active
+    Customer : timestamp created_at
+    Customer : timestamp updated_at
+
+    Customer : create()
+    Customer : update()
+    Customer : delete()
+    Customer : hostoryTravels()
+@enduml
+

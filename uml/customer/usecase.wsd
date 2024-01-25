@@ -1,0 +1,11 @@
+@startuml
+
+:Customer: -> (Consultar viagens)
+:Customer: -> (Realizar Login)
+:Customer: -> (Realizar Cadastro)
+:Customer: -> (Realizar Compra)
+:Customer: -> (Realizar Pagamento)
+:Customer: -> (Ver histórico de viagens)
+:Customer: -> (Editar dados pessoais)
+
+@enduml
