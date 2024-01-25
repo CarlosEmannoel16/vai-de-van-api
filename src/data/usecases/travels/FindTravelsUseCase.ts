@@ -1,22 +1,22 @@
 import { IListAllTravels } from '@/data/protocols/usecases/travels/LisatAllTravels';
+import { Travel } from '@/domain/Travel/entity/Travel';
 import { ITravelProtocolRepository } from '@/domain/Travel/repositories';
-import { Travel } from '@prisma/client';
 
 export class FindAllTravels implements IListAllTravels {
   constructor(private readonly travelRepository: ITravelProtocolRepository) {}
-  async execute(): Promise<IListAllTravels.Params[]> {
-    const data = await  this.travelRepository.findAll();
+  async execute(): Promise<IListAllTravels.Result[]> {
+    const data = await this.travelRepository.findAll();
     return data.map((travel: Travel) => ({
-      amount_of_accents: travel.,
+      amount_of_accents: travel.vehicle.quantitySeats,
       arrivalDate: travel.arrivalDate,
       created_at: travel.created_at,
       departureDate: travel.departureDate,
-      driverId: travel.driverId,
-      driverName: travel.driver.name,
+      driverId: travel.idDriver,
+      driverName: travel.nameDriver,
       id: travel.id,
-      routeId: travel.routeId,
+      routeId: travel.idRoute,
       update_at: travel.update_at,
-      vehicleId: travel.vehicleId,
+      vehicleId: travel.idVehicle,
       vehicleName: travel.vehicle.name,
     }));
   }
