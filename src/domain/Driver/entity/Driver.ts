@@ -35,7 +35,7 @@ export class Driver {
   }
 
   get travelsActives(): TravelsActives[] {
-    return this.travelsActives;
+    return this._travelsActives;
   }
 
   set email(email: string) {
@@ -44,18 +44,6 @@ export class Driver {
 
   set cnh(cnh: string) {
     this._cnh = cnh;
-  }
-
-  set cpf(cpf: string) {
-    this.cpf = cpf;
-  }
-
-  set date_of_birth(date_of_birth: Date) {
-    this.date_of_birth = date_of_birth;
-  }
-
-  set phone(phone: string) {
-    this.phone = phone;
   }
 
   set cnhDateOfIssue(cnhDateOfIssue: Date) {
@@ -68,9 +56,5 @@ export class Driver {
 
   set travelsActives(travelsActives: TravelsActives[]) {
     this._travelsActives = travelsActives;
-  }
-
-  get dateOfBirthToBR(): String {
-    return this.date_of_birth.toLocaleDateString('pt-BR');
   }
 }
