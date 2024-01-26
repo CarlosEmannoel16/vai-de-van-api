@@ -16,7 +16,10 @@ export class TripStopFactory {
     distanceFromLast,
     cityName,
   }: ParamsTripStopFactoryCreate) {
-
     return new TripStop(id, cityId, cityName, tripStopOrder, distanceFromLast);
+  }
+
+  static mapCreate(tripStop: ParamsTripStopFactoryCreate[]): TripStop[] {
+    return tripStop.map(stop => this.create(stop));
   }
 }

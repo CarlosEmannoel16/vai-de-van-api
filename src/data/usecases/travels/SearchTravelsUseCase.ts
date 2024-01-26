@@ -11,6 +11,7 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
     const result: ISearchTravelsUseCaseProtocol.Result[] = [];
 
     if (!travels) return undefined;
+    console.log(travels);
 
     travels.forEach(travel => {
       result.push({

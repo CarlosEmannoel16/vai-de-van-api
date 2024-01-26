@@ -19,7 +19,7 @@ export class DriverFactory {
     cnhExpirationDate,
     name,
   }: params): Driver {
-    const driver = new Driver(id, name, idUser);
+    const driver = new Driver(id, name);
 
     return driver;
   }

@@ -17,7 +17,6 @@ export class CreateCityUseCase implements ICreateCityUseCase {
     if (!existsState) throw new Error('Estado não encontrado');
 
     const result = await this.cityRepository.create(data);
-    if(result) return result;
-
+    if (result) return result;
   }
 }

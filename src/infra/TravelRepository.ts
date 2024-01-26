@@ -9,11 +9,13 @@ import { RouteFactory } from '@/domain/Route/factories/RouteFactories';
 import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
 import { VehicleFactory } from '@/domain/Vehicle/factory/VehicleFactory';
 import { Ticket } from '@/domain/Ticket/entity/Ticket';
+import { DriverFactory } from '@/domain/Driver/factory/DriverFactory';
+import { TicketFactory } from '@/domain/Ticket/factory/TicketFactory';
 
-const travel = new PrismaClient().travel;
+const prismaClient = new PrismaClient();
 export class TravelRepository implements ITravelProtocolRepository {
   async findByIdRoute(id: string): Promise<any> {
-    return travel.findMany({
+    return prismaClient.travel.findMany({
       where: {
         routeId: id,
       },
@@ -21,7 +23,7 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async findAll(): Promise<Travel[]> {
-    const data = await travel.findMany({
+    const data = await prismaClient.travel.findMany({
       select: {
         id: true,
         departureDate: true,
@@ -72,7 +74,7 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async findById(id: string): Promise<any> {
-    return travel.findUnique({
+    return prismaClient.travel.findUnique({
       where: { id },
       select: {
         arrivalDate: true,
@@ -87,14 +89,14 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async create(data: Travel): Promise<Travel> {
-    await travel.create({
+    await prismaClient.travel.create({
       data: {
-        description: data.Name,
-        departureDate: data.DepartureDate,
-        arrivalDate: data.ArrivalDate,
-        idVehicle: data.IdVehicle,
-        routeId: data.IdRoute,
-        driverId: data.IdDriver,
+        description: data.name,
+        departureDate: data.departureDate,
+        arrivalDate: data.arrivalDate,
+        idVehicle: data.idVehicle,
+        routeId: data.idRoute,
+        driverId: data.idDriver,
         status: 'DESABILITADA',
       },
     });
@@ -103,13 +105,13 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async update(id: string, data: Travel): Promise<Travel> {
-    await travel.update({
+    await prismaClient.travel.update({
       where: { id },
       data: {
-        arrivalDate: data.ArrivalDate,
-        departureDate: data.DepartureDate,
-        description: data.Name,
-        idVehicle: data.IdVehicle,
+        arrivalDate: data.arrivalDate,
+        departureDate: data.departureDate,
+        description: data.name,
+        idVehicle: data.idVehicle,
       },
     });
 
@@ -117,13 +119,13 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async delete(id: string): Promise<any> {
-    return travel.delete({ where: { id } });
+    return prismaClient.travel.delete({ where: { id } });
   }
 
   async search(
     data: ISearchTravelProtocolRepository.Params,
   ): Promise<Travel[]> {
-    const result = await new PrismaClient().travel.findMany({
+    const result = await prismaClient.travel.findMany({
       where: {
         departureDate: {
           lte: new Date(`${data.dateOfTravel}T23:59:59.000Z`),
@@ -137,89 +139,70 @@ export class TravelRepository implements ITravelProtocolRepository {
           },
         },
       },
-      select: {
-        arrivalDate: true,
-        departureDate: true,
-        Route: {
-          select: {
-            TripStops: {
-              select: {
-                id: true,
-                cityid: true,
-                finalStop: true,
-                initialStop: true,
-                tripStopOrder: true,
-                distanceFromLastStop: true,
-                City: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-            id: true,
-            km: true,
-            name: true,
-            kmValue: true,
-          },
-        },
+      include: {
         Driver: {
-          select: {
-            User: {
-              select: {
-                name: true,
-              },
-            },
-            id: true,
+          include: {
+            User: true,
           },
         },
-        id: true,
         Vehicle: true,
+        Route: {
+          include: {
+            TripStops: {
+              include: {
+                City: true,
+              },
+            },
+          },
+        },
         Tickets: true,
-        description: true,
       },
     });
 
+    console.log(result);
+
     return result?.map(travel => {
-      const driver = new Driver(travel.Driver.User.name, travel.Driver.id);
-      const route = RouteFactory.create({
-        km: travel.Route.km,
-        kmValue: Number(travel.Route.kmValue),
-        name: travel.Route.name,
-        id: travel.Route.id,
-        tripStops: travel.Route.TripStops?.map(tripStop => {
-          return TripStopFactory.create({
-            id: tripStop.id,
-            cityId: tripStop.cityid,
-            cityName: tripStop.City.name,
-            tripStopOrder: tripStop.tripStopOrder,
-            distanceFromLast: tripStop.distanceFromLastStop,
-          });
-        }),
-      });
-
-      const vehicle = VehicleFactory.create({
-        id: travel.Vehicle.id,
-        color: travel.Vehicle.cor,
-        withAir: travel.Vehicle.with_air,
-        name: travel.Vehicle.description,
-        quantitySeats: travel.Vehicle.amount_of_accents,
-        ownerId: travel.Vehicle.ownerId,
-        plate: travel.Vehicle.plate,
-      });
-
       return TravelFactory.createTravel({
         departureDate: travel.departureDate,
         arrivalDate: travel.arrivalDate,
         name: travel.description,
         id: travel.id,
-        vehicle,
-        driver,
-        route,
-        tickets:
-          travel?.Tickets?.map(ticket => {
-            return new Ticket(ticket.id, ticket.originId, ticket.destinyId);
-          }) || [],
+        vehicle: VehicleFactory.create({
+          id: travel.Vehicle.id,
+          color: travel.Vehicle.cor,
+          withAir: travel.Vehicle.with_air,
+          name: travel.Vehicle.description,
+          quantitySeats: travel.Vehicle.amount_of_accents,
+          ownerId: travel.Vehicle.ownerId,
+          plate: travel.Vehicle.plate,
+        }),
+        driver: DriverFactory.create({
+          id: travel.Driver.id,
+          name: travel.Driver.User.name,
+          idUser: travel.Driver.User.id,
+        }),
+        route: RouteFactory.create({
+          km: travel.Route.km,
+          kmValue: Number(travel.Route.kmValue),
+          name: travel.Route.name,
+          id: travel.Route.id,
+          tripStops: TripStopFactory.mapCreate(
+            travel.Route.TripStops?.map(ts => ({
+              cityId: ts.cityid,
+              cityName: ts.City.name,
+              distanceFromLast: ts.distanceFromLastStop,
+              tripStopOrder: ts.tripStopOrder,
+              id: ts.id,
+            })),
+          ),
+        }),
+        tickets: TicketFactory.mapCreate(
+          travel?.Tickets?.map(ticket => ({
+            destiny: ticket.destinyId,
+            id: ticket.id,
+            origin: ticket.originId,
+          })),
+        ),
       });
     });
   }

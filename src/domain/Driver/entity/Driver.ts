@@ -5,29 +5,33 @@ export type TravelsActives = {
   id: string;
 };
 
-export class Driver extends User {
+export class Driver {
   private _cnh: string;
   private _cnhDateOfIssue: Date;
   private _cnhExpirationDate: Date;
   private _travelsActives: TravelsActives[];
+  private _id: string;
+  private _name: string;
+  private _email: string;
 
   constructor(id: string, name: string) {
-    super(id, name);
+    this._id = id;
+    this._name = name;
   }
 
   validate() {
     const errors = [];
-    if (!this.id) errors.push('[Driver] id is required');
-    if (!this.name) errors.push('[Driver] name is required');
+    if (!this._id) errors.push('[Driver] id is required');
+    if (!this._name) errors.push('[Driver] name is required');
     if (errors.length > 0) throw new Error(errors.join(', '));
   }
 
   get id(): string {
-    return this.id;
+    return this._id;
   }
 
   get name(): string {
-    return this.name;
+    return this._name;
   }
 
   get travelsActives(): TravelsActives[] {
@@ -35,7 +39,7 @@ export class Driver extends User {
   }
 
   set email(email: string) {
-    this.email = email;
+    this._email = email;
   }
 
   set cnh(cnh: string) {
