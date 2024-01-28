@@ -18,6 +18,7 @@ export class FindAllTravels implements IListAllTravels {
       update_at: travel.update_at,
       vehicleId: travel.idVehicle,
       vehicleName: travel.vehicle.name,
+      status: travel.status,
     }));
   }
 }

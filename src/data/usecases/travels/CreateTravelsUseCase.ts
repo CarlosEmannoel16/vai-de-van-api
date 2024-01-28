@@ -19,9 +19,7 @@ export class CreateTravels implements ICreateTravels {
     const vehicle = await this.vehicleRepository.getById(data.idVehicle);
     if (!vehicle) throw new Error('Veículo não encontrado');
 
-
     const driver = await this.userRepository.getDriverById(data.driverId);
-
 
     const travel = TravelFactory.createTravel({
       arrivalDate: new Date(data.arrivalDate),
@@ -32,7 +30,6 @@ export class CreateTravels implements ICreateTravels {
       route,
       id: v4(),
     });
-
 
     await this.travelRepository.create(travel);
   }

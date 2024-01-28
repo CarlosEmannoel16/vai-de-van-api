@@ -31,6 +31,7 @@ import { makeGetTravelByIdController } from './main/factories/controllers/Travel
 import { makeSearchTravelClientController } from './main/factories/controllers/Travel/makeSearchTravelClientController';
 import { makeUpdateRouteController } from './main/factories/controllers/Route/makeUpdateRouteController';
 import { makeDashboardController } from './main/factories/controllers/Dashboard/makeDashboardController';
+import { makeFindAllDriversController } from './main/factories/controllers/Driver/makeFindAllDriversController';
 
 const routes = Router();
 
@@ -47,6 +48,7 @@ routes
   .post('/user/driver', adapterRouter(makeCreateDriverController()))
   .get('/user/:id', adapterRouter(makeGetUserByIdController()))
   .get('/users',  adapterRouter(makeGetAllUserController()))
+  .get('/drivers',  adapterRouter(makeFindAllDriversController()))
   .post('/user', adapterRouter(makeCreateUserController()))
   .delete('/user/:id', adapterRouter(makeDeleteUserController()))
   .put('/user/driver', adapterRouter(makeUpdateUserController()))

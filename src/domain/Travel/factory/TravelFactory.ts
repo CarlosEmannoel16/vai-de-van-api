@@ -1,5 +1,5 @@
 import { Driver } from '@/domain/Driver/entity/Driver';
-import { Travel } from '../entity/Travel';
+import { Travel, TravelStatus } from '../entity/Travel';
 import { Route } from '@/domain/Route/entity/Route';
 import { Vehicle } from '@/domain/Vehicle/entity/Vehicle';
 import { Ticket } from '@/domain/Ticket/entity/Ticket';
@@ -13,6 +13,7 @@ export type CreateTravelFactoryParams = {
   arrivalDate: Date;
   tickets?: Ticket[];
   departureDate: Date;
+  status?: TravelStatus;
 };
 export class TravelFactory {
   static createTravel({
@@ -24,11 +25,13 @@ export class TravelFactory {
     tickets = [],
     arrivalDate,
     departureDate,
+    status,
   }: CreateTravelFactoryParams) {
     const travel = new Travel(
       id,
       name,
       route,
+      status,
       driver,
       vehicle,
       departureDate,

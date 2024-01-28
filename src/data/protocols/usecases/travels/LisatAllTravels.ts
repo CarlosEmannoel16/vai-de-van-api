@@ -15,5 +15,6 @@ export namespace IListAllTravels {
     amount_of_accents: number;
     update_at: Date;
     created_at: Date;
+    status: string;
   };
 }

@@ -5,6 +5,8 @@ import { Ticket } from '@/domain/Ticket/entity/Ticket';
 import { toMoney } from '@/@shared/utils/toMoney';
 import { deprecate } from 'util';
 
+export type TravelStatus = 'EM_ANDAMENTO' | 'CONCLUIDA' | 'CANCELADA' | 'DESABILITADA' | 'ABERTA';
+
 export class Travel {
   private _id: string;
   private _Route: Route;
@@ -16,11 +18,14 @@ export class Travel {
   private _departureDate: Date;
   private _update_at: Date;
   private _created_at: Date;
+  private _status: TravelStatus
+
 
   constructor(
     id: string,
     name: string,
     Route: Route,
+    status: TravelStatus,
     Driver: Driver,
     Vehicle: Vehicle,
     arrivalDate: Date,
@@ -29,6 +34,7 @@ export class Travel {
     this._id = id;
     this._name = name;
     this._Route = Route;
+    this._status = status || 'DESABILITADA';
     this._Driver = Driver;
     this._Vehicle = Vehicle;
     this._arrivalDate = arrivalDate;
@@ -78,6 +84,10 @@ export class Travel {
 
   get nameDriver(): string {
     return this._Driver.name;
+  }
+
+  get status(): TravelStatus {
+    return this._status;
   }
 
 

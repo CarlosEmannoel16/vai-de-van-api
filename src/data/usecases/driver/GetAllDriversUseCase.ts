@@ -8,6 +8,9 @@ export class GetAllDriversUseCase implements IGetAllDriversUseCase {
 
   async execute(): Promise<IGetAllDriversUseCase.Result[]> {
     const result = await this.getAllDriversRepository.findAll();
-    return result;
+    return result.map((driver) => ({
+      id: driver.id,
+      name: driver.name,
+    }));
   }
 }
