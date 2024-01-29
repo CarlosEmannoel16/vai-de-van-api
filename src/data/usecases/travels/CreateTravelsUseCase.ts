@@ -5,11 +5,12 @@ import { ITravelProtocolRepository } from '@/domain/Travel/repositories';
 import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle';
 import { v4 } from 'uuid';
 import { TravelFactory } from '@/domain/Travel/factory/TravelFactory';
+import { IGetDriverByIdProtocolRepository } from '@/infra/protocols/user/GetDriverByIdProtocolRepository';
 export class CreateTravels implements ICreateTravels {
   constructor(
     private readonly travelRepository: ITravelProtocolRepository,
     private readonly routesRepository: IGetByIdRouteProtocolRepository,
-    private readonly userRepository: IUserProtocolRepository,
+    private readonly driverById: IGetDriverByIdProtocolRepository,
     private readonly vehicleRepository: IVehicleProtocolRepository,
   ) {}
   async execute(data: ICreateTravels.Params): Promise<any> {
@@ -19,7 +20,7 @@ export class CreateTravels implements ICreateTravels {
     const vehicle = await this.vehicleRepository.getById(data.idVehicle);
     if (!vehicle) throw new Error('Veículo não encontrado');
 
-    const driver = await this.userRepository.getDriverById(data.driverId);
+    const driver = await this.driverById.getDriverById(data.driverId);
     if (!driver) throw new Error('Motorista não encontrado');
 
     const travel = TravelFactory.createTravel({
