@@ -1,5 +1,6 @@
 import { CreateTravels } from '@/data/usecases/travels/CreateTravelsUseCase';
 import { CityRepository } from '@/infra/CityRepository';
+import { DriverRepository } from '@/infra/DriverRepository';
 import { RouteRepository } from '@/infra/RouteRepository';
 import { TravelRepository } from '@/infra/TravelRepository';
 import { UserRepository } from '@/infra/UserRepository';
@@ -12,7 +13,7 @@ export const makeCreateTravelController = (): IController => {
     new CreateTravels(
       new TravelRepository(),
       new RouteRepository(),
-      new UserRepository(),
+      new DriverRepository(),
       new VehicleRepository(),
     ),
   );

@@ -134,8 +134,8 @@ model Travel {
   Route         Route        @relation(fields: [routeId], references: [id])
   routeId       String
   Payment       Payment[]
-  Driver        Driver?      @relation(fields: [driverId], references: [idUser])
-  driverId      String?
+  Driver        Driver?      @relation(fields: [driverId], references: [id])
+  driverId      String?      @default("60fa4c20-e4e0-4419-9cde-fea353a457ab")
   departureDate DateTime
   arrivalDate   DateTime
   status        StatusTravel @default(ABERTA)
