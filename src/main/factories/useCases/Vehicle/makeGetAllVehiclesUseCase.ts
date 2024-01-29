@@ -1,4 +1,4 @@
-import { FindAllVehiclesUseCase } from "@/data/usecases/vechicle/FindAllVehicles";
+import { FindAllVehiclesUseCase } from "@/data/usecases/vehicle/FindAllVehicles";
 import { VehicleRepository } from "@/infra/VehicleRepository";
 
 export const makeGetAllVehiclesUseCase = () => {

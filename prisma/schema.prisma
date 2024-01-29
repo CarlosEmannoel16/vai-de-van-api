@@ -32,18 +32,17 @@ enum StatusTicket {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String   @id @default(uuid())
   name          String
   password      String
-  email         String    @unique
-  cpf           String    @unique
+  email         String   @unique
+  cpf           String   @unique
   phone         String
   date_of_birth DateTime
   type          String
-  created_at    DateTime  @default(now())
-  update_at     DateTime  @default(now()) @updatedAt
+  created_at    DateTime @default(now())
+  update_at     DateTime @default(now()) @updatedAt
   Driver        Driver[]
-  Vehicle       Vehicle[]
 }
 
 model SessionUsers {
@@ -122,8 +121,7 @@ model Vehicle {
   cor               String
   created_at        DateTime @default(now())
   update_at         DateTime @default(now()) @updatedAt
-  Owner             User     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ownerId           String
+  ownerName         String
 }
 
 model Travel {

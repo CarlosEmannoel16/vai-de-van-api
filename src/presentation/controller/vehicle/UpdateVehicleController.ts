@@ -1,4 +1,4 @@
-import { UpdateVehicleUseCase } from "@/data/usecases/vechicle/UpdateVehicle";
+import { UpdateVehicleUseCase } from "@/data/usecases/vehicle/UpdateVehicle";
 import { IFindAllVehiclesUseCase } from "@/data/protocols/usecases/vechicle/FindAllVehicleUseCase";
 import ControllerException from "@/presentation/helpers/ControllerException";
 import { IController } from "@/presentation/protocols/IController";

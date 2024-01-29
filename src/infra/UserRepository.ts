@@ -100,7 +100,6 @@ export class UserRepository implements IUserProtocolRepository {
         password: true,
         phone: true,
         type: true,
-        Vehicle: true,
         created_at: true,
         update_at: true,
       },
@@ -157,7 +156,7 @@ export class UserRepository implements IUserProtocolRepository {
             phone: true,
             type: true,
             update_at: true,
-            Vehicle: true,
+
             Driver: {
               select: {
                 cnh: true,

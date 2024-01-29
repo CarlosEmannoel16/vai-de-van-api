@@ -1,4 +1,4 @@
-import { GetVehicleByIdUseCase } from "@/data/usecases/vechicle/GetVehicleById"
+import { GetVehicleByIdUseCase } from "@/data/usecases/vehicle/GetVehicleById"
 import { VehicleRepository } from "@/infra/VehicleRepository"
 import { GetVehicleByIdController } from "@/presentation/controller/vehicle/GetVehicleByIdController"
 

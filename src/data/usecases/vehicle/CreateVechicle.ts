@@ -16,13 +16,20 @@ export class CreateVehicleUseCase implements ICreateVehicle {
     if (existsVehiclePlate) throw new Error('Placa já cadastrada');
 
 
-    const user = await this.userRepository.getById(data.ownerId);
-    if(!user) throw new Error('Proprietário não encontrado');
-
     const result = await this.vehicleRepository.create({
       ...data,
       amount_of_accents: Number(data.amount_of_accents),
     });
-    return result;
+    return {
+      amount_of_accents: result.quantitySeats,
+      cor: result.color,
+      created_at: result.dateOfCreation,
+      description: result.description,
+      id: result.id,
+      ownerName: result.ownerName,
+      plate: result.plate,
+      update_at: result.lastUpdate,
+      with_air: result.withAir,
+    };
   }
 }

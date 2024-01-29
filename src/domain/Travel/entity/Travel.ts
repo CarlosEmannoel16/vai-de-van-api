@@ -79,6 +79,10 @@ export class Travel {
     return this._Route.id;
   }
 
+  get route(): Route {
+    return this._Route;
+  }
+
   get idDriver(): string {
     return this._Driver.id;
   }

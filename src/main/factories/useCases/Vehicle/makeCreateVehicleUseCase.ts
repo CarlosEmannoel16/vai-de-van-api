@@ -1,4 +1,4 @@
-import { CreateVehicleUseCase } from "@/data/usecases/vechicle/CreateVechicle"
+import { CreateVehicleUseCase } from "@/data/usecases/vehicle/CreateVechicle"
 import { UserRepository } from "@/infra/UserRepository"
 import { VehicleRepository } from "@/infra/VehicleRepository"
 

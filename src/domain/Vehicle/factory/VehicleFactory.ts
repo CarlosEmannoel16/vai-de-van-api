@@ -7,7 +7,7 @@ export type createVehicleType = {
   quantitySeats: number;
   color: string;
   withAir: boolean;
-  ownerId: string;
+  ownerName: string;
 };
 
 export class VehicleFactory {
@@ -18,13 +18,13 @@ export class VehicleFactory {
     color,
     plate,
     withAir,
-    ownerId,
+    ownerName,
   }: createVehicleType) {
     const vehicle = new Vehicle(id, name, quantitySeats);
 
     if (color) vehicle.color = color;
     if (plate) vehicle.plate = plate;
-    if (ownerId) vehicle.ownerId = ownerId;
+    if (ownerName) vehicle.ownerName = ownerName;
 
     return vehicle;
   }

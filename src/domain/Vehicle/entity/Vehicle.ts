@@ -9,7 +9,9 @@ export class Vehicle {
   private _plate: string;
   private _classification = 0;
   private _withAir = false;
-  private _ownerId: string;
+  private _ownerName: string;
+  private _createdAt: Date;
+  private _dateOfUpdate: Date;
 
   constructor(id = v4(), name: string, quantitySeats: number) {
     this._id = id;
@@ -20,12 +22,12 @@ export class Vehicle {
   get Id(): string {
     return this._id;
   }
-  get ownerId(): string {
-    return this._ownerId;
+  get ownerName(): string {
+    return this._ownerName;
   }
 
-  set ownerId(ownerId: string) {
-    this._ownerId = ownerId;
+  set ownerName(ownerId: string) {
+    this._ownerName = ownerId;
   }
 
   get name(): string {
@@ -62,5 +64,29 @@ export class Vehicle {
 
   get plate(): string {
     return this._plate;
+  }
+
+  set dateOfCreation(date: Date) {
+    this._createdAt = date;
+  }
+
+  get dateOfCreation(): Date {
+    return this._createdAt;
+  }
+
+  get lastUpdate(): Date {
+    return this._dateOfUpdate;
+  }
+
+  set lastUpdate(date: Date) {
+    this._dateOfUpdate = date;
+  }
+
+  set withAir(withAir: boolean) {
+    this._withAir = withAir;
+  }
+
+  get withAir(): boolean {
+    return this._withAir;
   }
 }

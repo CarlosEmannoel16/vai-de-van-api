@@ -1,9 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { IAssociateAndCreateVehicleDriverRepository } from './protocols/vechicle/AssociateAndCreateVechicleDriverRepository';
 import { ICreateVehicleProtocolRepository } from './protocols/vechicle/CreateVehicleProtocolRepository';
 import { IVehicleProtocolRepository } from './protocols/vechicle';
 import { GetVehicleByParamsProtocolRepository } from './protocols/vechicle/GetVehicleByParamsProtocolRepository';
-import { IAssociateVehicleDriverRepository } from './protocols/vechicle/AssociateVehicleDriverRepository';
 import { Vehicle } from '@/domain/Vehicle/entity/Vehicle';
 import { VehicleFactory } from '@/domain/Vehicle/factory/VehicleFactory';
 import { Travel } from '@/domain/Travel/entity/Travel';
@@ -38,18 +36,21 @@ export class VehicleRepository implements IVehicleProtocolRepository {
   async getOneByParams(
     data: GetVehicleByParamsProtocolRepository.Params,
   ): Promise<Vehicle> {
+    console.log(data);
     const vehicle = await prisma.vehicle.findFirst({
       where: { ...data },
     });
-    return VehicleFactory.create({
-      id: vehicle.id,
-      name: vehicle.description,
-      quantitySeats: vehicle.amount_of_accents,
-      color: vehicle.cor,
-      withAir: vehicle.with_air,
-      plate: vehicle.plate,
-      ownerId: vehicle.ownerId,
-    });
+
+    if (vehicle)
+      return VehicleFactory.create({
+        id: vehicle.id,
+        name: vehicle.description,
+        quantitySeats: vehicle.amount_of_accents,
+        color: vehicle.cor,
+        withAir: vehicle.with_air,
+        plate: vehicle.plate,
+        ownerName: vehicle.ownerName,
+      });
   }
   async deleteById(id: string): Promise<boolean> {
     await prisma.vehicle.delete({
@@ -58,44 +59,7 @@ export class VehicleRepository implements IVehicleProtocolRepository {
 
     return true;
   }
-  async associate({
-    idDriver,
-    idVehicle,
-  }: IAssociateVehicleDriverRepository.Params): Promise<any> {
-    await prisma.vehicle.update({
-      where: { id: idVehicle },
-      data: { ownerId: idDriver },
-    });
-  }
-  async associateAndCreate({
-    amount_of_accents,
-    cor,
-    plate,
-    with_air,
-    ownerId,
-    description,
-  }: IAssociateAndCreateVehicleDriverRepository.Params): Promise<Vehicle> {
-    const result = await prisma.vehicle.create({
-      data: {
-        amount_of_accents,
-        cor,
-        plate,
-        with_air,
-        ownerId,
-        description,
-      },
-    });
 
-    return VehicleFactory.create({
-      id: result.id,
-      name: result.description,
-      quantitySeats: result.amount_of_accents,
-      color: result.cor,
-      withAir: result.with_air,
-      plate: result.plate,
-      ownerId: result.ownerId,
-    });
-  }
   async getAll(): Promise<Vehicle[]> {
     const result = await prisma.vehicle.findMany();
     return result.map(vehicle =>
@@ -106,7 +70,7 @@ export class VehicleRepository implements IVehicleProtocolRepository {
         color: vehicle.cor,
         withAir: vehicle.with_air,
         plate: vehicle.plate,
-        ownerId: vehicle.ownerId,
+        ownerName: vehicle.ownerName,
       }),
     );
   }
@@ -119,7 +83,7 @@ export class VehicleRepository implements IVehicleProtocolRepository {
       color: vehicle.cor,
       withAir: vehicle.with_air,
       plate: vehicle.plate,
-      ownerId: vehicle.ownerId,
+      ownerName: vehicle.ownerName,
     });
   }
   async create(
@@ -136,7 +100,7 @@ export class VehicleRepository implements IVehicleProtocolRepository {
       color: result.cor,
       withAir: result.with_air,
       plate: result.plate,
-      ownerId: result.ownerId,
+      ownerName: result.ownerName,
     });
   }
 

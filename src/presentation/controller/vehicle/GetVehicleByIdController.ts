@@ -1,4 +1,4 @@
-import { GetVehicleByIdUseCase } from "@/data/usecases/vechicle/GetVehicleById";
+import { GetVehicleByIdUseCase } from "@/data/usecases/vehicle/GetVehicleById";
 import ControllerException from "@/presentation/helpers/ControllerException";
 import { IController } from "@/presentation/protocols/IController";
 import { IResponse } from "@/presentation/utils/response";

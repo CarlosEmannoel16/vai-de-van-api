@@ -12,7 +12,7 @@ export namespace ICreateVehicleProtocolRepository {
     plate: string;
     with_air: boolean;
     cor: string;
-    ownerId: string
+    ownerName: string
     description: string
   };
 

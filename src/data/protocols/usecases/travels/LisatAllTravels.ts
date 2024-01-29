@@ -10,6 +10,7 @@ export namespace IListAllTravels {
     driverId: string;
     driverName: string;
     routeId: string;
+    routeDescription: string;
     vehicleId: string;
     vehicleName: string;
     amount_of_accents: number;

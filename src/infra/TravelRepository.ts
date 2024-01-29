@@ -63,7 +63,7 @@ export class TravelRepository implements ITravelProtocolRepository {
           color: travel.Vehicle.cor,
           id: travel.Vehicle.id,
           name: travel.Vehicle.description,
-          ownerId: travel.Vehicle.ownerId,
+          ownerName: travel.Vehicle.ownerName,
           plate: travel.Vehicle.plate,
           quantitySeats: travel.Vehicle.amount_of_accents,
           withAir: travel.Vehicle.with_air,
@@ -174,7 +174,7 @@ export class TravelRepository implements ITravelProtocolRepository {
           withAir: travel.Vehicle.with_air,
           name: travel.Vehicle.description,
           quantitySeats: travel.Vehicle.amount_of_accents,
-          ownerId: travel.Vehicle.ownerId,
+          ownerName: travel.Vehicle.ownerName,
           plate: travel.Vehicle.plate,
         }),
         driver: DriverFactory.create({

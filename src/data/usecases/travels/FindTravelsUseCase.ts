@@ -20,6 +20,7 @@ export class FindAllTravels implements IListAllTravels {
       vehicleName: travel.vehicle.name,
       status: travel.status,
       description: travel.description,
+      routeDescription: travel.route.name
     }));
   }
 }

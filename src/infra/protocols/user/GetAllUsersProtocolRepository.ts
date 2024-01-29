@@ -16,7 +16,6 @@ export namespace IGetAllUsersProtocolRepository {
       type: string;
       created_at: Date;
       update_at: Date;
-      Vehicle: Vehicle[];
       Driver: {
         cnh: string;
         cnhDateOfIssue: Date;

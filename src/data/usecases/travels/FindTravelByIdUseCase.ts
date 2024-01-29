@@ -1,4 +1,4 @@
-import { ILisTravelById } from '@/data/protocols/usecases/travels/FindTRavelById';
+import { ILisTravelById } from '@/data/protocols/usecases/travels/FindTravelById';
 import { IListAllTravels } from '@/data/protocols/usecases/travels/LisatAllTravels';
 import { ITravelProtocolRepository } from '@/domain/Travel/repositories';
 import { Travel } from '@prisma/client';

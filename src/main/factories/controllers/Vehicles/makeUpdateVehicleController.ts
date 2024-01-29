@@ -1,4 +1,4 @@
-import { UpdateVehicleUseCase } from "@/data/usecases/vechicle/UpdateVehicle"
+import { UpdateVehicleUseCase } from "@/data/usecases/vehicle/UpdateVehicle"
 import { VehicleRepository } from "@/infra/VehicleRepository"
 import { UpdateVehicleController } from "@/presentation/controller/vehicle/UpdateVehicleController"
 
