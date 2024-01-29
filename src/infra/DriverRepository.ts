@@ -5,6 +5,20 @@ import { PrismaClient } from '@prisma/client';
 
 const database = new PrismaClient();
 export class DriverRepository implements IDriverProtocolRepository {
+  async findById(id: string): Promise<Driver> {
+    const data = await database.driver.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        User: true,
+      },
+    });
+    return DriverFactory.create({
+      id: data.id,
+      name: data.User.name,
+    });
+  }
   async findAll(): Promise<Driver[]> {
     const data = await database.driver.findMany({
       include: {

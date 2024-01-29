@@ -13,6 +13,7 @@ export type CreateTravelFactoryParams = {
   arrivalDate: Date;
   tickets?: Ticket[];
   departureDate: Date;
+  description?: string;
   status?: TravelStatus;
 };
 export class TravelFactory {
@@ -26,6 +27,7 @@ export class TravelFactory {
     arrivalDate,
     departureDate,
     status,
+    description,
   }: CreateTravelFactoryParams) {
     const travel = new Travel(
       id,
@@ -40,6 +42,10 @@ export class TravelFactory {
 
     if (tickets.length) {
       travel.addTickets(tickets);
+    }
+
+    if (description) {
+      travel.description = description;
     }
 
     return travel;

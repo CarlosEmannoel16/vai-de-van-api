@@ -19,7 +19,7 @@ export namespace ICreateTravels {
     arrivalDate: Date;
     departureDate: Date;
     driverId: string;
-    idVechicle: string;
+    idVehicle: string;
     routeId: string;
     tripStops: {
       arrivalTime: Date;

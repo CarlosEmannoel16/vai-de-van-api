@@ -16,5 +16,6 @@ export namespace IListAllTravels {
     update_at: Date;
     created_at: Date;
     status: string;
+    description: string;
   };
 }

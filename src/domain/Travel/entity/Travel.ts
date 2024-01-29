@@ -19,6 +19,7 @@ export class Travel {
   private _update_at: Date;
   private _created_at: Date;
   private _status: TravelStatus
+  private _description: string;
 
 
   constructor(
@@ -105,6 +106,14 @@ export class Travel {
 
   set created_at(created_at: Date) {
     this._created_at = created_at;
+  }
+
+  set description(description: string) {
+    this._description = description;
+  }
+
+  get description(): string {
+    return this._description;
   }
 
   get created_at(): Date {

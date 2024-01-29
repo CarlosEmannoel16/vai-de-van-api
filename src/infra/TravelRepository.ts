@@ -49,6 +49,7 @@ export class TravelRepository implements ITravelProtocolRepository {
     return TravelFactory.mapTravel(
       data.map(travel => ({
         arrivalDate: travel.arrivalDate,
+        description: travel.description,
         departureDate: travel.departureDate,
         driver: new Driver(travel.Driver.id, travel.Driver.User.name),
         name: travel.description,
@@ -91,13 +92,14 @@ export class TravelRepository implements ITravelProtocolRepository {
   async create(data: Travel): Promise<Travel> {
     await prismaClient.travel.create({
       data: {
-        description: data.name,
+        description: data.description,
         departureDate: data.departureDate,
         arrivalDate: data.arrivalDate,
         idVehicle: data.idVehicle,
         routeId: data.idRoute,
         driverId: data.idDriver,
-        status: 'DESABILITADA',
+        status: data.status || 'DESABILITADA',
+
       },
     });
 
@@ -159,7 +161,6 @@ export class TravelRepository implements ITravelProtocolRepository {
       },
     });
 
-    console.log(result);
 
     return result?.map(travel => {
       return TravelFactory.createTravel({

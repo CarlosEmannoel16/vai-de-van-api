@@ -11,6 +11,7 @@ export class Driver {
   private _cnhExpirationDate: Date;
   private _travelsActives: TravelsActives[];
   private _id: string;
+  private _idUser: string;
   private _name: string;
   private _email: string;
 
