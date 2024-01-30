@@ -7,11 +7,12 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
   async execute(
     data: ISearchTravelsUseCaseProtocol.Params,
   ): Promise<ISearchTravelsUseCaseProtocol.Result[] | undefined> {
+
+
     const travels = await this.travelRepository.search(data);
     const result: ISearchTravelsUseCaseProtocol.Result[] = [];
 
     if (!travels) return undefined;
-    console.log(travels);
 
     travels.forEach(travel => {
       result.push({
@@ -29,6 +30,8 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
         ),
       });
     });
+
+    console.log(result);
 
     return result;
   }

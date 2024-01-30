@@ -161,6 +161,7 @@ export class TravelRepository implements ITravelProtocolRepository {
       },
     });
 
+    console.log(result);
 
     return result?.map(travel => {
       return TravelFactory.createTravel({
