@@ -74,6 +74,7 @@ model State {
 model City {
   id          String      @id @default(uuid())
   name        String
+  image       String      @default("")
   disabled    Boolean     @default(false)
   coordinates String
   State       State?      @relation(fields: [stateId], references: [id])
@@ -81,6 +82,7 @@ model City {
   created_at  DateTime    @default(now())
   update_at   DateTime    @default(now()) @updatedAt
   TripStops   TripStops[] @relation("CityDestiny")
+  Views       Views[]
 }
 
 model Route {
@@ -181,4 +183,26 @@ model Customer {
   Ticket     Ticket[]
   created_at DateTime @default(now())
   update_at  DateTime @default(now()) @updatedAt
+}
+
+model ViewsCategory {
+  id         String   @id @default(uuid())
+  name       String
+  disabled   Boolean  @default(false)
+  created_at DateTime @default(now())
+  update_at  DateTime @default(now()) @updatedAt
+  Views      Views[]
+}
+
+model Views {
+  id              String        @id @default(uuid())
+  name            String
+  urlImage        String
+  viewsCategoryId String
+  cityId          String
+  City            City          @relation(fields: [cityId], references: [id])
+  category        ViewsCategory @relation(fields: [viewsCategoryId], references: [id])
+  disabled        Boolean       @default(false)
+  created_at      DateTime      @default(now())
+  update_at       DateTime      @default(now()) @updatedAt
 }

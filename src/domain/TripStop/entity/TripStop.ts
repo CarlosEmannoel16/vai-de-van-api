@@ -1,5 +1,3 @@
-import { Ticket } from '@/domain/Ticket/entity/Ticket';
-import { PricesBetweenStops } from '@/domain/models/PricesBetweenStops';
 import { v4 } from 'uuid';
 
 export class TripStop {
@@ -32,7 +30,7 @@ export class TripStop {
       fieldsMessage.push('tripStopOrder must be greater than 0');
     if (!this._stopId) fieldsMessage.push('stopId is required');
     if (!this._cityId) fieldsMessage.push('cityId is required');
-    if(!this._cityName) fieldsMessage.push('cityName is required');
+    if (!this._cityName) fieldsMessage.push('cityName is required');
     if (!this._tripStopOrder) fieldsMessage.push('tripStopOrder is required');
 
     if (fieldsMessage.length > 0) throw new Error(fieldsMessage.join(', '));
@@ -88,6 +86,4 @@ export class TripStop {
   setTripStopOrder(tripStopOrder: number): void {
     this._tripStopOrder = tripStopOrder;
   }
-
-
 }
