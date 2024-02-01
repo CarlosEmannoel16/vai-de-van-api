@@ -1,6 +1,7 @@
 import { Driver } from '@/domain/Driver/entity/Driver';
 import { DriverFactory } from '@/domain/Driver/factory/DriverFactory';
 import { IDriverProtocolRepository } from '@/domain/Driver/repositories';
+import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 import { PrismaClient } from '@prisma/client';
 
 const database = new PrismaClient();
@@ -32,7 +33,7 @@ export class DriverRepository implements IDriverProtocolRepository {
       })),
     );
   }
-  async create(data: Driver): Promise<Driver> {
+  async create(data: DriverInterface): Promise<DriverInterface> {
     await database.driver.create({
       data: {
         cnh: data.cnh,

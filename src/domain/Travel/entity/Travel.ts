@@ -237,4 +237,8 @@ export class Travel {
 
     return quantityMaxOfSeats;
   }
+
+  registerTicket(ticket: Ticket) {
+    this.getQuantitySeatsBetweenStops
+  }
 }

@@ -18,6 +18,7 @@ export class CreateTravels implements ICreateTravels {
     if (!route) throw new Error('Rota não encontrada');
 
     const vehicle = await this.vehicleRepository.getById(data.idVehicle);
+
     if (!vehicle) throw new Error('Veículo não encontrado');
 
     const driver = await this.driverById.findById(data.driverId);

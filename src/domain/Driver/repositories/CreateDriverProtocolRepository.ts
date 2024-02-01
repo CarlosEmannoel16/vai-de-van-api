@@ -1,5 +1,5 @@
-import { Driver } from '../entity/Driver';
+import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 
 export interface CreateDriverProtocolRepository {
-  create(data: Driver): Promise<Driver>;
+  create(data: DriverInterface): Promise<DriverInterface>;
 }

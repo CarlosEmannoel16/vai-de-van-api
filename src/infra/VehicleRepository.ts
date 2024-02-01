@@ -59,7 +59,6 @@ export class VehicleRepository implements IVehicleProtocolRepository {
 
     return true;
   }
-
   async getAll(): Promise<Vehicle[]> {
     const result = await prisma.vehicle.findMany();
     return result.map(vehicle =>
@@ -103,7 +102,6 @@ export class VehicleRepository implements IVehicleProtocolRepository {
       ownerName: result.ownerName,
     });
   }
-
   async update(data: Vehicle): Promise<Vehicle> {
     await prisma.vehicle.update({
       where: { id: data.Id },
@@ -114,7 +112,6 @@ export class VehicleRepository implements IVehicleProtocolRepository {
 
     return data;
   }
-
   async countAll(): Promise<number> {
     return prisma.vehicle.count();
   }

@@ -1,12 +1,37 @@
-import { Customer } from '@/domain/Customer/entity/Customer';
-import { CustomerFactory } from '@/domain/Customer/factories/CustomerFactory';
-import { User } from '@/domain/User/entity/User';
 import { PrismaClient } from '@prisma/client';
+import { IFindCustomerByCpfProtocolRepository } from './protocols/customer/FindCustomerByCpfProtocolRepository';
+import { ICreateCustomerProtocolRepository } from './protocols/customer/CreateCustomerProtocolRepository';
+import { IFindCustomerByEmailProtocolRepository } from './protocols/customer/FindCustomerByEmailProtocolRepository';
+import { IFindCustomerByIdProtocolRepository } from './protocols/customer/FindCustomerByIdProtocolRepository';
+import { PersonFactory } from '@/domain/Person/factory/PersonFactory';
+import { CustomerInterface } from '@/domain/Person/protocols/CustomerInterface';
+const database = new PrismaClient().customer;
+export class CustomerRepository
+  implements
+    IFindCustomerByCpfProtocolRepository,
+    ICreateCustomerProtocolRepository,
+    IFindCustomerByEmailProtocolRepository,
+    IFindCustomerByIdProtocolRepository
+{
+  async findByCpf(cpf: string): Promise<CustomerInterface> {
+    const customer = await database.findFirst({
+      where: {
+        cpf,
+      },
+    });
 
-export class CustomerRepository {
-  async createCustomer(data: Customer): Promise<Customer> {
-    const database = new PrismaClient();
-    await database.customer.create({
+    return PersonFactory.create({
+      cpf: customer.cpf,
+      email: customer.email,
+      id: customer.id,
+      name: customer.name,
+      type: 'customer',
+      password: customer.password,
+      phone: customer.phone,
+    }) as CustomerInterface;
+  }
+  async create(data: CustomerInterface): Promise<CustomerInterface> {
+    await database.create({
       data: {
         id: data.id,
         name: data.name,
@@ -14,43 +39,46 @@ export class CustomerRepository {
         email: data.email,
         phone: data.phone,
         password: data.password,
-        phone2: data.phone2,
+        phone2: data.secondaryPhone,
         update_at: new Date(),
         created_at: new Date(),
       },
     });
     return data;
   }
-  async findCustomerByEmail(email: string):Promise<Customer> {
-    const database = new PrismaClient();
-    const customer = await database.customer.findFirst({
+  async findByEmail(email: string): Promise<CustomerInterface> {
+    const customer = await database.findFirst({
       where: {
         email,
       },
     });
 
-    return CustomerFactory.create({
+    return PersonFactory.create({
       id: customer.id,
       name: customer.name,
       email: customer.email,
       cpf: customer.cpf,
       password: customer.password,
-    });
+      type: 'customer',
+      phone: customer.phone,
+    }) as CustomerInterface;
   }
-  async findCustomerById(id: string): Promise<Customer> {
+  async findById(id: string): Promise<CustomerInterface> {
     const database = new PrismaClient();
     const customer = await database.customer.findFirst({
       where: {
         id,
       },
     });
-    return CustomerFactory.create({
+    return PersonFactory.create({
+      type: 'customer',
       id: customer.id,
       name: customer.name,
       email: customer.email,
       cpf: customer.cpf,
       password: customer.password,
-    });
+      phone: customer.phone,
+    }) as CustomerInterface;
   }
   async updateCustomer() {}
   async deleteCustomer() {}

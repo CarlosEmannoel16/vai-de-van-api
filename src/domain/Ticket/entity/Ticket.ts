@@ -1,9 +1,12 @@
+export type TicketStatus = 'reserved' | 'canceled' | 'concluded' | 'paid';
+
 export class Ticket {
   private _id: string;
   private _origin: string;
   private _destiny: string;
   private _amount: number;
   private _idCustomer: string;
+  private _status: boolean;
 
   constructor(id: string, destiny: string, origin: string) {
     this._id = id;

@@ -74,18 +74,85 @@ export class TravelRepository implements ITravelProtocolRepository {
     );
   }
 
-  async findById(id: string): Promise<any> {
-    return prismaClient.travel.findUnique({
+  async findById(id: string): Promise<Travel> {
+    const result = await prismaClient.travel.findUnique({
       where: { id },
-      select: {
-        arrivalDate: true,
-        departureDate: true,
-        Driver: true,
-        driverId: true,
+      include: {
+        Route: {
+          include: {
+            TripStops: {
+              include: {
+                City: true,
+              },
+            },
+          },
+        },
         Vehicle: true,
-        id: true,
-        Route: true,
+        Tickets: true,
+        Payment: true,
+        Driver: {
+          include: {
+            User: true,
+          },
+        },
       },
+    });
+
+    const driver = DriverFactory.create({
+      id: result.Driver.id,
+      name: result.Driver.User.name,
+      idUser: result.Driver.User.id,
+    });
+
+    const tripStops = TripStopFactory.mapCreate(
+      result.Route.TripStops?.map(ts => {
+        return {
+          cityId: ts.cityid,
+          cityName: ts.City.name,
+          distanceFromLast: ts.distanceFromLastStop,
+          tripStopOrder: ts.tripStopOrder,
+          id: ts.id,
+        };
+      }),
+    );
+
+    const route = RouteFactory.create({
+      km: result.Route.km,
+      kmValue: Number(result.Route.kmValue),
+      name: result.Route.name,
+      id: result.Route.id,
+      tripStops,
+    });
+
+    const vehicle = VehicleFactory.create({
+      color: result.Vehicle.cor,
+      id: result.Vehicle.id,
+      name: result.Vehicle.description,
+      ownerName: result.Vehicle.ownerName,
+      plate: result.Vehicle.plate,
+      quantitySeats: result.Vehicle.amount_of_accents,
+      withAir: result.Vehicle.with_air,
+    });
+
+    const tickets = TicketFactory.mapCreate(
+      result.Tickets?.map(ticket => ({
+        destiny: ticket.destinyId,
+        id: ticket.id,
+        origin: ticket.originId,
+      })) || [],
+    );
+
+    return TravelFactory.createTravel({
+      arrivalDate: result.arrivalDate,
+      departureDate: result.departureDate,
+      driver,
+      name: result.description,
+      route,
+      description: result.description,
+      id: result.id,
+      vehicle,
+      tickets,
+      status: result.status,
     });
   }
 
@@ -99,7 +166,6 @@ export class TravelRepository implements ITravelProtocolRepository {
         routeId: data.idRoute,
         driverId: data.idDriver,
         status: data.status || 'DESABILITADA',
-
       },
     });
 
@@ -160,8 +226,6 @@ export class TravelRepository implements ITravelProtocolRepository {
         Tickets: true,
       },
     });
-
-    console.log(result);
 
     return result?.map(travel => {
       return TravelFactory.createTravel({
