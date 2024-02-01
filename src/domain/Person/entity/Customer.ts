@@ -1,5 +1,4 @@
 import { CustomerInterface } from '../protocols/CustomerInterface';
-import PersonInterface from '../protocols/PersonInterface';
 
 export class Customer implements CustomerInterface {
   private _id: string;

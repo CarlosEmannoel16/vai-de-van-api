@@ -1,11 +1,11 @@
-import { User } from "@prisma/client";
+import { UserInterface } from "@/domain/Person/protocols/UserInterface";
 
 export interface IGetUserByParamsProtocolRepository {
     getUserByParams(
       data: IGetUserByParamsProtocolRepository.Params,
-    ): Promise<User>;
+    ): Promise<UserInterface>;
   }
-  
+
   export namespace IGetUserByParamsProtocolRepository {
     export type Params = {
       name?: string;
@@ -17,4 +17,3 @@ export interface IGetUserByParamsProtocolRepository {
       cnh?: string;
     };
   }
-  

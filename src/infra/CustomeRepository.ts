@@ -20,12 +20,11 @@ export class CustomerRepository
       },
     });
 
-    return PersonFactory.create({
+    return PersonFactory.create('customer', {
       cpf: customer.cpf,
       email: customer.email,
       id: customer.id,
       name: customer.name,
-      type: 'customer',
       password: customer.password,
       phone: customer.phone,
     }) as CustomerInterface;
@@ -53,13 +52,13 @@ export class CustomerRepository
       },
     });
 
-    return PersonFactory.create({
+    return PersonFactory.create('customer', {
       id: customer.id,
       name: customer.name,
       email: customer.email,
       cpf: customer.cpf,
       password: customer.password,
-      type: 'customer',
+
       phone: customer.phone,
     }) as CustomerInterface;
   }
@@ -70,8 +69,7 @@ export class CustomerRepository
         id,
       },
     });
-    return PersonFactory.create({
-      type: 'customer',
+    return PersonFactory.create('customer', {
       id: customer.id,
       name: customer.name,
       email: customer.email,

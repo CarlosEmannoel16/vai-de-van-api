@@ -1,4 +1,4 @@
-import {  PrismaClient, User } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 import { IUserProtocolRepository } from '@/infra/protocols';
 import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
 import { ICreateDriverProtocolRepository } from '@infra/protocols/drivers';
@@ -9,13 +9,25 @@ import { IGetUserByCpfProtocolRepository } from './protocols/user/GetUserByCpfPr
 import { IGetUserByEmailProtocolRepository } from './protocols/user/GetUserByEmailProtocolRepository';
 import { IGetAllUsersProtocolRepository } from './protocols/user/GetAllUsersProtocolRepository';
 import { Driver } from '@/domain/Driver/entity/Driver';
+import { UserInterface } from '@/domain/Person/protocols/UserInterface';
+import { PersonFactory } from '@/domain/Person/factory/PersonFactory';
 
 const prisma = new PrismaClient();
 export class UserRepository implements IUserProtocolRepository {
   async getUserByParams(
     data: IGetUserByParamsProtocolRepository.Params,
-  ): Promise<User> {
-    return prisma.user.findFirst({ where: data });
+  ): Promise<UserInterface> {
+    const result = await prisma.user.findFirst({ where: data });
+
+    return PersonFactory.create('admin', {
+      cpf: result.cpf,
+      email: result.email,
+      id: result.id,
+      name: result.name,
+      password: result.password,
+      phone: result.phone,
+      dateOfBirth: result.date_of_birth,
+    });
   }
   async delete(id: string): Promise<boolean> {
     const result = await prisma.user.delete({
@@ -189,8 +201,7 @@ export class UserRepository implements IUserProtocolRepository {
       },
     });
 
-
-   if(!driver) throw new Error('Motorista não encontrado');
+    if (!driver) throw new Error('Motorista não encontrado');
     return new Driver(driver?.User.id, driver?.User?.name);
   }
 }
