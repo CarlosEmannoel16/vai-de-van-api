@@ -4,30 +4,36 @@ import { Driver } from '@/domain/Driver/entity/Driver';
 import { Ticket } from '@/domain/Ticket/entity/Ticket';
 import { toMoney } from '@/@shared/utils/toMoney';
 import { deprecate } from 'util';
+import { TravelInterface } from './travel.interface';
+import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 
-export type TravelStatus = 'EM_ANDAMENTO' | 'CONCLUIDA' | 'CANCELADA' | 'DESABILITADA' | 'ABERTA';
+export type TravelStatus =
+  | 'EM_ANDAMENTO'
+  | 'CONCLUIDA'
+  | 'CANCELADA'
+  | 'DESABILITADA'
+  | 'ABERTA';
 
-export class Travel {
+export class Travel implements TravelInterface {
   private _id: string;
   private _Route: Route;
   private _name: string;
-  private _Driver: Driver;
+  private _Driver: DriverInterface;
   private _Vehicle: Vehicle;
   private _Tickets: Ticket[];
   private _arrivalDate: Date;
   private _departureDate: Date;
   private _update_at: Date;
   private _created_at: Date;
-  private _status: TravelStatus
+  private _status: TravelStatus;
   private _description: string;
-
 
   constructor(
     id: string,
     name: string,
     Route: Route,
     status: TravelStatus,
-    Driver: Driver,
+    Driver: DriverInterface,
     Vehicle: Vehicle,
     arrivalDate: Date,
     departureDate: Date,
@@ -44,7 +50,7 @@ export class Travel {
     this.validate();
   }
 
-  validate() {
+  private validate() {
     const errors = [];
     if (!this._id) errors.push('id is required');
     if (!this._name) errors.push('name travel is required');
@@ -63,6 +69,10 @@ export class Travel {
     return this._name;
   }
 
+  set name(name: string) {
+    this._name = name;
+  }
+
   get idVehicle(): string {
     return this._Vehicle.Id;
   }
@@ -75,12 +85,20 @@ export class Travel {
     return this._departureDate;
   }
 
+  set departureDate(departureDate: Date) {
+    this._departureDate = departureDate;
+  }
+
   get idRoute(): string {
     return this._Route.id;
   }
 
   get route(): Route {
     return this._Route;
+  }
+
+  get driver(): DriverInterface {
+    return this._Driver;
   }
 
   get idDriver(): string {
@@ -94,7 +112,6 @@ export class Travel {
   get status(): TravelStatus {
     return this._status;
   }
-
 
   get vehicle(): Vehicle {
     return this._Vehicle;
@@ -128,9 +145,6 @@ export class Travel {
     this._Tickets = [...this._Tickets, ...ticket];
   }
 
-  changeDepartureDate(departureDate: Date) {
-    this._departureDate = departureDate;
-  }
 
   getNameStopById(id: string): string {
     const stop = this._Route.stops.find(stop => stop.cityId === id);
@@ -238,7 +252,5 @@ export class Travel {
     return quantityMaxOfSeats;
   }
 
-  registerTicket(ticket: Ticket) {
-    this.getQuantitySeatsBetweenStops
-  }
+
 }

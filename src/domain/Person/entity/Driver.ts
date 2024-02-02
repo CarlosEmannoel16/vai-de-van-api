@@ -22,7 +22,7 @@ export class Driver implements DriverInterface {
   ) {
     this._id = id;
     this._name = name;
-    this.email = email;
+    this._email = email;
     this._dateOfBirth = dateOfBirth;
     this._cnh = cnh;
     this._cpf = cpf;
@@ -54,12 +54,16 @@ export class Driver implements DriverInterface {
     return this._name;
   }
 
-  set email(email: string) {
-    this._email = email;
+  get email() {
+    return this._email;
   }
 
   set cnh(cnh: string) {
     this._cnh = cnh;
+  }
+
+  get cnh(): string {
+    return this._cnh;
   }
 
   set cnhDateOfIssue(cnhDateOfIssue: Date) {
