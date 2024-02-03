@@ -20,6 +20,7 @@ export class CreateVehicleUseCase implements ICreateVehicle {
       ...data,
       amount_of_accents: Number(data.amount_of_accents),
     });
+
     return {
       amount_of_accents: result.quantitySeats,
       cor: result.color,

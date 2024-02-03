@@ -1,8 +1,8 @@
 import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 import { Route } from '@/domain/Route/entity/Route';
-import { Vehicle } from '@/domain/Vehicle/entity/Vehicle';
 import { TravelStatus } from './Travel';
 import { Ticket } from '@/domain/Ticket/entity/Ticket';
+import { VehicleInterface } from '@/domain/Vehicle/interface/VehicleInterface';
 
 export interface TravelInterface {
   addTickets(ticket: Ticket[]): void;
@@ -16,12 +16,14 @@ export interface TravelInterface {
 
   get id(): string;
 
+  get tickets(): Ticket[];
+
   get name(): string;
   set name(name: string);
 
-  get vehicle(): Vehicle;
+  get vehicle(): VehicleInterface;
   get idVehicle(): string;
-  set vehicle(vehicle: Vehicle);
+  set vehicle(vehicle: VehicleInterface);
 
   get departureDate(): Date;
   set departureDate(departureDate: Date);
@@ -46,5 +48,5 @@ export interface TravelInterface {
   set update_at(update_at: Date);
   get update_at(): Date;
 
-  get classificationVehicle(): number;
+
 }

@@ -1,6 +1,6 @@
 import { GetAllCitiesUseCase } from "@/data/usecases/city/getCityUseCase"
-import { CityRepository } from "@/infra/CityRepository"
+import { StopRepository } from "@/infra/StopRepository"
 
 export const makegetCitiesUseCase =() => {
-    return new GetAllCitiesUseCase(new CityRepository())
+    return new GetAllCitiesUseCase(new StopRepository())
 }

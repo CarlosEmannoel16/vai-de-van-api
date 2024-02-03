@@ -1,4 +1,4 @@
-import { Vehicle } from "@/domain/Vehicle/entity/Vehicle";
+import { Vehicle } from "@/domain/Vehicle/entity/Bus";
 
 export interface IFindVehicleAvailableByRouteUseCase {
   execute(

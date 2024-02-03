@@ -1,5 +1,5 @@
 import { CreateTravels } from '@/data/usecases/travels/CreateTravelsUseCase';
-import { CityRepository } from '@/infra/CityRepository';
+import { StopRepository } from '@/infra/StopRepository';
 import { DriverRepository } from '@/infra/DriverRepository';
 import { RouteRepository } from '@/infra/RouteRepository';
 import { TravelRepository } from '@/infra/TravelRepository';

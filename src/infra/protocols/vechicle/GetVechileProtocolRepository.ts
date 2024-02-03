@@ -1,5 +1,5 @@
-import { Vehicle } from "@/domain/Vehicle/entity/Vehicle";
+import { VehicleInterface } from "@/domain/Vehicle/interface/VehicleInterface";
 
 export interface GetVehicleProtocolRepository{
-    getAll(): Promise<Vehicle[]>
+    getAll(): Promise<VehicleInterface[]>
 }

@@ -1,9 +1,9 @@
-import { Vehicle } from "@/domain/Vehicle/entity/Vehicle";
+import { VehicleInterface } from "@/domain/Vehicle/interface/VehicleInterface";
 
 export interface ICreateVehicleProtocolRepository {
   create(
     data: ICreateVehicleProtocolRepository.params,
-  ): Promise<Vehicle>;
+  ): Promise<VehicleInterface>;
 }
 
 export namespace ICreateVehicleProtocolRepository {

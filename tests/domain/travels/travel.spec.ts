@@ -1,7 +1,7 @@
 import { Driver } from '@/domain/Driver/entity/Driver';
 import { Route } from '@/domain/Route/entity/Route';
 import { Travel } from '@/domain/Travel/entity/Travel';
-import { Vehicle } from '@/domain/Vehicle/entity/Vehicle';
+import { Vehicle } from '@/domain/Vehicle/entity/Bus';
 
 const makeRoute = () => {
   return new Route('id', 10, 'name_faker', 2);

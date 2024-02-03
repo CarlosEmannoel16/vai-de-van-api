@@ -1,6 +1,5 @@
 import { v4 } from 'uuid';
 import { TripStop } from '../../TripStop/entity/TripStop';
-import { Vehicle } from '../../Vehicle/entity/Vehicle';
 
 export class Route {
   private _id: string;

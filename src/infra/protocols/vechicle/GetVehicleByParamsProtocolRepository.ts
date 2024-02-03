@@ -1,7 +1,7 @@
-import { Vehicle } from "@/domain/Vehicle/entity/Vehicle";
+import { VehicleFactoryInterface } from "@/domain/Vehicle/interface/VehicleFactoryInterface";
 
 export interface GetVehicleByParamsProtocolRepository {
-  getOneByParams(data: GetVehicleByParamsProtocolRepository.Params): Promise<Vehicle>;
+  getOneByParams(data: GetVehicleByParamsProtocolRepository.Params): Promise<VehicleFactoryInterface>;
 }
 
 export namespace GetVehicleByParamsProtocolRepository {

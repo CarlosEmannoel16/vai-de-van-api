@@ -1,5 +1,5 @@
 import { CustomerInterface } from '../protocols/CustomerInterface';
-
+import { CustomerValidatorFactory } from '../factory/PersonValidatorFactory';
 export class Customer implements CustomerInterface {
   private _id: string;
   private _name: string;
@@ -21,10 +21,14 @@ export class Customer implements CustomerInterface {
     this._email = email;
     this._cpf = cpf;
     this._password = password;
+
+    CustomerValidatorFactory.create().validate(this);
   }
+
   get secondaryPhone(): string {
     return this._secondaryPhone;
   }
+
   get dateOfBirth(): Date {
     throw new Error('Method not implemented.');
   }

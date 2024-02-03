@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { ICreateVehicleProtocolRepository } from './protocols/vechicle/CreateVehicleProtocolRepository';
 import { IVehicleProtocolRepository } from './protocols/vechicle';
 import { GetVehicleByParamsProtocolRepository } from './protocols/vechicle/GetVehicleByParamsProtocolRepository';
-import { Vehicle } from '@/domain/Vehicle/entity/Vehicle';
+import { Vehicle } from '@/domain/Vehicle/entity/Bus';
 import { VehicleFactory } from '@/domain/Vehicle/factory/VehicleFactory';
 import { Travel } from '@/domain/Travel/entity/Travel';
 import { GetTravelsActivesFromVehicleRepository } from './protocols/vechicle/GetTravelsActivesFromVehicleRepository';

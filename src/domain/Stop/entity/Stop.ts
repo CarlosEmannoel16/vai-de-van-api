@@ -1,27 +1,44 @@
-export class Stop {
+import { StopValidatorFactory } from '../factory/StopValidatorFactory';
+import { StatusStopInterface } from '../interface/StatusStopInterface';
+import { StopInterface } from '../interface/StopInterface';
+
+export class Stop implements StopInterface {
   private readonly _id: string;
   private readonly _name: string;
   private readonly _image: string;
   public readonly _disable: boolean;
+  private readonly _coordinates: string;
   public readonly _created_at: Date;
   public readonly _updated_at: Date;
+  private readonly _status: StatusStopInterface;
 
-  constructor(id: string, name: string, disable: boolean) {
+  constructor(
+    id: string,
+    name: string,
+    status: StatusStopInterface,
+    coordinates: string,
+  ) {
     this._id = id;
     this._name = name;
-    this._disable = disable || false;
     this._created_at = new Date();
     this._updated_at = new Date();
+    this._coordinates = coordinates;
 
-    this.validate();
-
-
+    StopValidatorFactory.create().validate(this);
   }
-
-  validate() {
-    const errors = [];
-    if (!this._id) errors.push('id is required');
-    if (!this._name) errors.push('name is required');
-    if (errors.length > 0) throw new Error(errors.join(', '));
+  get coordinates(): string {
+    return this._coordinates;
+  }
+  get id(): string {
+    return this._id;
+  }
+  get name(): string {
+    return this._name;
+  }
+  get status(): StatusStopInterface {
+    return this._status;
+  }
+  get image(): string {
+    return this._image;
   }
 }
