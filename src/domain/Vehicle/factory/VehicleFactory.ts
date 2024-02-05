@@ -1,14 +1,11 @@
 import { v4 } from 'uuid';
 import { Bus } from '../entity/Bus';
-import {
-  CreateVehicleType,
-  VehicleFactoryInterface,
-} from '../interface/VehicleFactoryInterface';
+import { CreateVehicleType } from '../interface/VehicleFactoryInterface';
 import { VehicleInterface } from '../interface/VehicleInterface';
 import { BusInterface } from '../interface/BusInterface';
 
-export class VehicleFactory implements VehicleFactoryInterface {
-  create(
+export class VehicleFactory {
+  static create(
     vehicleType: 'bus',
     data: CreateVehicleType,
   ): VehicleInterface | BusInterface {

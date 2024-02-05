@@ -1,18 +1,20 @@
 import { IFindAllVehiclesUseCase } from '@/data/protocols/usecases/vechicle/FindAllVehicleUseCase';
-import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle';
+import { BusInterface } from '@/domain/Vehicle/interface/BusInterface';
+import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle/VehicleProtocolRepository';
 
 export class FindAllVehiclesUseCase implements IFindAllVehiclesUseCase {
-  constructor(private readonly findVehicle: IVehicleProtocolRepository) {}
+  constructor(
+    private readonly findVehicle: IVehicleProtocolRepository<BusInterface>,
+  ) {}
   async execute(): Promise<IFindAllVehiclesUseCase.Result[]> {
     const vehicles = await this.findVehicle.getAll();
     return vehicles.map(vehicle => ({
       color: vehicle.color,
       id: vehicle.id,
-      name: vehicle.name,
+      name: vehicle.description,
       plate: vehicle.plate,
       quantitySeats: vehicle.quantitySeats,
-      ownerId: vehicle.ownerId,
-
+      ownerName: vehicle.ownerName,
     }));
   }
 }

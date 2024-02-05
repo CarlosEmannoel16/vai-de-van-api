@@ -1,11 +1,8 @@
-import { Vehicle } from "@/domain/Vehicle/entity/Bus";
-
 export interface IFindVehicleAvailableByRouteUseCase {
   execute(
     routeId: string,
   ): Promise<IFindVehicleAvailableByRouteUseCase.Result[]>;
 }
-
 
 export namespace IFindVehicleAvailableByRouteUseCase {
   export type Params = {

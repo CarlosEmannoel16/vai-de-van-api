@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { ICreateVehicleProtocolRepository } from './protocols/vechicle/CreateVehicleProtocolRepository';
+import { ICreateVehicleProtocolRepository } from './protocols/vechicle/VehicleProtocolRepository';
 import { IVehicleProtocolRepository } from './protocols/vechicle';
 import { GetVehicleByParamsProtocolRepository } from './protocols/vechicle/GetVehicleByParamsProtocolRepository';
 import { Vehicle } from '@/domain/Vehicle/entity/Bus';

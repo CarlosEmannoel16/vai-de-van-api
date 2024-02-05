@@ -36,6 +36,12 @@ export class Bus implements BusInterface {
     this._createdAt = createdAt;
     this._dateOfUpdate = dateOfUpdate;
   }
+  get dateOfCreate(): Date {
+    return this._createdAt;
+  }
+  get dateOfUpdate(): Date {
+    return this._dateOfUpdate;
+  }
 
   get Id(): string {
     return this._id;
@@ -78,22 +84,6 @@ export class Bus implements BusInterface {
 
   get plate(): string {
     return this._plate;
-  }
-
-  set dateOfCreation(date: Date) {
-    this._createdAt = date;
-  }
-
-  get dateOfCreation(): Date {
-    return this._createdAt;
-  }
-
-  get lastUpdate(): Date {
-    return this._dateOfUpdate;
-  }
-
-  set lastUpdate(date: Date) {
-    this._dateOfUpdate = date;
   }
 
   set withAir(withAir: boolean) {

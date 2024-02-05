@@ -1,4 +1,4 @@
-import { SituationVehicleType } from "./SituationVehicleInterface";
+import { SituationVehicleType } from './SituationVehicleInterface';
 
 export interface VehicleInterface {
   get description(): string;
@@ -6,5 +6,7 @@ export interface VehicleInterface {
   get color(): string;
   get situation(): SituationVehicleType;
   get quantitySeats(): number;
-
+  get dateOfCreate(): Date;
+  get dateOfUpdate(): Date;
+  get ownerName(): string;
 }

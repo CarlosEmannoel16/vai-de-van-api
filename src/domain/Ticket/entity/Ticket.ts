@@ -1,17 +1,23 @@
-export type TicketStatus = 'reserved' | 'canceled' | 'concluded' | 'paid';
+import { StatusTicket } from '@prisma/client';
+import { TicketInterface } from '../interface/TicketInterface';
+import { TicketStatus } from '../interface/TicketStatus';
 
-export class Ticket {
+export class Ticket implements TicketInterface {
   private _id: string;
   private _origin: string;
   private _destiny: string;
   private _amount: number;
   private _idCustomer: string;
-  private _status: boolean;
+  private _status: TicketStatus;
 
   constructor(id: string, destiny: string, origin: string) {
     this._id = id;
     this._origin = origin;
     this._destiny = destiny;
+  }
+
+  get status(): TicketStatus {
+    return this._status;
   }
 
   get id(): string {
@@ -32,5 +38,9 @@ export class Ticket {
 
   get amount(): number {
     return this._amount;
+  }
+
+  changeStatus(status: TicketStatus): void {
+    this._status = status;
   }
 }
