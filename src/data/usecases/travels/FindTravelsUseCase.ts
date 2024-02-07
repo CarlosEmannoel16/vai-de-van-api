@@ -17,10 +17,10 @@ export class FindAllTravels implements IListAllTravels {
       routeId: travel.idRoute,
       update_at: travel.update_at,
       vehicleId: travel.idVehicle,
-      vehicleName: travel.vehicle.name,
+      vehicleName: travel.vehicle.description,
       status: travel.status,
       description: travel.description,
-      routeDescription: travel.route.name
+      routeDescription: travel.route.name,
     }));
   }
 }

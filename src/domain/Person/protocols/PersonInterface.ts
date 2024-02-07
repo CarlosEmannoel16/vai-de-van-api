@@ -4,5 +4,8 @@ export default interface PersonInterface {
   get email(): string;
   get cpf(): string;
   get id(): string;
+  get phone(): string;
   get password(): string;
+  get dateOfCreate(): Date;
+  get dateOfUpdate(): Date;
 }

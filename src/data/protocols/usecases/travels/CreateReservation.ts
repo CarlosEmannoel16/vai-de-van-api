@@ -11,7 +11,6 @@ export namespace ICreateReservationUseCase {
     idStopDestiny: string;
     idCustomer: string;
     cpfCustomer: string;
-
   };
 
   export type Result = {

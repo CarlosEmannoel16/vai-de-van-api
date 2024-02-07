@@ -22,7 +22,7 @@ export class CreateReservationUseCase implements ICreateReservationUseCase {
 
     if (!travel) throw new Error('Viagem não encontrada');
 
-    const quantity = await travel.getQuantitySeatsBetweenStops(
+    const quantity =  travel.getQuantitySeatsBetweenStops(
       idStopOrigin,
       idStopDestiny,
     );

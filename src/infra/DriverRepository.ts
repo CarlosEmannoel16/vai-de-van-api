@@ -1,12 +1,12 @@
-import { Driver } from '@/domain/Driver/entity/Driver';
-import { DriverFactory } from '@/domain/Driver/factory/DriverFactory';
-import { IDriverProtocolRepository } from '@/domain/Driver/repositories';
 import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 import { PrismaClient } from '@prisma/client';
+import { IDriverProtocolRepository } from './protocols/drivers';
+import { PersonFactory } from '@/domain/Person/factory/PersonFactory';
 
 const database = new PrismaClient();
 export class DriverRepository implements IDriverProtocolRepository {
-  async findById(id: string): Promise<Driver> {
+
+  async findById(id: string): Promise<DriverInterface> {
     const data = await database.driver.findFirst({
       where: {
         id,
@@ -15,23 +15,36 @@ export class DriverRepository implements IDriverProtocolRepository {
         User: true,
       },
     });
-    return DriverFactory.create({
+
+    return PersonFactory.create('driver', {
+      cpf: data.User.cpf,
+      email: data.User.email,
       id: data.id,
       name: data.User.name,
-    });
+      cnh: data.cnh,
+      dateOfBirth: data.User.date_of_birth,
+      password: data.User.password,
+      phone: data.User.phone,
+    }) as DriverInterface;
   }
-  async findAll(): Promise<Driver[]> {
+  async findAll(): Promise<DriverInterface[]> {
     const data = await database.driver.findMany({
       include: {
         User: true,
       },
     });
-    return DriverFactory.createMany(
-      data.map(item => ({
-        id: item.id,
-        name: item.User.name,
+    return PersonFactory.createMany(
+      'driver',
+      data.map(d => ({
+        cpf: d.User.cpf,
+        email: d.User.email,
+        id: d.id,
+        name: d.User.name,
+        cnh: d.cnh,
+        dateOfBirth: d.User.date_of_birth,
+        phone: d.User.phone,
       })),
-    );
+    ) as DriverInterface[];
   }
   async create(data: DriverInterface): Promise<DriverInterface> {
     await database.driver.create({

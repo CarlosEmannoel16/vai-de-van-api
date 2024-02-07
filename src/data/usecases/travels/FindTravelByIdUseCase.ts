@@ -18,7 +18,10 @@ export class FindTravelById implements ILisTravelById {
       routeId: data.idRoute,
       update_at: data.update_at,
       vehicleId: data.idVehicle,
-      vehicleName: data.vehicle.name,
+      description: data.description,
+      routeDescription: data.description,
+      status: data.status,
+      vehicleName: data.vehicle.description,
     };
   }
 }

@@ -1,14 +1,15 @@
 import { v4 } from 'uuid';
 import { TripStop } from '../../TripStop/entity/TripStop';
+import { Stop } from '@/domain/Stop/entity/Stop';
+import { TripStopInterface } from '@/domain/TripStop/interface/TripStopInterface';
+import { StopInterface } from '@/domain/Stop/interface/StopInterface';
 
 export class Route {
   private _id: string;
   private _km: number;
   private _name: string;
   private _kmValue: number;
-  private _stops: TripStop[] = [];
-  private _initialStop: TripStop;
-  private _finalStop: TripStop;
+  private _tripStops: TripStopInterface[] = [];
 
   constructor(id = v4(), km: number, name: string, kmValue: number) {
     this._id = id;
@@ -29,23 +30,28 @@ export class Route {
     if (fieldsMessage.length > 0) throw new Error(fieldsMessage.join(', '));
   }
 
-  addStop(data: TripStop) {
-    let lastOrder = 1;
-    this.stops?.map(stop => {
-      if (stop.tripStopOrder === 1) this._initialStop = stop;
-      if (stop.tripStopOrder === this.stops.length) this._finalStop = stop;
-      if (stop.tripStopOrder === data.tripStopOrder)
+  addTripStop(data: TripStopInterface[]) {
+    let initial = false;
+    let final = false;
+    let orders = {};
+
+    data.map(tripStop => {
+      if (tripStop.isInitialStop && !initial) initial = true;
+      if (tripStop.isInitialStop && initial)
+        throw new Error('initial stop already exists');
+
+      if (tripStop.isFinalStop) final = true;
+      if (tripStop.isFinalStop && final)
+        throw new Error('final stop already exists');
+
+      if (orders[tripStop.stopOrder])
         throw new Error(
-          'tripStopOrder already exists: order ' + stop.tripStopOrder,
+          'tripStopOrder already exists: order ' + tripStop.stopOrder,
         );
+      orders[tripStop.stopOrder] = true;
     });
 
-    this.stops.push(data);
-
-    this.stops?.map(stop => {
-      if (stop.tripStopOrder === 1) this._initialStop = stop;
-      if (stop.tripStopOrder === this.stops.length) this._finalStop = stop;
-    });
+    this._tripStops = data;
   }
 
   get id(): string {
@@ -71,23 +77,23 @@ export class Route {
     });
   }
 
-  get stops(): TripStop[] {
-    return this._stops;
+  get tripStops(): TripStopInterface[] {
+    return this._tripStops;
   }
 
   get amountOfStops(): number {
-    return this._stops.length;
+    return this._tripStops.length;
   }
 
   get quantityOfPassengers(): number {
     return 1;
   }
 
-  get initialStop(): TripStop {
-    return this._initialStop;
+  get initialStop(): TripStopInterface {
+    return this._tripStops.filter(tripStop => tripStop.isInitialStop)[0];
   }
 
-  get finalStop(): TripStop {
-    return this._finalStop;
+  get finalStop(): TripStopInterface {
+    return this._tripStops.filter(tripStop => tripStop.isFinalStop)[0];
   }
 }

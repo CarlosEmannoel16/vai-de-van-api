@@ -21,9 +21,6 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
         dateOfDeparture: travel.getDateOfDepartureInBr(),
         value: travel.getValueBetweenStops(data.origin, data.destiny),
         driver: travel.nameDriver,
-        vehicle: {
-          classification: travel.classificationVehicle,
-        },
         quantity: travel.getQuantitySeatsBetweenStops(
           data.origin,
           data.destiny,

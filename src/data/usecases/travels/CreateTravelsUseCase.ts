@@ -2,16 +2,18 @@ import { ICreateTravels } from '@/data/protocols/usecases/travels/CreateTravels'
 import { IUserProtocolRepository } from '@/infra/protocols';
 import { IGetByIdRouteProtocolRepository } from '@/domain/Route/repository/GetByIdRouteProtocolRepository';
 import { ITravelProtocolRepository } from '@/domain/Travel/repositories';
-import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle';
 import { v4 } from 'uuid';
 import { TravelFactory } from '@/domain/Travel/factory/TravelFactory';
-import { IFindDriverByIdProtocolRepository } from '@/domain/Driver/repositories/GetDriverByIdProtocolRepository';
+import { IFindVehicleAvailableByRouteUseCase } from '@/data/protocols/usecases/vechicle/FindVehicleAvailableByRouteUseCase';
+import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle/VehicleProtocolRepository';
+import { BusInterface } from '@/domain/Vehicle/interface/BusInterface';
+import { IDriverProtocolRepository } from '@/infra/protocols/drivers';
 export class CreateTravels implements ICreateTravels {
   constructor(
     private readonly travelRepository: ITravelProtocolRepository,
     private readonly routesRepository: IGetByIdRouteProtocolRepository,
-    private readonly driverById: IFindDriverByIdProtocolRepository,
-    private readonly vehicleRepository: IVehicleProtocolRepository,
+    private readonly driverById: IDriverProtocolRepository,
+    private readonly vehicleRepository: IVehicleProtocolRepository<BusInterface>,
   ) {}
   async execute(data: ICreateTravels.Params): Promise<any> {
     const route = await this.routesRepository.getById(data.routeId);

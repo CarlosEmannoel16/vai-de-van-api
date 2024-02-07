@@ -21,9 +21,6 @@ export class FindTravelByCityOriginUseCase
       dateOfDeparture: travel.departureDate.toString(),
       value: travel.getValueBetweenStops('1', '2'),
       driver: travel.driver.name,
-      vehicle: {
-        classification: travel.classificationVehicle,
-      },
       quantity: travel.getQuantitySeatsBetweenStops('1', '2'),
     }));
   }

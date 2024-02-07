@@ -2,14 +2,17 @@ import { StopInterface } from '@/domain/Stop/interface/StopInterface';
 import { TripStopInterface } from '../interface/TripStopInterface';
 
 export class TripStop implements TripStopInterface {
-  private _stop: StopInterface[] = [];
+  private _stop: StopInterface;
   private _stopOrder: number;
   private _isFinalStop: boolean = false;
   private _isInitialStop: boolean = false;
 
-  constructor(stop: StopInterface[], stopOrder: number) {
+  constructor(stop: StopInterface, stopOrder: number) {
     this._stopOrder = stopOrder;
     this._stop = stop;
+  }
+  get Stop(): StopInterface {
+    return this._stop;
   }
   get stopOrder(): number {
     return this._stopOrder;

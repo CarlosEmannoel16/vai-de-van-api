@@ -16,9 +16,6 @@ export namespace IFindTravelByOriginIdUseCaseProtocol {
     dateOfDeparture: string;
     value: string;
     driver: string;
-    vehicle: {
-      classification: number;
-    };
     quantity: number;
   };
 }

@@ -1,27 +1,12 @@
 import { CustomerInterface } from '../protocols/CustomerInterface';
 import { CustomerValidatorFactory } from '../factory/PersonValidatorFactory';
-export class Customer implements CustomerInterface {
-  private _id: string;
-  private _name: string;
-  private _email: string;
-  private _password: string;
-  private _cpf: string;
-  private _phone: string;
+import { Person } from './Person';
+import { PersonProps } from '../factory/PersonFactory';
+export class Customer extends Person implements CustomerInterface {
   private _secondaryPhone: string;
 
-  constructor(
-    id: string,
-    name: string,
-    email: string,
-    password: string,
-    cpf: string,
-  ) {
-    this._id = id;
-    this._name = name;
-    this._email = email;
-    this._cpf = cpf;
-    this._password = password;
-
+  constructor(data: PersonProps) {
+    super(data);
     CustomerValidatorFactory.create().validate(this);
   }
 
@@ -29,35 +14,7 @@ export class Customer implements CustomerInterface {
     return this._secondaryPhone;
   }
 
-  get dateOfBirth(): Date {
-    throw new Error('Method not implemented.');
-  }
-
   addPassword(password: string): void {
     this._password = password;
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
-  get name(): string {
-    return this._name;
-  }
-
-  get email(): string {
-    return this._email;
-  }
-
-  get password(): string {
-    return this._password;
-  }
-
-  get cpf(): string {
-    return this._cpf;
-  }
-
-  get phone(): string {
-    return this._phone;
   }
 }

@@ -1,21 +1,8 @@
-import { User } from "@prisma/client";
+import { DriverInterface } from "@/domain/Person/protocols/DriverInterface";
 
-export interface ICreateDriverProtocolRepository {
-    createDriver(data:ICreateDriverProtocolRepository.Params): Promise<User>
+export interface IDriverProtocolRepository {
+  create(data: DriverInterface): Promise<DriverInterface>;
+  findById(id: string): Promise<DriverInterface>;
+  findAll(): Promise<DriverInterface[]>;
 }
 
-export namespace ICreateDriverProtocolRepository {
-    export type Params = {
-        name: string;
-        cnh: string
-        email: string;
-        phone: string;
-        date_of_birth: Date;
-        cpf: string;
-        password: string;
-        cnhDateOfIssue: Date 
-        cnhExpirationDate: Date
-      };
-    
-     
-}

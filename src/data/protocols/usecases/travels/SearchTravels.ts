@@ -17,9 +17,6 @@ export namespace ISearchTravelsUseCaseProtocol {
     dateOfDeparture: string;
     value: string;
     driver: string;
-    vehicle: {
-      classification: number;
-    };
     quantity: number;
   };
 }
