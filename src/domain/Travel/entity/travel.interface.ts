@@ -1,11 +1,11 @@
 import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 import { Route } from '@/domain/Route/entity/Route';
 import { TravelStatus } from './Travel';
-import { Ticket } from '@/domain/Ticket/entity/Ticket';
 import { VehicleInterface } from '@/domain/Vehicle/interface/VehicleInterface';
+import { TicketInterface } from '@/domain/Ticket/interface/TicketInterface';
 
 export interface TravelInterface {
-  addTickets(ticket: Ticket[]): void;
+  addTickets(ticket: TicketInterface[]): void;
   getNameStopById(id: string): string;
   getDateOfDepartureInBr(): string;
   getValueBetweenStops(idStopOrigin: string, idStopDestiny: string): string;
@@ -16,7 +16,7 @@ export interface TravelInterface {
 
   get id(): string;
 
-  get tickets(): Ticket[];
+  get tickets(): TicketInterface[];
 
   get name(): string;
   set name(name: string);

@@ -1,17 +1,5 @@
-export interface IGetUserByNameProtocolRepository {
-  getUserByName(
-    nameUser: string,
-  ): Promise<IGetUserByNameProtocolRepository.Result>;
-}
+import { UserInterface } from '@/domain/Person/protocols/UserInterface';
 
-export namespace IGetUserByNameProtocolRepository {
-  export type Result = {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-    type: string;
-    cpf: string;
-    date_of_birth: Date;
-  };
+export interface IGetUserByNameProtocolRepository {
+  getUserByName(nameUser: string): Promise<UserInterface>;
 }

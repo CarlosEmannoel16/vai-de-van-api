@@ -5,6 +5,7 @@ import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 import { VehicleInterface } from '@/domain/Vehicle/interface/VehicleInterface';
 import { TravelValidatorFactory } from '../factory/TravelValidatorFactory';
 import { TravelService } from '../services/TravelService';
+import { TicketInterface } from '@/domain/Ticket/interface/TicketInterface';
 
 export type TravelStatus =
   | 'EM_ANDAMENTO'
@@ -19,7 +20,7 @@ export class Travel implements TravelInterface {
   private _name: string;
   private _Driver: DriverInterface;
   private _Vehicle: VehicleInterface;
-  private _tickets: Ticket[] = [];
+  private _tickets: TicketInterface[] = [];
   private _arrivalDate: Date;
   private _departureDate: Date;
   private _update_at: Date;
@@ -49,7 +50,7 @@ export class Travel implements TravelInterface {
     TravelValidatorFactory.create().validate(this);
   }
   get tickets(): Ticket[] {
-    return this._tickets;
+    throw new Error('Method not implemented.');
   }
 
   get id(): string {
@@ -132,14 +133,14 @@ export class Travel implements TravelInterface {
     return this._created_at;
   }
 
-  addTickets(tickets: Ticket[]) {
+  addTickets(tickets: TicketInterface[]) {
     this._tickets = [...this._tickets, ...tickets];
   }
 
   getNameStopById(id: string): string {
-    const stop = this._Route.stops.find(stop => stop.cityId === id);
+    const stop = this._Route.tripStops.find(stop => stop.Stop.id === id);
     if (!stop) throw new Error('Stop not found');
-    return stop.cityName;
+    return stop.Stop.name;
   }
 
   getDateOfDepartureInBr(): string {

@@ -1,16 +1,9 @@
 import { PrismaClient, User } from '@prisma/client';
 import { IUserProtocolRepository } from '@/infra/protocols';
-import { IUpdateUserProtocolRepository } from './protocols/user/UpdateUserProtocolRepository';
-import { ICreateDriverProtocolRepository } from '@infra/protocols/drivers';
 import { IGetUserByParamsProtocolRepository } from './protocols/user/GetUserByParamsProtocolRepository';
-import { ICreateUserProtocolRepository } from './protocols/user/CreateUserProtocolRepository';
-import { IGetUserByNameProtocolRepository } from './protocols/user/GetUserByNameProtocolRepository';
-import { IGetUserByCpfProtocolRepository } from './protocols/user/GetUserByCpfProtocolRepository';
-import { IGetUserByEmailProtocolRepository } from './protocols/user/GetUserByEmailProtocolRepository';
-import { IGetAllUsersProtocolRepository } from './protocols/user/GetAllUsersProtocolRepository';
-import { Driver } from '@/domain/Driver/entity/Driver';
 import { UserInterface } from '@/domain/Person/protocols/UserInterface';
-import { PersonFactory } from '@/domain/Person/factory/PersonFactory';
+import PersonFactory from '@/domain/Person/factory/PersonFactory';
+import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 
 const prisma = new PrismaClient();
 export class UserRepository implements IUserProtocolRepository {
@@ -19,7 +12,7 @@ export class UserRepository implements IUserProtocolRepository {
   ): Promise<UserInterface> {
     const result = await prisma.user.findFirst({ where: data });
 
-    return PersonFactory.create('admin', {
+    return PersonFactory.user({
       cpf: result.cpf,
       email: result.email,
       id: result.id,
@@ -32,70 +25,40 @@ export class UserRepository implements IUserProtocolRepository {
   async delete(id: string): Promise<boolean> {
     const result = await prisma.user.delete({
       where: { id },
-      include: { Driver: { where: { idUser: id } } },
     });
     return result ? true : false;
   }
-  async update(
-    data: IUpdateUserProtocolRepository.Params,
-  ): Promise<IUpdateUserProtocolRepository.Result> {
-    const { id, cpf, date_of_birth, email, name, password, phone, type } = data;
-    const user = prisma.user.update({
+  async update(user: UserInterface): Promise<UserInterface> {
+    await prisma.user.update({
       data: {
-        cpf,
-        date_of_birth,
-        email,
-        name,
-        password,
-        phone,
-        type,
+        cpf: user.cpf,
+        created_at: user.dateOfCreate,
+        date_of_birth: user.dateOfBirth,
+        email: user.email,
+        name: user.name,
+        password: user.password,
+        phone: user.phone,
+        update_at: user.dateOfUpdate,
       },
       where: {
-        id: id,
+        id: user.id,
       },
     });
     return user;
   }
-  async createDriver(
-    data: ICreateDriverProtocolRepository.Params,
-  ): Promise<User> {
-    const {
-      cnh,
-      cpf,
-      date_of_birth,
-      email,
-      name,
-      password,
-      phone,
-      cnhDateOfIssue,
-      cnhExpirationDate,
-    } = data;
-    return prisma.user.create({
+  async create(user: UserInterface): Promise<UserInterface> {
+    await prisma.user.create({
       data: {
-        cpf,
-        date_of_birth,
-        email,
-        name,
-        password,
-        created_at: new Date(),
-        update_at: new Date(),
-        phone,
-        type: 'DRIVER',
-        Driver: { create: { cnh, cnhDateOfIssue, cnhExpirationDate } },
+        cpf: user.cpf,
+        date_of_birth: user.dateOfBirth,
+        email: user.email,
+        name: user.name,
+        password: user.password,
+        phone: user.phone,
+        created_at: user.dateOfCreate,
+        id: user.id,
+        update_at: user.dateOfUpdate,
       },
-    });
-  }
-  async create({
-    cpf,
-    date_of_birth,
-    email,
-    name,
-    password,
-    phone,
-    type,
-  }: ICreateUserProtocolRepository.Params): Promise<ICreateUserProtocolRepository.Result> {
-    const user = await prisma.user.create({
-      data: { cpf, date_of_birth, email, name, password, phone, type },
     });
     return user;
   }
@@ -105,53 +68,66 @@ export class UserRepository implements IUserProtocolRepository {
       select: {
         cpf: true,
         date_of_birth: true,
-        Driver: true,
         email: true,
         name: true,
         id: true,
         password: true,
         phone: true,
-        type: true,
         created_at: true,
         update_at: true,
       },
     });
   }
 
-  async getUserByName(
-    nameUser: string,
-  ): Promise<IGetUserByNameProtocolRepository.Result | any> {
+  async getUserByName(nameUser: string): Promise<UserInterface | undefined> {
     const user = await prisma.user.findFirst({ where: { name: nameUser } });
-    if (!user) return {};
+    if (!user) return;
 
-    const { email, id, name, phone, type, cpf, date_of_birth } = user;
-    return {
-      email,
-      id,
-      name,
-      phone,
-      type,
-      cpf,
-      date_of_birth,
-    };
+    return PersonFactory.user({
+      cpf: user.cpf,
+      email: user.email,
+      id: user.id,
+      name: user.name,
+      password: user.password,
+      dateOfBirth: user.date_of_birth,
+      dateOfCreate: user.created_at,
+      dateOfUpdate: user.update_at,
+      phone: user.phone,
+    });
   }
 
-  async getByCpf(
-    cpfUser: string,
-  ): Promise<IGetUserByCpfProtocolRepository.Result | any> {
+  async getByCpf(cpfUser: string): Promise<UserInterface | any> {
     const user = await prisma.user.findFirst({ where: { cpf: cpfUser } });
-    if (!user) return {};
-    const { cpf, date_of_birth, email, id, name, phone, type } = user;
-    return { cpf, date_of_birth, email, id, name, phone, type };
+    if (!user) return;
+    return PersonFactory.user({
+      cpf: user.cpf,
+      email: user.email,
+      id: user.id,
+      name: user.name,
+      dateOfBirth: user.date_of_birth,
+      password: user.password,
+      dateOfCreate: user.created_at,
+      dateOfUpdate: user.update_at,
+      phone: user.phone,
+    });
   }
 
   async getUserByEmail(
     emailUser: string,
-  ): Promise<IGetUserByEmailProtocolRepository.Result | any> {
+  ): Promise<UserInterface | any> {
     const user = await prisma.user.findFirst({ where: { email: emailUser } });
     if (!user) return {};
-    const { cpf, date_of_birth, email, id, name, phone, type, password } = user;
-    return { cpf, date_of_birth, email, id, name, phone, type, password };
+    return PersonFactory.user({
+      cpf: user.cpf,
+      email: user.email,
+      id: user.id,
+      name: user.name,
+      dateOfBirth: user.date_of_birth,
+      password: user.password,
+      dateOfCreate: user.created_at,
+      dateOfUpdate: user.update_at,
+      phone: user.phone,
+    });
   }
 
   async getAll(): Promise<IGetAllUsersProtocolRepository.Result[]> {

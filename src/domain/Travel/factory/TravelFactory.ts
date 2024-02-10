@@ -1,8 +1,8 @@
 import { Travel, TravelStatus } from '../entity/Travel';
 import { Route } from '@/domain/Route/entity/Route';
-import { Ticket } from '@/domain/Ticket/entity/Ticket';
 import { VehicleInterface } from '@/domain/Vehicle/interface/VehicleInterface';
 import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
+import { TicketInterface } from '@/domain/Ticket/interface/TicketInterface';
 
 export type CreateTravelFactoryParams = {
   id?: string;
@@ -11,7 +11,7 @@ export type CreateTravelFactoryParams = {
   driver: DriverInterface;
   vehicle: VehicleInterface;
   arrivalDate: Date;
-  tickets?: Ticket[];
+  tickets?: TicketInterface[];
   departureDate: Date;
   description?: string;
   status?: TravelStatus;

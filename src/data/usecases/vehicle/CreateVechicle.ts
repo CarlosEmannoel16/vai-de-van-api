@@ -1,7 +1,6 @@
 import { ICreateVehicle } from '@/data/protocols/usecases/vechicle/CreateVechicleUseCase';
 import { VehicleFactory } from '@/domain/Vehicle/factory/VehicleFactory';
 import { BusInterface } from '@/domain/Vehicle/interface/BusInterface';
-import { IUserProtocolRepository } from '@/infra/protocols';
 import { IVehicleProtocolRepository } from '@/infra/protocols/vechicle/VehicleProtocolRepository';
 import { Vehicle } from '@prisma/client';
 import { v4 } from 'uuid';

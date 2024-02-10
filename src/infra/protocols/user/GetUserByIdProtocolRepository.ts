@@ -1,20 +1,7 @@
-import { UserModel } from '@/domain/models';
+import { UserInterface } from '@/domain/Person/protocols/UserInterface';
 import { Travel, User, Vehicle } from '@prisma/client';
 import { Driver } from 'typeorm';
 
 export interface IGetUserByIdProtocolRepository {
-  getById(idUser: string): Promise<IGetUserByIdProtocolRepository.Result>;
+  getById(id: string): Promise<UserInterface>;
 }
-
-
-export namespace IGetUserByIdProtocolRepository{
-  export type Result = 
-    User & {
-      Driver: Driver[];
-      Vehicle: Vehicle[];
-    }
-}
-
-
-
-

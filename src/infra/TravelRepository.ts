@@ -4,14 +4,13 @@ import { ISearchTravelProtocolRepository } from '../domain/Travel/repositories/S
 import { PrismaClient, TripStops, Vehicle } from '@prisma/client';
 import { Travel } from '@/domain/Travel/entity/Travel';
 import { TravelFactory } from '@/domain/Travel/factory/TravelFactory';
-import { Driver } from '@/domain/Driver/entity/Driver';
 import { RouteFactory } from '@/domain/Route/factories/RouteFactories';
 import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
 import { VehicleFactory } from '@/domain/Vehicle/factory/VehicleFactory';
-import { Ticket } from '@/domain/Ticket/entity/Ticket';
-import { DriverFactory } from '@/domain/Driver/factory/DriverFactory';
 import { TicketFactory } from '@/domain/Ticket/factory/TicketFactory';
 import { TravelInterface } from '@/domain/Travel/entity/travel.interface';
+import PersonFactory from '@/domain/Person/factory/PersonFactory';
+import { StopFactory } from '@/domain/Stop/factory/StopFactory';
 
 const travelDataBase = new PrismaClient().travel;
 export class TravelRepository implements ITravelProtocolRepository {
@@ -34,12 +33,7 @@ export class TravelRepository implements ITravelProtocolRepository {
         idVehicle: true,
         routeId: true,
         status: true,
-        Driver: {
-          select: {
-            id: true,
-            User: true,
-          },
-        },
+        Driver: true,
         Route: true,
         Vehicle: true,
         update_at: true,
@@ -52,7 +46,18 @@ export class TravelRepository implements ITravelProtocolRepository {
         arrivalDate: travel.arrivalDate,
         description: travel.description,
         departureDate: travel.departureDate,
-        driver: new Driver(travel.Driver.id, travel.Driver.User.name),
+        driver: PersonFactory.driver({
+          id: travel.Driver.id,
+          name: travel.Driver.name,
+          cpf: travel.Driver.cpf,
+          email: travel.Driver.email,
+          cnh: travel.Driver.cnh,
+          dateOfBirth: travel.Driver.date_of_birth,
+          dateOfCreate: travel.Driver.created_at,
+          dateOfUpdate: travel.Driver.update_at,
+          password: travel.Driver.password,
+          phone: travel.Driver.phone,
+        }),
         name: travel.description,
         route: RouteFactory.create({
           km: travel.Route.km,
@@ -60,14 +65,10 @@ export class TravelRepository implements ITravelProtocolRepository {
           name: travel.Route.name,
           id: travel.Route.id,
         }),
-        vehicle: VehicleFactory.create({
-          color: travel.Vehicle.cor,
+        vehicle: VehicleFactory.bus({
+          description: travel.Vehicle.description,
           id: travel.Vehicle.id,
-          name: travel.Vehicle.description,
-          ownerName: travel.Vehicle.ownerName,
-          plate: travel.Vehicle.plate,
           quantitySeats: travel.Vehicle.amount_of_accents,
-          withAir: travel.Vehicle.with_air,
         }),
         id: travel.id,
         tickets: [] as any,
@@ -83,7 +84,7 @@ export class TravelRepository implements ITravelProtocolRepository {
           include: {
             TripStops: {
               include: {
-                City: true,
+                Stop: true,
               },
             },
           },
@@ -91,26 +92,27 @@ export class TravelRepository implements ITravelProtocolRepository {
         Vehicle: true,
         Tickets: true,
         Payment: true,
-        Driver: {
-          include: {
-            User: true,
-          },
-        },
+        Driver: true,
       },
     });
 
-    const driver = DriverFactory.create({
+    const driver = PersonFactory.driver({
       id: result.Driver.id,
-      name: result.Driver.User.name,
-      idUser: result.Driver.User.id,
+      name: result.Driver.name,
+      cpf: result.Driver.cpf,
+      email: result.Driver.email,
     });
 
     const tripStops = TripStopFactory.mapCreate(
       result.Route.TripStops?.map(ts => {
         return {
-          cityId: ts.cityid,
-          cityName: ts.City.name,
           distanceFromLast: ts.distanceFromLastStop,
+          stop: StopFactory.create({
+            coordinates: ts.Stop.coordinates,
+            id: ts.Stop.id,
+            name: ts.Stop.name,
+            status: ts.Stop.disabled ? 'disable' : 'enable',
+          }),
           tripStopOrder: ts.tripStopOrder,
           id: ts.id,
         };
@@ -125,14 +127,14 @@ export class TravelRepository implements ITravelProtocolRepository {
       tripStops,
     });
 
-    const vehicle = VehicleFactory.create({
+    const vehicle = VehicleFactory.bus({
       color: result.Vehicle.cor,
       id: result.Vehicle.id,
-      name: result.Vehicle.description,
       ownerName: result.Vehicle.ownerName,
       plate: result.Vehicle.plate,
       quantitySeats: result.Vehicle.amount_of_accents,
       withAir: result.Vehicle.with_air,
+      description: result.Vehicle.description,
     });
 
     const tickets = TicketFactory.mapCreate(
@@ -152,7 +154,6 @@ export class TravelRepository implements ITravelProtocolRepository {
       description: result.description,
       id: result.id,
       vehicle,
-      tickets,
       status: result.status,
     });
   }
@@ -204,24 +205,20 @@ export class TravelRepository implements ITravelProtocolRepository {
         Route: {
           TripStops: {
             some: {
-              cityid: data.origin,
+              stopId: data.origin,
             },
           },
         },
         status: 'ABERTA',
       },
       include: {
-        Driver: {
-          include: {
-            User: true,
-          },
-        },
+        Driver: true,
         Vehicle: true,
         Route: {
           include: {
             TripStops: {
               include: {
-                City: true,
+                Stop: true,
               },
             },
           },
@@ -236,19 +233,20 @@ export class TravelRepository implements ITravelProtocolRepository {
         arrivalDate: travel.arrivalDate,
         name: travel.description,
         id: travel.id,
-        vehicle: VehicleFactory.create({
+        vehicle: VehicleFactory.bus({
           id: travel.Vehicle.id,
           color: travel.Vehicle.cor,
           withAir: travel.Vehicle.with_air,
-          name: travel.Vehicle.description,
+          description: travel.Vehicle.description,
           quantitySeats: travel.Vehicle.amount_of_accents,
           ownerName: travel.Vehicle.ownerName,
           plate: travel.Vehicle.plate,
         }),
-        driver: DriverFactory.create({
+        driver: PersonFactory.driver({
           id: travel.Driver.id,
-          name: travel.Driver.User.name,
-          idUser: travel.Driver.User.id,
+          name: travel.Driver.name,
+          cpf: travel.Driver.cpf,
+          email: travel.Driver.email,
         }),
         route: RouteFactory.create({
           km: travel.Route.km,
@@ -257,11 +255,15 @@ export class TravelRepository implements ITravelProtocolRepository {
           id: travel.Route.id,
           tripStops: TripStopFactory.mapCreate(
             travel.Route.TripStops?.map(ts => ({
-              cityId: ts.cityid,
-              cityName: ts.City.name,
               distanceFromLast: ts.distanceFromLastStop,
               tripStopOrder: ts.tripStopOrder,
               id: ts.id,
+              stop: StopFactory.create({
+                coordinates: ts.Stop.coordinates,
+                id: ts.Stop.id,
+                name: ts.Stop.name,
+                status: ts.Stop.disabled ? 'disable' : 'enable',
+              }),
             })),
           ),
         }),
@@ -282,24 +284,20 @@ export class TravelRepository implements ITravelProtocolRepository {
         Route: {
           TripStops: {
             some: {
-              cityid: cityOrigin,
+              stopId: cityOrigin,
               initialStop: true,
             },
           },
         },
       },
       include: {
-        Driver: {
-          include: {
-            User: true,
-          },
-        },
+        Driver: true,
         Vehicle: true,
         Route: {
           include: {
             TripStops: {
               include: {
-                City: true,
+                Stop: true,
               },
             },
           },
@@ -314,19 +312,20 @@ export class TravelRepository implements ITravelProtocolRepository {
         name: travel.description,
         arrivalDate: travel.arrivalDate,
         departureDate: travel.departureDate,
-        vehicle: VehicleFactory.create({
+        vehicle: VehicleFactory.bus({
           id: travel.Vehicle.id,
           color: travel.Vehicle.cor,
           plate: travel.Vehicle.plate,
-          name: travel.Vehicle.description,
+          description: travel.Vehicle.description,
           withAir: travel.Vehicle.with_air,
           ownerName: travel.Vehicle.ownerName,
           quantitySeats: travel.Vehicle.amount_of_accents,
         }),
-        driver: DriverFactory.create({
+        driver: PersonFactory.driver({
           id: travel.Driver.id,
-          name: travel.Driver.User.name,
-          idUser: travel.Driver.User.id,
+          name: travel.Driver.name,
+          cpf: travel.Driver.cpf,
+          email: travel.Driver.email,
         }),
         route: RouteFactory.create({
           km: travel.Route.km,
@@ -336,9 +335,13 @@ export class TravelRepository implements ITravelProtocolRepository {
           tripStops: TripStopFactory.mapCreate(
             travel.Route.TripStops?.map(ts => ({
               distanceFromLast: ts.distanceFromLastStop,
+              stop: StopFactory.create({
+                coordinates: ts.Stop.coordinates,
+                id: ts.Stop.id,
+                name: ts.Stop.name,
+                status: ts.Stop.disabled ? 'disable' : 'enable',
+              }),
               tripStopOrder: ts.tripStopOrder,
-              cityName: ts.City.name,
-              cityId: ts.cityid,
               id: ts.id,
             })),
           ),
@@ -352,7 +355,5 @@ export class TravelRepository implements ITravelProtocolRepository {
         ),
       });
     });
-
-
   }
 }

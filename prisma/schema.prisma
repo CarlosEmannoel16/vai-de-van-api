@@ -31,6 +31,37 @@ enum StatusTicket {
   ATIVO
 }
 
+model Customer {
+  id            String   @id @default(uuid())
+  name          String
+  hasAccount    Boolean  @default(false)
+  password      String?
+  email         String   @unique
+  cpf           String   @unique
+  phone         String
+  phone2        String
+  date_of_birth DateTime
+  Ticket        Ticket[]
+  created_at    DateTime @default(now())
+  update_at     DateTime @default(now()) @updatedAt
+}
+
+model Driver {
+  id                String   @id @default(uuid())
+  name              String
+  password          String
+  email             String   @unique
+  cpf               String   @unique
+  phone             String
+  date_of_birth     DateTime
+  cnh               String
+  cnhDateOfIssue    DateTime @default(now())
+  cnhExpirationDate DateTime @default(now())
+  Travel            Travel[]
+  created_at        DateTime @default(now())
+  update_at         DateTime @default(now()) @updatedAt
+}
+
 model User {
   id            String   @id @default(uuid())
   name          String
@@ -39,10 +70,8 @@ model User {
   cpf           String   @unique
   phone         String
   date_of_birth DateTime
-  type          String
   created_at    DateTime @default(now())
   update_at     DateTime @default(now()) @updatedAt
-  Driver        Driver[]
 }
 
 model SessionUsers {
@@ -50,28 +79,16 @@ model SessionUsers {
   token  String
 }
 
-model Driver {
-  id                String   @id @default(uuid())
-  cnh               String
-  cnhDateOfIssue    DateTime @default(now())
-  cnhExpirationDate DateTime @default(now())
-  idUser            String   @unique
-  User              User     @relation(fields: [idUser], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  Travel            Travel[]
-  created_at        DateTime @default(now())
-  update_at         DateTime @default(now()) @updatedAt
-}
-
 model State {
   id         String   @id @default(uuid())
   name       String
   uf         String
-  cities     City[]
+  stops      Stop[]
   created_at DateTime @default(now())
   update_at  DateTime @default(now()) @updatedAt
 }
 
-model City {
+model Stop {
   id          String      @id @default(uuid())
   name        String
   image       String      @default("")
@@ -81,7 +98,7 @@ model City {
   stateId     String?
   created_at  DateTime    @default(now())
   update_at   DateTime    @default(now()) @updatedAt
-  TripStops   TripStops[] @relation("CityDestiny")
+  TripStops   TripStops[] @relation("StopDestiny")
   Views       Views[]
 }
 
@@ -91,26 +108,26 @@ model Route {
   km         Int
   disabled   Boolean     @default(false)
   kmValue    String?
-  Travel     Travel[]
   created_at DateTime    @default(now())
   update_at  DateTime    @default(now()) @updatedAt
+  Travel     Travel[]
   TripStops  TripStops[]
 }
 
 model TripStops {
   id                   String   @id @default(uuid())
-  cityid               String
   initialStop          Boolean  @default(false)
   finalStop            Boolean  @default(false)
-  City                 City     @relation(fields: [cityid], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "CityDestiny")
+  stopId               String
   tripStopOrder        Int
   distanceFromLastStop Float    @default(0)
+  routeId              String?
   created_at           DateTime @default(now())
   update_at            DateTime @default(now()) @updatedAt
   Route                Route?   @relation(fields: [routeId], references: [id])
-  routeId              String?
   TicketOrigin         Ticket[] @relation("TripStopOrigin")
   TicketDestiny        Ticket[] @relation("TripStopDestiny")
+  Stop                 Stop     @relation(fields: [stopId], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "StopDestiny")
 }
 
 model Vehicle {
@@ -128,20 +145,21 @@ model Vehicle {
 
 model Travel {
   id            String       @id @default(uuid())
-  Vehicle       Vehicle      @relation(fields: [idVehicle], references: [id])
   description   String       @default("Viagem Padrao")
   idVehicle     String
-  Route         Route        @relation(fields: [routeId], references: [id])
   routeId       String
-  Payment       Payment[]
-  Driver        Driver?      @relation(fields: [driverId], references: [id])
   driverId      String?      @default("60fa4c20-e4e0-4419-9cde-fea353a457ab")
   departureDate DateTime
   arrivalDate   DateTime
   status        StatusTravel @default(ABERTA)
+  isDailyTrip   Boolean      @default(false)
   created_at    DateTime     @default(now())
   update_at     DateTime     @default(now()) @updatedAt
+  Driver        Driver?      @relation(fields: [driverId], references: [id])
+  Payment       Payment[]
   Tickets       Ticket[]
+  Vehicle       Vehicle      @relation(fields: [idVehicle], references: [id])
+  Route         Route        @relation(fields: [routeId], references: [id])
 }
 
 model Payment {
@@ -172,19 +190,6 @@ model Ticket {
   travelId        String
 }
 
-model Customer {
-  id         String   @id @default(uuid())
-  cpf        String
-  name       String
-  email      String
-  password   String
-  phone      String
-  phone2     String
-  Ticket     Ticket[]
-  created_at DateTime @default(now())
-  update_at  DateTime @default(now()) @updatedAt
-}
-
 model ViewsCategory {
   id         String   @id @default(uuid())
   name       String
@@ -199,8 +204,8 @@ model Views {
   name            String
   urlImage        String
   viewsCategoryId String
-  cityId          String
-  City            City          @relation(fields: [cityId], references: [id])
+  stopId          String
+  Stop            Stop          @relation(fields: [stopId], references: [id])
   category        ViewsCategory @relation(fields: [viewsCategoryId], references: [id])
   disabled        Boolean       @default(false)
   created_at      DateTime      @default(now())

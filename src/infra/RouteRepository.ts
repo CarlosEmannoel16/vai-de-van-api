@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { IRouteRepository } from '../domain/Route/repository';
 import { RouteFactory } from '@/domain/Route/factories/RouteFactories';
 import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
+import { StopFactory } from '@/domain/Stop/factory/StopFactory';
 const prisma = new PrismaClient();
 export class RouteRepository implements IRouteRepository {
   async update(data: Route): Promise<Route> {
@@ -36,18 +37,14 @@ export class RouteRepository implements IRouteRepository {
         TripStops: {
           select: {
             id: true,
-            cityid: true,
+            stopId: true,
             finalStop: true,
             update_at: true,
             created_at: true,
             initialStop: true,
             tripStopOrder: true,
             distanceFromLastStop: true,
-            City: {
-              select: {
-                name: true,
-              },
-            },
+            Stop: true,
           },
         },
       },
@@ -58,13 +55,17 @@ export class RouteRepository implements IRouteRepository {
       kmValue: Number(route.kmValue),
       name: route.name,
       id: route.id,
-      tripStops: route.TripStops?.map(tripStop => {
+      tripStops: route.TripStops.map(tripStop => {
         return TripStopFactory.create({
-          cityId: tripStop.cityid,
-          distanceFromLast: Number(tripStop.distanceFromLastStop),
+          distanceFromLast: tripStop.distanceFromLastStop,
           tripStopOrder: tripStop.tripStopOrder,
           id: tripStop.id,
-          cityName: tripStop.City.name,
+          stop: StopFactory.create({
+            id: tripStop.Stop.id,
+            name: tripStop.Stop.name,
+            status: tripStop.Stop.disabled ? 'disable' : 'enable',
+            coordinates: tripStop.Stop.coordinates,
+          }),
         });
       }),
     });
@@ -80,12 +81,12 @@ export class RouteRepository implements IRouteRepository {
         TripStops: {
           select: {
             id: true,
-            cityid: true,
+            stopId: true,
             finalStop: true,
             initialStop: true,
             tripStopOrder: true,
             distanceFromLastStop: true,
-            City: {
+            Stop: {
               select: {
                 name: true,
               },
@@ -102,16 +103,6 @@ export class RouteRepository implements IRouteRepository {
         id: route.id,
       });
 
-      route.TripStops?.map(tripStop => {
-        const tripStopEntity = TripStopFactory.create({
-          cityId: tripStop.cityid,
-          cityName: tripStop.City.name,
-          distanceFromLast: Number(tripStop.distanceFromLastStop),
-          id: tripStop.id,
-          tripStopOrder: tripStop.tripStopOrder,
-        });
-        routeEntity.addStop(tripStopEntity);
-      });
       return routeEntity;
     });
   }
@@ -126,16 +117,16 @@ export class RouteRepository implements IRouteRepository {
         kmValue: String(data.kmValue),
         id: data.id,
         TripStops: {
-          create: data.stops?.map(tripStop => {
+          create: data.tripStops?.map(tripStop => {
             return {
-              id: tripStop.stopId,
+              id: tripStop.id,
               finalStop: tripStop.isFinalStop,
               initialStop: tripStop.isInitialStop,
-              tripStopOrder: tripStop.tripStopOrder,
+              tripStopOrder: tripStop.stopOrder,
               created_at: new Date(),
               distanceFromLastStop: tripStop.distanceFromLast,
               update_at: new Date(),
-              cityid: tripStop.cityId,
+              stopId: tripStop.Stop.id,
             };
           }),
         },

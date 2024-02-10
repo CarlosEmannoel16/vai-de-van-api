@@ -24,7 +24,7 @@ export interface PersonProps {
   dateOfUpdate?: Date;
 }
 
-export class PersonFactory implements PersonFactoryInterface {
+class PersonFactory implements PersonFactoryInterface {
   driver(data: PersonProps): DriverInterface {
     return new Driver({ ...data, cnh: data.cnh });
   }
@@ -35,3 +35,5 @@ export class PersonFactory implements PersonFactoryInterface {
     return new User(data);
   }
 }
+
+export default new PersonFactory;

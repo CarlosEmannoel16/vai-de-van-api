@@ -3,7 +3,7 @@ import { IFindCustomerByCpfProtocolRepository } from './protocols/customer/FindC
 import { ICreateCustomerProtocolRepository } from './protocols/customer/CreateCustomerProtocolRepository';
 import { IFindCustomerByEmailProtocolRepository } from './protocols/customer/FindCustomerByEmailProtocolRepository';
 import { IFindCustomerByIdProtocolRepository } from './protocols/customer/FindCustomerByIdProtocolRepository';
-import { PersonFactory } from '@/domain/Person/factory/PersonFactory';
+import PersonFactory from '@/domain/Person/factory/PersonFactory';
 import { CustomerInterface } from '@/domain/Person/protocols/CustomerInterface';
 const database = new PrismaClient().customer;
 export class CustomerRepository
@@ -20,7 +20,7 @@ export class CustomerRepository
       },
     });
 
-    return PersonFactory.create('customer', {
+    return PersonFactory.customer({
       cpf: customer.cpf,
       email: customer.email,
       id: customer.id,
@@ -52,7 +52,7 @@ export class CustomerRepository
       },
     });
 
-    return PersonFactory.create('customer', {
+    return PersonFactory.customer({
       id: customer.id,
       name: customer.name,
       email: customer.email,
@@ -69,7 +69,7 @@ export class CustomerRepository
         id,
       },
     });
-    return PersonFactory.create('customer', {
+    return PersonFactory.customer({
       id: customer.id,
       name: customer.name,
       email: customer.email,

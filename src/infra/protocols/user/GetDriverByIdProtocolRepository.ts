@@ -1,5 +1,5 @@
-import { Driver } from "@/domain/Driver/entity/Driver";
+import { UserInterface } from "@/domain/Person/protocols/UserInterface";
 
 export interface IGetDriverByIdProtocolRepository {
-  getDriverById(id: string): Promise<Driver>;
+  getDriverById(id: string): Promise<UserInterface>;
 }

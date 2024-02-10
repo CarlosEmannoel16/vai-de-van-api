@@ -1,15 +1,7 @@
+import { UserInterface } from "@/domain/Person/protocols/UserInterface";
+
 export interface IGetUserByCpfProtocolRepository {
-  getByCpf(cpf: string): Promise<IGetUserByCpfProtocolRepository.Result>;
+  getByCpf(cpf: string): Promise<UserInterface>;
 }
 
-export namespace IGetUserByCpfProtocolRepository {
-  export type Result = {
-    id: string;
-    name: string;
-    type: string;
-    email: string;
-    phone: string;
-    date_of_birth: Date;
-    cpf: string;
-  };
-}
+
