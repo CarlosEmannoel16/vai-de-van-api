@@ -129,7 +129,7 @@ export class UserRepository implements IUserProtocolRepository {
   }
 
   async getAll(): Promise<UserInterface[]> {
-    const data = await prisma.driver.findMany();
+    const data = await prisma.user.findMany();
     let users: UserInterface[] = [];
 
     data.map(user => {
@@ -151,24 +151,24 @@ export class UserRepository implements IUserProtocolRepository {
     return users;
   }
 
-  async getDriverById(id: string): Promise<Driver> {
-    const driver = await prisma.driver.findFirst({
+  async getDriverById(id: string): Promise<UserInterface> {
+    const user = await prisma.user.findFirst({
       where: {
-        idUser: id,
-      },
-      select: {
-        id: true,
-        User: {
-          select: {
-            email: true,
-            id: true,
-            name: true,
-          },
-        },
+        id,
       },
     });
 
-    if (!driver) throw new Error('Motorista não encontrado');
-    return new Driver(driver?.User.id, driver?.User?.name);
+    if (!user) throw new Error('Motorista não encontrado');
+    return PersonFactory.user({
+      cpf: user.cpf,
+      email: user.email,
+      id: user.id,
+      name: user.name,
+      dateOfBirth: user.date_of_birth,
+      password: user.password,
+      dateOfCreate: user.created_at,
+      dateOfUpdate: user.update_at,
+      phone: user.phone,
+    });
   }
 }
