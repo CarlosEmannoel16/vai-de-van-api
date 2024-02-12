@@ -112,9 +112,7 @@ export class UserRepository implements IUserProtocolRepository {
     });
   }
 
-  async getUserByEmail(
-    emailUser: string,
-  ): Promise<UserInterface | any> {
+  async getUserByEmail(emailUser: string): Promise<UserInterface | any> {
     const user = await prisma.user.findFirst({ where: { email: emailUser } });
     if (!user) return {};
     return PersonFactory.user({
@@ -130,34 +128,27 @@ export class UserRepository implements IUserProtocolRepository {
     });
   }
 
-  async getAll(): Promise<IGetAllUsersProtocolRepository.Result[]> {
-    const data = await prisma.driver.findMany({
-      select: {
-        User: {
-          select: {
-            cpf: true,
-            email: true,
-            created_at: true,
-            date_of_birth: true,
-            id: true,
-            name: true,
-            phone: true,
-            type: true,
-            update_at: true,
+  async getAll(): Promise<UserInterface[]> {
+    const data = await prisma.driver.findMany();
+    let users: UserInterface[] = [];
 
-            Driver: {
-              select: {
-                cnh: true,
-                cnhDateOfIssue: true,
-                cnhExpirationDate: true,
-                Travel: true,
-              },
-            },
-          },
-        },
-      },
+    data.map(user => {
+      users.push(
+        PersonFactory.user({
+          cpf: user.cpf,
+          email: user.email,
+          id: user.id,
+          name: user.name,
+          dateOfBirth: user.date_of_birth,
+          password: user.password,
+          dateOfCreate: user.created_at,
+          dateOfUpdate: user.update_at,
+          phone: user.phone,
+        }),
+      );
     });
-    return data;
+
+    return users;
   }
 
   async getDriverById(id: string): Promise<Driver> {
