@@ -1,5 +1,5 @@
 import { ValidatorInterface } from '@/domain/@shared/validator/ValidatorInterface';
-import { TravelInterface } from '../entity/travel.interface';
+import { TravelInterface } from '../Interfaces/travel.interface';
 import * as Yup from 'yup';
 
 export class TravelValidator implements ValidatorInterface<TravelInterface> {

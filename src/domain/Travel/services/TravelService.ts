@@ -1,23 +1,24 @@
 import { toMoney } from "@/@shared/utils/toMoney";
 import { Route } from "@/domain/Route/entity/Route";
-import { TravelInterface } from "../entity/travel.interface";
+import { TravelInterface } from "../Interfaces/travel.interface";
+import { TripStop } from "@/domain/TripStop/entity/TripStop";
 
 export class TravelService {
   static getValueBetweenStops(route:Route, idStop1: string, idStop2: string): string {
-    const stop1 = route.stops.find(stop => stop.cityId === idStop1);
-    const stop2 = route.stops.find(stop => stop.cityId === idStop2);
+    const stop1 = route.tripStops.find(tripStop => tripStop.stop.id === idStop1);
+    const stop2 = route.tripStops.find(tripStop => tripStop.stop.id === idStop2);
     if (!stop1 || !stop2) throw new Error('Stop not found');
-    if (stop1.tripStopOrder >= stop2.tripStopOrder)
+    if (stop1.stopOrder >= stop2.stopOrder)
       throw new Error('Stop1 must be less than stop2');
 
     let distance = 0;
 
-    route.stops?.map(stop => {
+    route.tripStops?.map(tripStop => {
       if (
-        stop.tripStopOrder > stop1.tripStopOrder &&
-        stop.tripStopOrder <= stop2.tripStopOrder
+        tripStop.stopOrder > stop1.stopOrder &&
+        tripStop.stopOrder <= stop2.stopOrder
       ) {
-        distance += stop.distanceFromLast;
+        distance += tripStop.distanceFromLast;
       }
     });
 
@@ -29,11 +30,11 @@ export class TravelService {
     stopIdOrigin: string,
     stopIdDestiny: string,
   ): number {
-    const stopOrigin = travel.route.stops.find(
-      stop => stop.cityId === stopIdOrigin,
+    const stopOrigin = travel.route.tripStops.find(
+      tripStop => tripStop.stop.id === stopIdOrigin,
     );
-    const stopDestiny =travel.route.stops.find(
-      stop => stop.cityId === stopIdDestiny,
+    const stopDestiny =travel.route.tripStops.find(
+      tripStop => tripStop.stop.id === stopIdDestiny,
     );
 
     let quantityMaxOfSeats = travel.vehicle.quantitySeats;
@@ -42,8 +43,8 @@ export class TravelService {
     //Removendo do total todas as viagens completas de ponto a ponto
     travel.tickets?.map(ticket => {
       if (
-        ticket.origin === travel.route.initialStop.cityId &&
-        ticket.destiny === travel.route.finalStop.cityId
+        ticket.origin === travel.route.initialStop.stop.id &&
+        ticket.destiny === travel.route.finalStop.stop.id
       ) {
         travelFullQuantity += 1;
       }
@@ -54,22 +55,22 @@ export class TravelService {
     //ver todas as origins anterior a origin atual
     // e ver todas as destinys posteriores a destiny atual
 
-    const routeAfterOrigin = travel.route.stops.filter(stop => {
-      if (stop.tripStopOrder >= stopOrigin.tripStopOrder) return stop;
+    const routeAfterOrigin = travel.route.tripStops.filter(stop => {
+      if (stop.stopOrder >= stopOrigin.stopOrder) return stop;
     });
 
-    const routeBeforeDestiny = travel.route.stops.filter(stop => {
-      if (stop.tripStopOrder < stopDestiny.tripStopOrder) return stop;
+    const routeBeforeDestiny = travel.route.tripStops.filter(stop => {
+      if (stop.stopOrder < stopDestiny.stopOrder) return stop;
     });
 
     if (routeAfterOrigin.length > 2) {
       routeAfterOrigin?.map(stop => {
         routeAfterOrigin?.map(stop2 => {
-          if (stop.cityId === stop2.cityId) return;
+          if (stop.stop.id === stop2.stop.id) return;
           travel.tickets?.map(ticket => {
             if (
-              ticket.origin === stop.cityId &&
-              ticket.destiny === stop2.cityId
+              ticket.origin === stop.stop.id &&
+              ticket.destiny === stop2.stop.id
             )
               quantityMaxOfSeats -= 1;
           });
@@ -82,8 +83,8 @@ export class TravelService {
         routeAfterOrigin?.map(stop2 => {
           travel.tickets?.map(ticket => {
             if (
-              ticket.origin === stop.cityId &&
-              ticket.destiny === stop2.cityId
+              ticket.origin === stop.stop.id &&
+              ticket.destiny === stop2.stop.id
             )
               quantityMaxOfSeats -= 1;
           });

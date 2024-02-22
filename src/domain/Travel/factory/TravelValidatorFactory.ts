@@ -1,4 +1,4 @@
-import { TravelInterface } from "../entity/travel.interface";
+import { TravelInterface } from "../Interfaces/travel.interface";
 import { TravelValidator } from "../validator/TravelValidator";
 
 export class TravelValidatorFactory {

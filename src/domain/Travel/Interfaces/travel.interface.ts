@@ -1,6 +1,6 @@
 import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 import { Route } from '@/domain/Route/entity/Route';
-import { TravelStatus } from './Travel';
+import { TravelStatus } from '../entity/Travel';
 import { VehicleInterface } from '@/domain/Vehicle/interface/VehicleInterface';
 import { TicketInterface } from '@/domain/Ticket/interface/TicketInterface';
 

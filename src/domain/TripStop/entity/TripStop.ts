@@ -2,26 +2,31 @@ import { StopInterface } from '@/domain/Stop/interface/StopInterface';
 import { TripStopInterface } from '../interface/TripStopInterface';
 
 export class TripStop implements TripStopInterface {
-  private _id: string;
+
   private _stop: StopInterface;
   private _stopOrder: number;
   private _isFinalStop: boolean = false;
   private _isInitialStop: boolean = false;
   private _distanceFromLast: number;
 
-  constructor(id:string ,stop: StopInterface, stopOrder: number, distanceFromLast: number) {
+  constructor(stop: StopInterface, stopOrder: number, distanceFromLast: number) {
     this._distanceFromLast = distanceFromLast;
     this._stopOrder = stopOrder;
     this._stop = stop;
-    this._id = id;
+    this.validate();
   }
-  get id(): string {
-    throw new Error('Method not implemented.');
+
+  validate() {
+    const errors = [];
+    if(!this._stopOrder) errors.push('stopOrder is required to create a TripStop');
+    if(!this._stop) errors.push('stop is required to create a TripStop');
+    if(errors.length > 0) throw new Error(errors.join(', '));
   }
+
   get distanceFromLast(): number {
     return this._distanceFromLast;
   }
-  get Stop(): StopInterface {
+  get stop(): StopInterface {
     return this._stop;
   }
   get stopOrder(): number {

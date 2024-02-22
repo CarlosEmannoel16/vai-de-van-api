@@ -1,6 +1,6 @@
 import { Route } from '@/domain/Route/entity/Route';
 import { Ticket } from '@/domain/Ticket/entity/Ticket';
-import { TravelInterface } from './travel.interface';
+import { TravelInterface } from '../Interfaces/travel.interface';
 import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 import { VehicleInterface } from '@/domain/Vehicle/interface/VehicleInterface';
 import { TravelValidatorFactory } from '../factory/TravelValidatorFactory';
@@ -138,9 +138,9 @@ export class Travel implements TravelInterface {
   }
 
   getNameStopById(id: string): string {
-    const stop = this._Route.tripStops.find(stop => stop.Stop.id === id);
+    const stop = this._Route.tripStops.find(stop => stop.stop.id === id);
     if (!stop) throw new Error('Stop not found');
-    return stop.Stop.name;
+    return stop.stop.name;
   }
 
   getDateOfDepartureInBr(): string {

@@ -1,10 +1,8 @@
 import { v4 } from 'uuid';
-import { TripStop } from '../../TripStop/entity/TripStop';
-import { Stop } from '@/domain/Stop/entity/Stop';
 import { TripStopInterface } from '@/domain/TripStop/interface/TripStopInterface';
-import { StopInterface } from '@/domain/Stop/interface/StopInterface';
+import { RouterInterface } from '../interface/RouteInterface';
 
-export class Route {
+export class Route implements RouterInterface {
   private _id: string;
   private _km: number;
   private _name: string;
@@ -83,10 +81,6 @@ export class Route {
 
   get amountOfStops(): number {
     return this._tripStops.length;
-  }
-
-  get quantityOfPassengers(): number {
-    return 1;
   }
 
   get initialStop(): TripStopInterface {

@@ -8,7 +8,7 @@ import { RouteFactory } from '@/domain/Route/factories/RouteFactories';
 import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
 import { VehicleFactory } from '@/domain/Vehicle/factory/VehicleFactory';
 import { TicketFactory } from '@/domain/Ticket/factory/TicketFactory';
-import { TravelInterface } from '@/domain/Travel/entity/travel.interface';
+import { TravelInterface } from '@/domain/Travel/Interfaces/travel.interface';
 import PersonFactory from '@/domain/Person/factory/PersonFactory';
 import { StopFactory } from '@/domain/Stop/factory/StopFactory';
 

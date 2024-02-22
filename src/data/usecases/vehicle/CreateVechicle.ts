@@ -16,13 +16,17 @@ export class CreateVehicleUseCase implements ICreateVehicle {
 
     if (existsVehiclePlate) throw new Error('Placa já cadastrada');
 
-    const vehicle = VehicleFactory.create('bus', {
+    const vehicle = VehicleFactory.bus({
       id: v4(),
       description: data.description,
       quantitySeats: data.amount_of_accents,
       color: data.cor,
       ownerName: data.ownerName,
       situation: 'available',
+      createdAt: new Date(),
+      dateOfUpdate: new Date(),
+      plate: data.plate,
+      withAir: data.with_air,
     }) as BusInterface;
 
     const result = await this.vehicleRepository.create(vehicle);

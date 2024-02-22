@@ -17,7 +17,7 @@ export type CreateTravelFactoryParams = {
   status?: TravelStatus;
 };
 export class TravelFactory {
-  static createTravel({
+  static create({
     id,
     name,
     route,
