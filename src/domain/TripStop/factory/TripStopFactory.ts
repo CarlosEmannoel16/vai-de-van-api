@@ -6,7 +6,7 @@ export type ParamsTripStopFactoryCreate = {
   id?: string;
   tripStopOrder: number;
   distanceFromLast: number;
-  stop: StopInterface;
+  stop?: StopInterface;
 };
 export class TripStopFactory {
   static create({
@@ -15,7 +15,7 @@ export class TripStopFactory {
     id,
     distanceFromLast,
   }: ParamsTripStopFactoryCreate) {
-    return new TripStop(id, stop, tripStopOrder, distanceFromLast);
+    return new TripStop(stop, tripStopOrder, distanceFromLast);
   }
 
   static mapCreate(tripStop: ParamsTripStopFactoryCreate[]): TripStop[] {

@@ -1,4 +1,4 @@
-import {  PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { IUpdateStopRepository } from './protocols/stops/UpdateStopRepository';
 import { StopInterface } from '@/domain/Stop/interface/StopInterface';
 import { StopFactory } from '@/domain/Stop/factory/StopFactory';
@@ -6,8 +6,9 @@ import { ICreateStopRepository } from './protocols/stops/CreateStopRepository';
 import { IGetAllStopsRepository } from './protocols/stops/GetAllStopsRepository';
 import { IChangeStatusStopRepository } from './protocols/stops/ChangeStatusStopRepository';
 import { IGetStopRepository } from './protocols/stops/GetStopRepository';
+import { IGetStopsByIdsRepository } from './protocols/stops/GetStopsByIdsRepository';
 
-const stop = new PrismaClient().stop
+const stop = new PrismaClient().stop;
 
 export class StopRepository
   implements
@@ -15,9 +16,20 @@ export class StopRepository
     IGetAllStopsRepository,
     IChangeStatusStopRepository,
     IUpdateStopRepository,
-    IGetStopRepository
+    IGetStopRepository,
+    IGetStopsByIdsRepository
 {
-
+  async getByIds(ids: string[]): Promise<StopInterface[]> {
+    const result = await stop.findMany({ where: { id: { in: ids } } });
+    return result.map(stop => {
+      return StopFactory.create({
+        id: stop.id,
+        name: stop.name,
+        status: 'enable',
+        coordinates: stop.coordinates,
+      });
+    });
+  }
   async getOne(id: string): Promise<StopInterface> {
     const result = await stop.findUnique({ where: { id } });
     return StopFactory.create({
@@ -62,7 +74,7 @@ export class StopRepository
   }
   async getAll(): Promise<StopInterface[]> {
     const result = await stop.findMany();
-    return result.map((stop) => {
+    return result.map(stop => {
       return StopFactory.create({
         id: stop.id,
         name: stop.name,

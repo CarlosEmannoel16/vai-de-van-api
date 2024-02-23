@@ -7,6 +7,60 @@ import PersonFactory, {
 
 const database = new PrismaClient();
 export class DriverRepository implements IDriverProtocolRepository {
+  async getByEmail(email: string): Promise<DriverInterface> {
+    const data = await database.driver.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    return PersonFactory.driver({
+      cpf: data.cpf,
+      email: data.email,
+      id: data.id,
+      name: data.name,
+      cnh: data.cnh,
+      dateOfBirth: data.date_of_birth,
+      password: data.password,
+      phone: data.phone,
+    }) as DriverInterface;
+  }
+  async getByCpf(cpf: string): Promise<DriverInterface> {
+    const data = await database.driver.findFirst({
+      where: {
+        cpf,
+      },
+    });
+
+    return PersonFactory.driver({
+      cpf: data.cpf,
+      email: data.email,
+      id: data.id,
+      name: data.name,
+      cnh: data.cnh,
+      dateOfBirth: data.date_of_birth,
+      password: data.password,
+      phone: data.phone,
+    }) as DriverInterface;
+  }
+  async getByCnh(cnh: string): Promise<DriverInterface> {
+    const data = await database.driver.findFirst({
+      where: {
+        cnh,
+      },
+    });
+
+    return PersonFactory.driver({
+      cpf: data.cpf,
+      email: data.email,
+      id: data.id,
+      name: data.name,
+      cnh: data.cnh,
+      dateOfBirth: data.date_of_birth,
+      password: data.password,
+      phone: data.phone,
+    }) as DriverInterface;
+  }
   async findById(id: string): Promise<DriverInterface> {
     const data = await database.driver.findFirst({
       where: {

@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { PersonProps } from '../factory/PersonFactory';
 import PersonInterface from '../protocols/PersonInterface';
 
@@ -23,7 +24,7 @@ export abstract class Person implements PersonInterface {
     dateOfCreate,
     dateOfUpdate,
   }: PersonProps) {
-    this._id = id;
+    this._id = id || v4();
     this._name = name;
     this._dateOfBirth = dateOfBirth;
     this._email = email;

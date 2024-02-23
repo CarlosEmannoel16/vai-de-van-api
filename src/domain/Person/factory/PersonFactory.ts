@@ -12,7 +12,7 @@ export interface PersonFactoryInterface {
 }
 
 export interface PersonProps {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   cpf: string;

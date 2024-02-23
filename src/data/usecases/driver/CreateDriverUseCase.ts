@@ -1,38 +1,28 @@
 import { ICreateDriverUseCase } from '@/data/protocols/usecases/driver/CreateDriver';
-import { PersonFactory } from '@/domain/Person/factory/PersonFactory';
-import { IUserProtocolRepository } from '@/infra/protocols';
+import PersonFactory from '@/domain/Person/factory/PersonFactory';
 import { IDriverProtocolRepository } from '@/infra/protocols/drivers';
-import { v4 } from 'uuid';
 
 export class CreateDriverUseCase implements ICreateDriverUseCase {
-  constructor(
-    private readonly userRepository: IUserProtocolRepository,
-    private readonly driverRepository: IDriverProtocolRepository,
-  ) {}
+  constructor(private readonly driverRepository: IDriverProtocolRepository) {}
   async create(
     data: ICreateDriverUseCase.request,
   ): Promise<ICreateDriverUseCase.response> {
     const errors = [];
-    const existsCpf = await this.userRepository.getUserByParams({
-      cpf: data.cpf,
-    });
-    const existsEmail = await this.userRepository.getUserByParams({
-      email: data.email,
-    });
+    const existsCpf = await this.driverRepository.getByCpf(data.cpf);
+    const existsEmail = await this.driverRepository.getByEmail(data.email);
+    const existsCnh = await this.driverRepository.getByCnh(data.cnh);
 
     if (existsCpf) errors.push('CPF já cadastrado');
     if (existsEmail) errors.push('Email já cadastrado');
+    if (existsCnh) errors.push('CNH já cadastrada');
     if (errors.length > 0) throw new Error(`Erros: ` + errors.join(', '));
 
-    const personFactory = new PersonFactory();
-
-    const driver = personFactory.driver({
+    const driver = PersonFactory.driver({
       cpf: data.cpf,
       email: data.email,
       name: data.name,
       password: data.password,
       phone: data.phone,
-      id: v4(),
       cnh: data.cnh,
       dateOfBirth: new Date(data.date_of_birth),
     });

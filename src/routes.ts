@@ -47,15 +47,15 @@ routes
   routes.post('/user/driver', adapterRouter(makeCreateDriverController()))
   routes.get('/user/:id', adapterRouter(makeGetUserByIdController()))
   routes.get('/users',  adapterRouter(makeGetAllUserController()))
-  routes.get('/drivers',  adapterRouter(makeFindAllDriversController()))
   routes.post('/user', adapterRouter(makeCreateUserController()))
+
   routes.delete('/user/:id', adapterRouter(makeDeleteUserController()))
-  routes.put('/user/driver', adapterRouter(makeUpdateUserController()))
+  routes.put('/driver', adapterRouter(makeUpdateUserController()))
 
 
   //Driver
+  routes.get('/drivers', adapterRouter(makeFindAllDriversController()))
   routes.post('/driver', adapterRouter(makeCreateDriverController()))
-  routes.get('/driver', adapterRouter(makeFindAllDriversController()))
   routes.put('/driver', adapterRouter(makeUpdateUserController()) )
   routes.get('/driver/:id', adapterRouter(makeGetUserByIdController()))
   routes.delete('/driver/:id', adapterRouter(makeDeleteUserController()) )

@@ -20,13 +20,12 @@ export class CreateTravels implements ICreateTravels {
     if (!route) throw new Error('Rota não encontrada');
 
     const vehicle = await this.vehicleRepository.getById(data.idVehicle);
-
     if (!vehicle) throw new Error('Veículo não encontrado');
 
     const driver = await this.driverById.findById(data.driverId);
     if (!driver) throw new Error('Motorista não encontrado');
 
-    const travel = TravelFactory.createTravel({
+    const travel = TravelFactory.create({
       arrivalDate: new Date(data.arrivalDate),
       departureDate: new Date(data.departureDate),
       name: data.description || 'Viagem sem nome',
