@@ -1,5 +1,15 @@
-import { Customer } from '@/domain/Customer/entity/Customer';
+import { CustomerInterface } from '@/domain/Person/protocols/CustomerInterface';
 
 export interface ICreateCustomerUseCaseProtocol {
-  execute(data: Customer): Promise<Customer>;
+  execute(
+    data: ICreateCustomerUseCaseProtocol.Params,
+  ): Promise<CustomerInterface>;
+}
+
+export namespace ICreateCustomerUseCaseProtocol {
+  export type Params = {
+    name: string;
+    email: string;
+    password: string;
+  };
 }
