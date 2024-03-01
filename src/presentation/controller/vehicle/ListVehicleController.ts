@@ -1,22 +1,18 @@
-import { IFindAllVehiclesUseCase } from "@/data/protocols/usecases/vechicle/FindAllVehicleUseCase";
-import ControllerException from "@/presentation/helpers/ControllerException";
-import { IController } from "@/presentation/protocols/IController";
-import { IResponse } from "@/presentation/utils/response";
-import { Request, Response } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
-import { ParsedQs } from "qs";
+import { HandlerErrorController } from '@/@shared/decorators/TryCatch';
+import { IFindAllVehiclesUseCase } from '@/data/protocols/usecases/vechicle/FindAllVehicleUseCase';
+import { IController } from '@/presentation/protocols/IController';
+import { IResponse } from '@/presentation/utils/response';
+import { Request, Response } from 'express';
 
-export class GetAllVehiclesController implements IController{
-    constructor(private readonly findAllVehiclesUseCase: IFindAllVehiclesUseCase) {}
-    async handle(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>): Promise<Response<IResponse, Record<string, any>>> {
-      try {
-         const result = await this.findAllVehiclesUseCase.execute()
-         return res.status(200).json({ message: "Veículos encontrados com sucesso", data: result });
-      } catch (error) {
-        console.log(error)
-        const { message, status, statusCode } =
-        ControllerException.handleError(error);
-      return res.status(statusCode).json({ message, status });
-      }
-    }
+export class GetAllVehiclesController implements IController {
+  constructor(
+    private readonly findAllVehiclesUseCase: IFindAllVehiclesUseCase,
+  ) {}
+  @HandlerErrorController
+  async handle(req: Request, res: Response): Promise<Response<IResponse>> {
+    const result = await this.findAllVehiclesUseCase.execute();
+    return res
+      .status(200)
+      .json({ message: 'Veículos encontrados com sucesso', data: result });
+  }
 }
