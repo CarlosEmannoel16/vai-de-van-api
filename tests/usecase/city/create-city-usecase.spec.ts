@@ -1,4 +1,4 @@
-import { CreateCityUseCase } from '@/data/usecases/city/CreateCityUseCase';
+import { CreateCityUseCase } from '@/data/usecases/stops/CreateCityUseCase';
 import { IGetStateByIdProtocolRepository } from '@/infra/protocols';
 import { ICityProtocolRepository } from '@/infra/protocols/city';
 

@@ -19,7 +19,7 @@ import multer from 'multer';
 import { makeGetAllRouteController } from './main/factories/controllers/Route/makeGetAllRouteController';
 import { makeGetByIdController } from './main/factories/controllers/Route/makeGetRouteByIdController';
 import { makeCreateRouteController } from './main/factories/controllers/Route/makeCreateRouteController';
-import { makeGetCitiesController } from './main/factories/controllers/Cities/makeGetCitiesController';
+import { makeGetAllStopsController } from './main/factories/controllers/Stop/GetAllStopsControllerFactory';
 import { makeCreateTravelController } from './main/factories/controllers/Travel/makeCreateTravelController';
 import { makeFindAllTravelController } from './main/factories/controllers/Travel/makeFindAllTravelController';
 import { makeCreateVehicleController } from './main/factories/controllers/Vehicles/makeCreateVehicleController';
@@ -38,7 +38,7 @@ const routes = Router();
 
 routes.post('/login', adapterRouter(makeLoginController()));
 routes.get('/free/users', adapterRouter(makeGetAllUserController()));
-routes.get('/city', adapterRouter(makeGetCitiesController()));
+routes.get('/stops', adapterRouter(makeGetAllStopsController()));
 
 //routes private
 routes;

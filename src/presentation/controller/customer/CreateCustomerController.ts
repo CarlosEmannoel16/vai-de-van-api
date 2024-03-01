@@ -35,6 +35,7 @@ export class CreateCustomerController implements IController {
       name: result.name,
       id: result.id,
       email: result.email,
+      emailConfirmed: result.emailConfirm,
     });
   }
 }

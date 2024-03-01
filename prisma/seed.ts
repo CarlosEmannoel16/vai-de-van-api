@@ -1,20 +1,20 @@
-import { City, PrismaClient } from '@prisma/client';
+import { Stop, PrismaClient } from '@prisma/client';
 import axios from 'axios';
 const prisma = new PrismaClient();
 async function main() {
-  const adm = await prisma.user.upsert({
-    where: { email: 'adm@email.com' },
-    update: {},
-    create: {
-      email: 'adm@email.com',
-      name: 'Adm',
-      cpf: '123456789',
-      date_of_birth: new Date(),
-      password: '123456',
-      phone: '88999999999',
-      type: 'adm',
-    },
-  });
+  // const adm = await prisma.user.upsert({
+  //   where: { email: 'adm@email.com' },
+  //   update: {},
+  //   create: {
+  //     email: 'adm@email.com',
+  //     name: 'Adm',
+  //     cpf: '123456789',
+  //     date_of_birth: new Date(),
+  //     password: '123456',
+  //     phone: '88999999999',
+  //     type: 'adm',
+  //   },
+  // });
 
   type CityAxios = { nome: string; codigo_ibge: string };
 
@@ -28,7 +28,7 @@ async function main() {
       name: city.nome ,
       stateId: '1',
     };
-  }) as City[];
+  }) as Stop[];
 
   const state = await prisma.state.upsert({
     where: { id: '1' },
@@ -36,7 +36,7 @@ async function main() {
     create: { name: 'Ceará', uf: 'CE', id: '1' },
   });
 
-  const citiesResult = await prisma.city.createMany({ data: [...data], skipDuplicates: true });
+  const citiesResult = await prisma.stop.createMany({ data: [...data], skipDuplicates: true });
 
 }
 main()

@@ -1,24 +1,12 @@
 import { PrismaClient } from '@prisma/client';
-import { IUpdateStopRepository } from './protocols/stops/UpdateStopRepository';
 import { StopInterface } from '@/domain/Stop/interface/StopInterface';
 import { StopFactory } from '@/domain/Stop/factory/StopFactory';
-import { ICreateStopRepository } from './protocols/stops/CreateStopRepository';
-import { IGetAllStopsRepository } from './protocols/stops/GetAllStopsRepository';
-import { IChangeStatusStopRepository } from './protocols/stops/ChangeStatusStopRepository';
-import { IGetStopRepository } from './protocols/stops/GetStopRepository';
-import { IGetStopsByIdsRepository } from './protocols/stops/GetStopsByIdsRepository';
+
+import { IStopProtocolRepository } from './protocols/stops/StopProtocolRepository';
 
 const stop = new PrismaClient().stop;
 
-export class StopRepository
-  implements
-    ICreateStopRepository,
-    IGetAllStopsRepository,
-    IChangeStatusStopRepository,
-    IUpdateStopRepository,
-    IGetStopRepository,
-    IGetStopsByIdsRepository
-{
+export class StopRepository implements IStopProtocolRepository {
   async getByIds(ids: string[]): Promise<StopInterface[]> {
     const result = await stop.findMany({ where: { id: { in: ids } } });
     return result.map(stop => {
