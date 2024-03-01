@@ -46,6 +46,13 @@ Para rodar os testes, rode o seguinte comando
 
 **Back-end:** Node, Express, Postgres
 
+## Libs
+Nodemailer
+Jest
+Prisma
+Yup
+multer
+
 
 ## 🛠 Habilidades
 Javascript, HTML, CSS, Node
