@@ -7,14 +7,14 @@ import {
   makeCreateDriverController,
   makeUpdateUserController,
   makeDeleteUserController,
-  makeUpdateProfileUserController
+  makeUpdateProfileUserController,
 } from './main/factories/controllers';
 import {
   makeMiddlewareAuth,
   makeMiddlewareRouteAdm,
 } from './main/factories/middlewares';
 import { adapterMiddleware, adapterRouter } from './main/utils';
-import upload from './config/upload'
+import upload from './config/upload';
 import multer from 'multer';
 import { makeGetAllRouteController } from './main/factories/controllers/Route/makeGetAllRouteController';
 import { makeGetByIdController } from './main/factories/controllers/Route/makeGetRouteByIdController';
@@ -32,62 +32,65 @@ import { makeSearchTravelClientController } from './main/factories/controllers/T
 import { makeUpdateRouteController } from './main/factories/controllers/Route/makeUpdateRouteController';
 import { makeDashboardController } from './main/factories/controllers/Dashboard/makeDashboardController';
 import { makeFindAllDriversController } from './main/factories/controllers/Driver/makeFindAllDriversController';
+import { makeCreateCustomerController } from './main/factories/controllers/customer/CreateCustomerControllerFactory';
 
 const routes = Router();
 
-routes.post('/login', adapterRouter(makeLoginController()))
-routes.get('/free/users', adapterRouter(makeGetAllUserController()))
-routes.get('/city', adapterRouter(makeGetCitiesController()))
-
+routes.post('/login', adapterRouter(makeLoginController()));
+routes.get('/free/users', adapterRouter(makeGetAllUserController()));
+routes.get('/city', adapterRouter(makeGetCitiesController()));
 
 //routes private
-routes
-  //.use(adpterMiddleware(makeMiddlewareAuth()))
-  routes.post('/user/upload/profile', multer({storage: upload.storage}).single('avatar'), adapterRouter(makeUpdateProfileUserController()))
-  routes.post('/user/driver', adapterRouter(makeCreateDriverController()))
-  routes.get('/user/:id', adapterRouter(makeGetUserByIdController()))
-  routes.get('/users',  adapterRouter(makeGetAllUserController()))
-  routes.post('/user', adapterRouter(makeCreateUserController()))
+routes;
+//.use(adpterMiddleware(makeMiddlewareAuth()))
+routes.post(
+  '/user/upload/profile',
+  multer({ storage: upload.storage }).single('avatar'),
+  adapterRouter(makeUpdateProfileUserController()),
+);
+routes.post('/user/driver', adapterRouter(makeCreateDriverController()));
+routes.get('/user/:id', adapterRouter(makeGetUserByIdController()));
+routes.get('/users', adapterRouter(makeGetAllUserController()));
+routes.post('/user', adapterRouter(makeCreateUserController()));
 
-  routes.delete('/user/:id', adapterRouter(makeDeleteUserController()))
-  routes.put('/driver', adapterRouter(makeUpdateUserController()))
+routes.delete('/user/:id', adapterRouter(makeDeleteUserController()));
+routes.put('/driver', adapterRouter(makeUpdateUserController()));
 
+//Driver
+routes.get('/drivers', adapterRouter(makeFindAllDriversController()));
+routes.post('/driver', adapterRouter(makeCreateDriverController()));
+routes.put('/driver', adapterRouter(makeUpdateUserController()));
+routes.get('/driver/:id', adapterRouter(makeGetUserByIdController()));
+routes.delete('/driver/:id', adapterRouter(makeDeleteUserController()));
 
-  //Driver
-  routes.get('/drivers', adapterRouter(makeFindAllDriversController()))
-  routes.post('/driver', adapterRouter(makeCreateDriverController()))
-  routes.put('/driver', adapterRouter(makeUpdateUserController()) )
-  routes.get('/driver/:id', adapterRouter(makeGetUserByIdController()))
-  routes.delete('/driver/:id', adapterRouter(makeDeleteUserController()) )
+//Vehicles
+routes.post('/vehicle', adapterRouter(makeCreateVehicleController()));
+routes.get('/vehicle', adapterRouter(makeGetAllVehiclesController()));
+routes.put('/vehicle', adapterRouter(makeUpdateVehicleController()));
+routes.get('/vehicle/:id', adapterRouter(makeGetVehicleByIdController()));
+routes.delete('/vehicle/:id', adapterRouter(makeDeleteVehicleController()));
 
+//Routes
+routes.get('/route/:id', adapterRouter(makeGetByIdController()));
+routes.get('/route', adapterRouter(makeGetAllRouteController()));
+routes.post('/route', adapterRouter(makeCreateRouteController()));
+routes.put('/route', adapterRouter(makeUpdateRouteController()));
 
-  //Vehicles
-  routes.post('/vehicle', adapterRouter(makeCreateVehicleController()) )
-  routes.get('/vehicle',  adapterRouter(makeGetAllVehiclesController()))
-  routes.put('/vehicle',  adapterRouter(makeUpdateVehicleController()) )
-  routes.get('/vehicle/:id',  adapterRouter(makeGetVehicleByIdController()))
-  routes.delete('/vehicle/:id',  adapterRouter(makeDeleteVehicleController()) )
+//Relatorios
+routes.get('/dashboard', adapterRouter(makeDashboardController()));
+// routes.get('/report/routes/:idDriver')
+// routes.get('/report/routes/:idCity')
+// routes.get('/report/routes/all')
 
-  //Routes
-  routes.get('/route/:id', adapterRouter(makeGetByIdController()))
-  routes.get('/route', adapterRouter(makeGetAllRouteController()))
-  routes.post('/route', adapterRouter(makeCreateRouteController()))
-  routes.put('/route', adapterRouter(makeUpdateRouteController()))
-
-  //Relatorios
-  routes.get('/dashboard', adapterRouter(makeDashboardController()))
-  // routes.get('/report/routes/:idDriver')
-  // routes.get('/report/routes/:idCity')
-  // routes.get('/report/routes/all')
-
-  //Travel
-  routes.get('/travel/search', adapterRouter(makeSearchTravelClientController()))
-  routes.post('/travel', adapterRouter(makeCreateTravelController()))
-  routes.get('/travel/all', adapterRouter(makeFindAllTravelController()))
-  routes.get('/travel/:id', adapterRouter(makeGetTravelByIdController()))
-
+//Travel
+routes.get('/travel/search', adapterRouter(makeSearchTravelClientController()));
+routes.post('/travel', adapterRouter(makeCreateTravelController()));
+routes.get('/travel/all', adapterRouter(makeFindAllTravelController()));
+routes.get('/travel/:id', adapterRouter(makeGetTravelByIdController()));
 
 //Stops
 
+//Customer
+routes.post('/customer', adapterRouter(makeCreateCustomerController()));
 
 export default routes;

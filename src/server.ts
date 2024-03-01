@@ -6,8 +6,10 @@ import config from './config/development';
 import { Server, Socket } from 'socket.io';
 import { createServer } from 'http';
 import morgan from 'morgan';
+import { MessagesConfig } from '@/@shared/language/Messages';
+import { Nodemailer } from './loader/InitializeEmail';
 dotenv.config();
-
+MessagesConfig.instance.setLanguage('pt-br');
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
@@ -32,7 +34,8 @@ io.on('connection', (socket: Socket) => {
 });
 
 server.listen(config.server.port, () => {
-  MessagesConfig.instance.setLanguage('pt-br');
+
+  Nodemailer.getInstance.init();
   console.log(`Server started in port ${config.server.port} ✅🎃🚀🇧🇷`);
   console.log(`http://localhost:${config.server.port}`);
   console.log(`process id: ${process.pid}`);

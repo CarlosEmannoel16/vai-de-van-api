@@ -1,7 +1,6 @@
 import { ValidationError } from 'yup';
 import { ResponseStatus } from '../utils/response';
 import { BaseError } from '@/data/errors/baseError';
-import { Err } from 'joi';
 
 export interface ControllerExceptionResult {
   statusCode: number;
@@ -25,11 +24,11 @@ class ControllerException {
       return {
         statusCode,
         status: ResponseStatus.BAD_REQUEST,
-        message: error?.errors[0],
+        message: error.message,
       };
     }
 
-   
+
     return {
       statusCode: 500,
       status: ResponseStatus.INTERNAL_SERVER_ERROR,

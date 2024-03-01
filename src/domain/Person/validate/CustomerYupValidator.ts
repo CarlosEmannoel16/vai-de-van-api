@@ -1,6 +1,7 @@
 import { ValidatorInterface } from '@/domain/@shared/validator/ValidatorInterface';
 import { CustomerInterface } from '../protocols/CustomerInterface';
 import * as yup from 'yup';
+import { date } from 'joi';
 
 export class CustomerYupValidator
   implements ValidatorInterface<CustomerInterface>
@@ -12,7 +13,7 @@ export class CustomerYupValidator
       email: yup.string().email().required(),
       cpf: yup.string().required(),
       phone: yup.string().required(),
-      secondaryPhone: yup.string().required(),
+      dateOfBirth: yup.string().required(),
     });
 
     schema.validateSync(data);

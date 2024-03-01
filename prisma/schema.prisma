@@ -31,6 +31,14 @@ enum StatusTicket {
   ATIVO
 }
 
+model CodeEmail {
+  id         String   @id @default(uuid())
+  code       String
+  email      String
+  created_at DateTime @default(now())
+  update_at  DateTime @default(now()) @updatedAt
+}
+
 model Customer {
   id            String   @id @default(uuid())
   name          String
@@ -39,8 +47,9 @@ model Customer {
   email         String   @unique
   cpf           String   @unique
   phone         String
-  phone2        String
+  phone2        String @default("")
   date_of_birth DateTime
+  emailConfirm  Boolean  @default(false)
   Ticket        Ticket[]
   created_at    DateTime @default(now())
   update_at     DateTime @default(now()) @updatedAt

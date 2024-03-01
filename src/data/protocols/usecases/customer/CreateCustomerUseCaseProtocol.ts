@@ -11,5 +11,8 @@ export namespace ICreateCustomerUseCaseProtocol {
     name: string;
     email: string;
     password: string;
+    cpf: string;
+    dateOfBirth: Date;
+    phone: string;
   };
 }

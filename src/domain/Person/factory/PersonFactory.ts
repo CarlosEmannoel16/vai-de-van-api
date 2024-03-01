@@ -22,6 +22,7 @@ export interface PersonProps {
   phone?: string;
   dateOfCreate?: Date;
   dateOfUpdate?: Date;
+  emailConfirm?: boolean;
 }
 
 class PersonFactory implements PersonFactoryInterface {
@@ -29,11 +30,11 @@ class PersonFactory implements PersonFactoryInterface {
     return new Driver({ ...data, cnh: data.cnh });
   }
   customer(data: PersonProps): CustomerInterface {
-    return new Customer(data);
+    return new Customer({ ...data, emailConfirm: false });
   }
   user(data: PersonProps): UserInterface {
     return new User(data);
   }
 }
 
-export default new PersonFactory;
+export default new PersonFactory();
