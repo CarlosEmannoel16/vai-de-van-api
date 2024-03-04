@@ -15,10 +15,10 @@ export class GetAllRoutesUseCase implements IGetAllRoutes {
         km: route.km,
         kmValue: route.kmValue,
         name: route.name,
-        tripStops: route?.stops?.map(tripStop => {
+        tripStops: route?.tripStops?.map(tripStop => {
           return {
-            idCity: tripStop.cityId,
-            nameCity: tripStop.cityName,
+            idCity: tripStop.stop.id,
+            nameCity: tripStop.stop.name,
             distanceLastStop: tripStop.distanceFromLast,
             isInitialStop: tripStop.isInitialStop,
             isFinalStop: tripStop.isFinalStop,

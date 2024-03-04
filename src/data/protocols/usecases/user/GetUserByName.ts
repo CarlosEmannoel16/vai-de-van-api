@@ -9,6 +9,5 @@ export namespace IGetUserByName {
     email: string;
     phone: string;
     cpf: string;
-    type: string;
   };
 }

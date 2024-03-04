@@ -5,13 +5,11 @@ export interface IGetByIdRoutes {
 export namespace IGetByIdRoutes {
   export type Params = {
     id: string;
-  }
+  };
   export type Result = {
     id: string;
     name: string;
     km: number;
     kmValue: string | null;
-    originId: string;
-    destinyId: string;
   };
 }
