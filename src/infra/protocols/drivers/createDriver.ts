@@ -1,4 +1,4 @@
-import { DriverInterface } from "@/domain/Person/protocols/DriverInterface";
+import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 
 export interface IDriverProtocolRepository {
   create(data: DriverInterface): Promise<DriverInterface>;
@@ -7,5 +7,8 @@ export interface IDriverProtocolRepository {
   getByCpf(cpf: string): Promise<DriverInterface>;
   getByCnh(cnh: string): Promise<DriverInterface>;
   getByEmail(email: string): Promise<DriverInterface>;
-}
 
+  checkExistsByCpf(cpf: string): Promise<boolean>;
+  checkExistsByCnh(cnh: string): Promise<boolean>;
+  checkExistsByEmail(email: string): Promise<boolean>;
+}

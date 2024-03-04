@@ -33,6 +33,7 @@ import { makeUpdateRouteController } from './main/factories/controllers/Route/ma
 import { makeDashboardController } from './main/factories/controllers/Dashboard/makeDashboardController';
 import { makeFindAllDriversController } from './main/factories/controllers/Driver/makeFindAllDriversController';
 import { makeCreateCustomerController } from './main/factories/controllers/customer/CreateCustomerControllerFactory';
+import { makeAuthCustomerController } from './main/factories/controllers/customer/AuthCustomerControllerFactory';
 
 const routes = Router();
 
@@ -92,5 +93,6 @@ routes.get('/travel/:id', adapterRouter(makeGetTravelByIdController()));
 
 //Customer
 routes.post('/customer', adapterRouter(makeCreateCustomerController()));
+routes.post('/customer/auth', adapterRouter(makeAuthCustomerController()));
 
 export default routes;

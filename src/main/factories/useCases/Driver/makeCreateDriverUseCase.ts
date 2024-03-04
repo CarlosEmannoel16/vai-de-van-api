@@ -1,6 +1,6 @@
+import { ICreateDriverUseCase } from '@/data/protocols/usecases/driver/CreateDriver';
 import { CreateDriverUseCase } from '@/data/usecases/driver/CreateDriverUseCase';
-import { ICreateDriver } from '@/data/protocols/usecases/driver/CreateDriver';
-import { UserRepository } from '@/infra/UserRepository';
-export const makeCreateDriverUseCase = (): ICreateDriver => {
-  return new CreateDriverUseCase(new UserRepository(), new UserRepository());
+import { DriverRepository } from '@/infra/DriverRepository';
+export const makeCreateDriverUseCase = (): ICreateDriverUseCase => {
+  return new CreateDriverUseCase(new DriverRepository());
 };

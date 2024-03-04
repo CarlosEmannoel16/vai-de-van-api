@@ -2,20 +2,22 @@ import { ICreateRouteUseCase } from '@/data/protocols/usecases/routes/CreateRout
 import { RouteFactory } from '@/domain/Route/factories/RouteFactories';
 import { TripStopFactory } from '@/domain/TripStop/factory/TripStopFactory';
 import { ICreateRouteProtocolRepository } from '@/domain/Route/repository/CreateRouteProtocolRepository';
-import { StopFactory } from '@/domain/Stop/factory/StopFactory';
-import { IGetStopsByIdsRepository } from '@/infra/protocols/stops/GetStopsByIdsRepository';
+import { IStopProtocolRepository } from '@/infra/protocols/stops/StopProtocolRepository';
 
 export class CreateRouteUseCase implements ICreateRouteUseCase {
   constructor(
     private readonly CreateRoute: ICreateRouteProtocolRepository,
-    private readonly findStopsByIds: IGetStopsByIdsRepository,
+    private readonly stopRepository: IStopProtocolRepository,
   ) {}
   async execute(
     data: ICreateRouteUseCase.Params,
   ): Promise<ICreateRouteUseCase.Result> {
-    const result = await this.findStopsByIds.getByIds(
+    const result = await this.stopRepository.getByIds(
       data.TripStops.map(ts => ts.stopId),
     );
+
+    console.log(data.TripStops.length);
+    console.log(result.length);
 
     if (data.TripStops.length !== result.length) {
       throw new Error('Some stops were not found');
@@ -34,6 +36,8 @@ export class CreateRouteUseCase implements ICreateRouteUseCase {
         distanceFromLast: tripStop.distanceFromLast,
         tripStopOrder: tripStop.stopOrder,
         stop,
+        isFinalStop: tripStop.isFinalStop,
+        isInitialStop: tripStop.isInitialStop,
       });
     });
 

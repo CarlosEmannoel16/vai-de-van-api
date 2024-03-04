@@ -7,6 +7,39 @@ import PersonFactory, {
 
 const database = new PrismaClient();
 export class DriverRepository implements IDriverProtocolRepository {
+  async checkExistsByCpf(cpf: string): Promise<boolean> {
+    const driver = await database.driver.findFirst({
+      select: {
+        id: true,
+      },
+      where: {
+        cpf,
+      },
+    });
+    return driver !== null;
+  }
+  async checkExistsByCnh(cnh: string): Promise<boolean> {
+    const driver = await database.driver.findFirst({
+      select: {
+        id: true,
+      },
+      where: {
+        cnh,
+      },
+    });
+    return driver !== null;
+  }
+  async checkExistsByEmail(email: string): Promise<boolean> {
+    const driver = await database.driver.findFirst({
+      select: {
+        id: true,
+      },
+      where: {
+        email,
+      },
+    });
+    return driver !== null;
+  }
   async getByEmail(email: string): Promise<DriverInterface> {
     const data = await database.driver.findFirst({
       where: {

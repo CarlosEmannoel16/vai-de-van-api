@@ -11,6 +11,7 @@ export function HandlerErrorController(
       const result = await originalMethod.apply(this, args);
       return result;
     } catch (error) {
+      console.log(error);
       const { message, status, statusCode } =
         ControllerException.handleError(error);
       return args[1].status(statusCode).json({ message, status });

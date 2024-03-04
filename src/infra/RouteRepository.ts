@@ -108,31 +108,36 @@ export class RouteRepository implements IRouteRepository {
   }
 
   async create(data: Route): Promise<Route> {
-    await prisma.route.create({
-      data: {
-        km: data.km,
-        name: data.name,
-        created_at: new Date(),
-        disabled: false,
-        kmValue: String(data.kmValue),
-        id: data.id,
-        TripStops: {
-          create: data.tripStops?.map(tripStop => {
-            return {
-              id: tripStop.id,
+    try {
+      await prisma.route.create({
+        data: {
+          km: data.km,
+          name: data.name,
+          created_at: new Date(),
+          disabled: false,
+          kmValue: String(data.kmValue),
+          id: data.id,
+          TripStops: {
+            create: data.tripStops?.map(tripStop => ({
               finalStop: tripStop.isFinalStop,
               initialStop: tripStop.isInitialStop,
               tripStopOrder: tripStop.stopOrder,
               created_at: new Date(),
               distanceFromLastStop: tripStop.distanceFromLast,
               update_at: new Date(),
-              stopId: tripStop.Stop.id,
-            };
-          }),
+              stopId: tripStop.stop.id,
+            })),
+          },
+          update_at: new Date(),
         },
-      },
-    });
-    return data;
+      });
+
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw new Error('Error to create route');
+    }
   }
 
   async getCountAll(): Promise<number> {

@@ -9,7 +9,6 @@ export class StopValidator implements ValidatorInterface<StopInterface> {
       .shape({
         id: yup.string().required(),
         name: yup.string().required(),
-        status: yup.boolean().required(),
       })
       .validate(data);
   }

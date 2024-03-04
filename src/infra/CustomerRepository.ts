@@ -104,7 +104,7 @@ export class CustomerRepository implements ICustomerProtocolRepository {
       email: customer.email,
       cpf: customer.cpf,
       password: customer.password,
-
+      dateOfBirth: customer.date_of_birth,
       phone: customer.phone,
     }) as CustomerInterface;
   }

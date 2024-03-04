@@ -34,13 +34,13 @@ export class Route implements RouterInterface {
     let orders = {};
 
     data.map(tripStop => {
-      if (tripStop.isInitialStop && !initial) initial = true;
       if (tripStop.isInitialStop && initial)
         throw new Error('initial stop already exists');
+      if (tripStop.isInitialStop && !initial) initial = true;
 
-      if (tripStop.isFinalStop) final = true;
       if (tripStop.isFinalStop && final)
         throw new Error('final stop already exists');
+      if (tripStop.isFinalStop) final = true;
 
       if (orders[tripStop.stopOrder])
         throw new Error(
