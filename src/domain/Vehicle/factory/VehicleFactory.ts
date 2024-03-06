@@ -10,7 +10,7 @@ export class VehicleFactory {
     if (!data.id) id = v4();
 
     return new Bus(
-      data.id,
+      id,
       data.description,
       data.quantitySeats,
       data.color,

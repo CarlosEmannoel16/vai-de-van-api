@@ -13,6 +13,8 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
       destiny: data.destiny,
     });
 
+    console.log(travels);
+
     if (!travels) return undefined;
     const result: ISearchTravelsUseCaseProtocol.Result[] = [];
 

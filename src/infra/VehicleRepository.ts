@@ -1,18 +1,14 @@
 import { PrismaClient } from '@prisma/client';
-import { ICreateVehicleProtocolRepository } from './protocols/vechicle/VehicleProtocolRepository';
-import { IVehicleProtocolRepository } from './protocols/vechicle';
-import { GetVehicleByParamsProtocolRepository } from './protocols/vechicle/GetVehicleByParamsProtocolRepository';
-import { Vehicle } from '@/domain/Vehicle/entity/Bus';
 import { VehicleFactory } from '@/domain/Vehicle/factory/VehicleFactory';
-import { Travel } from '@/domain/Travel/entity/Travel';
-import { GetTravelsActivesFromVehicleRepository } from './protocols/vechicle/GetTravelsActivesFromVehicleRepository';
+import { IVehicleProtocolRepository } from './protocols/vechicle/VehicleProtocolRepository';
+import { VehicleInterface } from '@/domain/Vehicle/interface/VehicleInterface';
 
 const prisma = new PrismaClient();
 
-export class VehicleRepository implements IVehicleProtocolRepository {
-  async getTravelsActives(
-    id: string,
-  ): Promise<GetTravelsActivesFromVehicleRepository.Result> {
+export class VehicleRepository
+  implements IVehicleProtocolRepository<VehicleInterface>
+{
+  async getTravelsActives(id: string): Promise<any> {
     const result = await prisma.vehicle.findMany({
       select: {
         Travel: {
@@ -33,18 +29,16 @@ export class VehicleRepository implements IVehicleProtocolRepository {
 
     return result.map((vehicle: any) => vehicle.Travel);
   }
-  async getOneByParams(
-    data: GetVehicleByParamsProtocolRepository.Params,
-  ): Promise<Vehicle> {
+  async getOneByParams(data: VehicleInterface): Promise<VehicleInterface> {
     console.log(data);
     const vehicle = await prisma.vehicle.findFirst({
       where: { ...data },
     });
 
     if (vehicle)
-      return VehicleFactory.create({
+      return VehicleFactory.bus({
         id: vehicle.id,
-        name: vehicle.description,
+        description: vehicle.description,
         quantitySeats: vehicle.amount_of_accents,
         color: vehicle.cor,
         withAir: vehicle.with_air,
@@ -59,12 +53,12 @@ export class VehicleRepository implements IVehicleProtocolRepository {
 
     return true;
   }
-  async getAll(): Promise<Vehicle[]> {
+  async getAll(): Promise<VehicleInterface[]> {
     const result = await prisma.vehicle.findMany();
     return result.map(vehicle =>
-      VehicleFactory.create({
+      VehicleFactory.bus({
         id: vehicle.id,
-        name: vehicle.description,
+        description: vehicle.description,
         quantitySeats: vehicle.amount_of_accents,
         color: vehicle.cor,
         withAir: vehicle.with_air,
@@ -73,11 +67,11 @@ export class VehicleRepository implements IVehicleProtocolRepository {
       }),
     );
   }
-  async getById(id: string): Promise<Vehicle> {
+  async getById(id: string): Promise<VehicleInterface> {
     const vehicle = await prisma.vehicle.findFirst({ where: { id } });
-    return VehicleFactory.create({
+    return VehicleFactory.bus({
       id: vehicle.id,
-      name: vehicle.description,
+      description: vehicle.description,
       quantitySeats: vehicle.amount_of_accents,
       color: vehicle.cor,
       withAir: vehicle.with_air,
@@ -85,26 +79,26 @@ export class VehicleRepository implements IVehicleProtocolRepository {
       ownerName: vehicle.ownerName,
     });
   }
-  async create(
-    data: ICreateVehicleProtocolRepository.params,
-  ): Promise<Vehicle> {
-    const result = await prisma.vehicle.create({
-      data,
+  async create(data: VehicleInterface): Promise<VehicleInterface> {
+
+    console.log(data);
+   await prisma.vehicle.create({
+      data: {
+        id: data.id,
+        amount_of_accents: data.quantitySeats,
+        cor: data.color,
+        description: data.description,
+        ownerName: data.ownerName,
+        plate: data.plate,
+        with_air: data.withAir,
+      },
     });
 
-    return VehicleFactory.create({
-      id: result.id,
-      name: result.description,
-      quantitySeats: result.amount_of_accents,
-      color: result.cor,
-      withAir: result.with_air,
-      plate: result.plate,
-      ownerName: result.ownerName,
-    });
+    return data;
   }
-  async update(data: Vehicle): Promise<Vehicle> {
+  async update(data: VehicleInterface): Promise<VehicleInterface> {
     await prisma.vehicle.update({
-      where: { id: data.Id },
+      where: { id: data.id },
       data: {
         ...data,
       },

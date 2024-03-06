@@ -19,14 +19,14 @@ export class CreateVehicleUseCase implements ICreateVehicle {
     const vehicle = VehicleFactory.bus({
       id: v4(),
       description: data.description,
-      quantitySeats: data.amount_of_accents,
-      color: data.cor,
+      quantitySeats: data.quantitySeats,
+      color: data.color,
       ownerName: data.ownerName,
       situation: 'available',
       createdAt: new Date(),
       dateOfUpdate: new Date(),
       plate: data.plate,
-      withAir: data.with_air,
+      withAir: data.withAir,
     }) as BusInterface;
 
     const result = await this.vehicleRepository.create(vehicle);

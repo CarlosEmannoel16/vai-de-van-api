@@ -53,7 +53,7 @@ export class TravelFactory {
 
   static mapTravel(travels: CreateTravelFactoryParams[]) {
     return travels.map(travel => {
-      return this.createTravel(travel);
+      return this.create(travel);
     });
   }
 }

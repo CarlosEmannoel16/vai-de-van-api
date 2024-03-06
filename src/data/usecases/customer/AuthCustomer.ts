@@ -1,10 +1,12 @@
 import { InvalidParamsError } from '@/data/errors/ParamsInvalid';
 import { IAuthCustomerProtocolUseCase } from '@/data/protocols/usecases/customer/AuthCustomerUseCaseProtocol';
 import { ICustomerProtocolRepository } from '@/infra/protocols/customer/CustomerProtocolRepository';
+import { ISendEmail, SendEmail } from '@/infra/protocols/email/SendEmail';
 
 export class AuthCustomerUseCase implements IAuthCustomerProtocolUseCase {
   constructor(
     private readonly customerRepository: ICustomerProtocolRepository,
+    private readonly sendEmail: ISendEmail,
   ) {}
   async handler(
     email: string,
@@ -14,7 +16,6 @@ export class AuthCustomerUseCase implements IAuthCustomerProtocolUseCase {
       throw new InvalidParamsError('Invalid credentials');
 
     const customer = await this.customerRepository.findByEmail(email);
-    console.log(customer);
 
     if (!customer) {
       throw new Error('Invalid credentials');
@@ -26,6 +27,12 @@ export class AuthCustomerUseCase implements IAuthCustomerProtocolUseCase {
       throw new Error('Invalid credentials');
     }
 
+    await this.sendEmail.send({
+      message: 'Novo login realizado na sua conta vai de van!',
+      subject: 'Novo Login',
+      to: customer.email,
+    });
+
     return {
       id: customer.id,
       name: customer.name,
@@ -33,6 +40,7 @@ export class AuthCustomerUseCase implements IAuthCustomerProtocolUseCase {
       cpf: customer.cpf,
       dateOfBirth: customer.dateOfBirth,
       phone: customer.phone,
+      emailIsConfirmed: customer.emailConfirm,
     };
   }
 }

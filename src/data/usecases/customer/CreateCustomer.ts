@@ -21,12 +21,8 @@ export class CreateCustomerUseCase implements ICreateCustomerUseCaseProtocol {
       cpf: data.cpf,
       email: data.email,
       name: data.name,
-      password: data.password,
       phone: data.phone,
     });
-    console.log('passou');
-
-    console.log(data);
 
     const customer = PersonFactory.customer({
       cpf: data.cpf,

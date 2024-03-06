@@ -4,10 +4,10 @@ export interface ICreateVehicle {
 
 export namespace ICreateVehicle {
   export type Params = {
-    amount_of_accents: number;
+    quantitySeats: number;
     plate: string;
-    with_air: boolean;
-    cor: string;
+    withAir: boolean;
+    color: string;
     ownerName: string;
     description: string;
   };

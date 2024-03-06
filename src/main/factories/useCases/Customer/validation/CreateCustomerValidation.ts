@@ -1,8 +1,5 @@
 import { IValidatorCreateCustomer } from '@/data/protocols/usecases/customer/actions/ValidatorCreateCustomerProtocol';
-import {
-  IValidatorCustomerProtocol,
-  ValidateCreateCustomer,
-} from '@/data/usecases/customer/validations/CreateCustomerValidation';
+import { ValidateCreateCustomer } from '@/data/usecases/customer/validations/CreateCustomerValidation';
 import { CheckIfCPFCustomerExists } from '@/data/usecases/customer/validations/actions/CheckIfCpfCustomerExists';
 import { CheckIfEmailCustomerExists } from '@/data/usecases/customer/validations/actions/CheckIfCustomerEmailExists';
 import { CheckIfPhoneCustomerExists } from '@/data/usecases/customer/validations/actions/CheckIfPhoneCustomerExists';

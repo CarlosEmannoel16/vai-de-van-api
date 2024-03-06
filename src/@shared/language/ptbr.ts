@@ -2,11 +2,11 @@ import { MessagesType } from './Messages';
 
 export const MessagesPtBr: MessagesType = {
   customer: {
-    emailAlreadyExists: '',
-    invalidEmail: '',
+    emailAlreadyExists: 'Email já cadastrado',
+    invalidEmail: 'Email inválido',
     cpfAlreadyExists: 'CPF já cadastrado',
-    dateOfBirthInvalid: '',
-    phoneAlreadyExists: '',
-    emailAlreadyConfirmed: '',
+    dateOfBirthInvalid: 'Data de nascimento inválida',
+    phoneAlreadyExists: 'Telefone já cadastrado',
+    emailAlreadyConfirmed: 'Email já confirmado',
   },
 };

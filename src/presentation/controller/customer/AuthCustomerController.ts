@@ -11,6 +11,7 @@ export class AuthCustomerController implements IController {
 
   @HandlerErrorController
   async handle(req: Request, res: Response): Promise<Response<IResponse>> {
+    console.log('AuthCustomerController');
     const result = await this.authCustomerUseCase.handler(
       req.body.email,
       req.body.password,

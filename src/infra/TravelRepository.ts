@@ -145,7 +145,7 @@ export class TravelRepository implements ITravelProtocolRepository {
       })) || [],
     );
 
-    return TravelFactory.createTravel({
+    return TravelFactory.create({
       arrivalDate: result.arrivalDate,
       departureDate: result.departureDate,
       driver,
@@ -205,7 +205,9 @@ export class TravelRepository implements ITravelProtocolRepository {
         Route: {
           TripStops: {
             some: {
-              stopId: data.origin,
+              stopId: {
+                contains: data.destiny,
+              },
             },
           },
         },
@@ -227,8 +229,9 @@ export class TravelRepository implements ITravelProtocolRepository {
       },
     });
 
+
     return result?.map(travel => {
-      return TravelFactory.createTravel({
+      return TravelFactory.create({
         departureDate: travel.departureDate,
         arrivalDate: travel.arrivalDate,
         name: travel.description,
@@ -307,7 +310,7 @@ export class TravelRepository implements ITravelProtocolRepository {
     });
 
     return result?.map(travel => {
-      return TravelFactory.createTravel({
+      return TravelFactory.create({
         id: travel.id,
         name: travel.description,
         arrivalDate: travel.arrivalDate,

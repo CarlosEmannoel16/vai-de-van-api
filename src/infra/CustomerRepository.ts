@@ -14,7 +14,7 @@ export class CustomerRepository implements ICustomerProtocolRepository {
       },
     });
 
-    return !!customer;
+    return customer?.id ? true : false;
   }
   async checkIfEmailExists(email: string): Promise<boolean> {
     const customer = await database.findFirst({
@@ -97,6 +97,8 @@ export class CustomerRepository implements ICustomerProtocolRepository {
         email,
       },
     });
+
+    if(!customer) throw new Error("Customer not found");
 
     return PersonFactory.customer({
       id: customer.id,

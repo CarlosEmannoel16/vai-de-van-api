@@ -16,4 +16,6 @@ export interface VehicleInterface {
   set dateOfUpdate(date: Date);
   get ownerName(): string;
   set ownerName(ownerName: string);
+  get plate(): string;
+  get withAir(): boolean;
 }

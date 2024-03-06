@@ -49,8 +49,8 @@ export class Travel implements TravelInterface {
 
     TravelValidatorFactory.create().validate(this);
   }
-  get tickets(): Ticket[] {
-    throw new Error('Method not implemented.');
+  get tickets(): TicketInterface[] {
+    return this._tickets
   }
 
   get id(): string {
