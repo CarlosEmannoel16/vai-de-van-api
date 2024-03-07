@@ -2,7 +2,7 @@ import { CustomerInterface } from '../protocols/CustomerInterface';
 import { CustomerValidatorFactory } from '../factory/PersonValidatorFactory';
 import { Person } from './Person';
 import { PersonProps } from '../factory/PersonFactory';
-import Messages from '@/@shared/language';
+import { Messages } from '@/@shared/language';
 export class Customer extends Person implements CustomerInterface {
   private _secondaryPhone: string;
   private _emailConfirm: boolean;

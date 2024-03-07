@@ -10,6 +10,9 @@ export type MessagesType = {
     phoneAlreadyExists: string;
     emailAlreadyConfirmed: string;
   };
+  stop: {
+    stopNotFound: string;
+  };
 };
 
 export class MessagesConfig {

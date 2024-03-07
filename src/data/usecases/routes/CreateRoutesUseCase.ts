@@ -16,9 +16,6 @@ export class CreateRouteUseCase implements ICreateRouteUseCase {
       data.TripStops.map(ts => ts.stopId),
     );
 
-    console.log(data.TripStops.length);
-    console.log(result.length);
-
     if (data.TripStops.length !== result.length) {
       throw new Error('Some stops were not found');
     }

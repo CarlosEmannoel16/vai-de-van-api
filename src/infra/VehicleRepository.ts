@@ -30,7 +30,7 @@ export class VehicleRepository
     return result.map((vehicle: any) => vehicle.Travel);
   }
   async getOneByParams(data: VehicleInterface): Promise<VehicleInterface> {
-    console.log(data);
+
     const vehicle = await prisma.vehicle.findFirst({
       where: { ...data },
     });
@@ -80,8 +80,6 @@ export class VehicleRepository
     });
   }
   async create(data: VehicleInterface): Promise<VehicleInterface> {
-
-    console.log(data);
    await prisma.vehicle.create({
       data: {
         id: data.id,

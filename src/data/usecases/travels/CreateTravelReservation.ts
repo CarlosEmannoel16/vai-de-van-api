@@ -16,7 +16,7 @@ export class CreateReservationUseCase implements ICreateReservationUseCase {
     idStopOrigin,
     idStopDestiny,
     idCustomer,
-    cpfCustomer,
+    cpfCustomer
   }: ICreateReservationUseCase.Params) {
     const travel = await this.findTravelById.findById(idTravel);
 

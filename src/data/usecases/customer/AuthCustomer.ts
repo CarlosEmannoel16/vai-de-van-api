@@ -27,7 +27,7 @@ export class AuthCustomerUseCase implements IAuthCustomerProtocolUseCase {
       throw new Error('Invalid credentials');
     }
 
-    await this.sendEmail.send({
+    this.sendEmail.send({
       message: 'Novo login realizado na sua conta vai de van!',
       subject: 'Novo Login',
       to: customer.email,

@@ -1,12 +1,22 @@
-import { toMoney } from "@/@shared/utils/toMoney";
-import { Route } from "@/domain/Route/entity/Route";
-import { TravelInterface } from "../Interfaces/travel.interface";
-import { TripStop } from "@/domain/TripStop/entity/TripStop";
+import { toMoney } from '@/@shared/utils/toMoney';
+import { Route } from '@/domain/Route/entity/Route';
+import { TravelInterface } from '../Interfaces/travel.interface';
+import { TripStop } from '@/domain/TripStop/entity/TripStop';
+import { MessagesConfig } from '@/@shared/language/Messages';
+import { Messages } from '@/@shared/language';
 
 export class TravelService {
-  static getValueBetweenStops(route:Route, idStop1: string, idStop2: string): string {
-    const stop1 = route.tripStops.find(tripStop => tripStop.stop.id === idStop1);
-    const stop2 = route.tripStops.find(tripStop => tripStop.stop.id === idStop2);
+  static getValueBetweenStops(
+    route: Route,
+    idStop1: string,
+    idStop2: string,
+  ): string {
+    const stop1 = route.tripStops.find(
+      tripStop => tripStop.stop.id === idStop1,
+    );
+    const stop2 = route.tripStops.find(
+      tripStop => tripStop.stop.id === idStop2,
+    );
     if (!stop1 || !stop2) throw new Error('Stop not found');
     if (stop1.stopOrder >= stop2.stopOrder)
       throw new Error('Stop1 must be less than stop2');
@@ -33,7 +43,7 @@ export class TravelService {
     const stopOrigin = travel.route.tripStops.find(
       tripStop => tripStop.stop.id === stopIdOrigin,
     );
-    const stopDestiny =travel.route.tripStops.find(
+    const stopDestiny = travel.route.tripStops.find(
       tripStop => tripStop.stop.id === stopIdDestiny,
     );
 
@@ -93,5 +103,23 @@ export class TravelService {
     }
 
     return quantityMaxOfSeats;
+  }
+
+  static getQuantityStopsBetweenStops(
+    route: Route,
+    idStop1: string,
+    idStop2: string,
+  ): number {
+    const stop1 = route.tripStops.find(
+      tripStop => tripStop.stop.id === idStop1,
+    );
+    const stop2 = route.tripStops.find(
+      tripStop => tripStop.stop.id === idStop2,
+    );
+    if (!stop1 || !stop2) throw new Error(Messages.stop.stopNotFound);
+    if (stop1.stopOrder >= stop2.stopOrder)
+      throw new Error('Stop1 must be less than stop2');
+
+    return stop2.stopOrder - stop1.stopOrder;
   }
 }

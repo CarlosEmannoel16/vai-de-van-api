@@ -1,7 +1,7 @@
 import { ICustomerProtocolRepository } from '@/infra/protocols/customer/CustomerProtocolRepository';
 import { ValidateCreateCustomer } from '../CreateCustomerValidation';
 import { CustomerInterface } from '@/domain/Person/protocols/CustomerInterface';
-import Messages from '@/@shared/language';
+import {Messages} from '@/@shared/language';
 import { InvalidParamsError } from '@/data/errors/ParamsInvalid';
 import { IActionChainOfResponsibility } from '@/data/protocols/actionsChainOfResponsability/ActionChainOfResponsabilty';
 

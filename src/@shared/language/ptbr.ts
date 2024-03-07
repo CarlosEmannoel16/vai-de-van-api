@@ -9,4 +9,7 @@ export const MessagesPtBr: MessagesType = {
     phoneAlreadyExists: 'Telefone já cadastrado',
     emailAlreadyConfirmed: 'Email já confirmado',
   },
+  stop: {
+    stopNotFound: 'Ponto não encontrado',
+  },
 };

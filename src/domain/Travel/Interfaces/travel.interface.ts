@@ -13,6 +13,13 @@ export interface TravelInterface {
     idStopOrigin: string,
     idStopDestiny: string,
   ): number;
+  getQuantityStopsBetweenStops(
+    idStopOrigin: string,
+    idStopDestiny: string,
+  ): TravelInterface.getQuantityStopsBetweenStopsResult;
+
+  getHourOfDepartureInBr(): string;
+  getHourOfArrivalInBr(): string;
 
   get id(): string;
 
@@ -47,6 +54,11 @@ export interface TravelInterface {
 
   set update_at(update_at: Date);
   get update_at(): Date;
+}
 
-
+export namespace TravelInterface {
+  export type getQuantityStopsBetweenStopsResult = {
+    number: number;
+    toString: () => string;
+  };
 }

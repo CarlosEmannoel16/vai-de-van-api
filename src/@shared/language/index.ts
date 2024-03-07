@@ -1,3 +1,3 @@
 import { MessagesConfig } from './Messages';
 
-export default MessagesConfig.instance.messages;
+export const Messages = MessagesConfig.instance.messages;

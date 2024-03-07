@@ -13,8 +13,6 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
       destiny: data.destiny,
     });
 
-    console.log(travels);
-
     if (!travels) return undefined;
     const result: ISearchTravelsUseCaseProtocol.Result[] = [];
 
@@ -23,17 +21,21 @@ export class SearchTravelsUseCase implements ISearchTravelsUseCaseProtocol {
         nameDestiny: travel.getNameStopById(data.destiny),
         nameOrigin: travel.getNameStopById(data.origin),
         dateOfDeparture: travel.getDateOfDepartureInBr(),
+        hourOfDeparture: travel.getHourOfDepartureInBr(),
+        hourOfArrival: travel.getHourOfArrivalInBr(),
         value: travel.getValueBetweenStops(data.origin, data.destiny),
         driver: travel.nameDriver,
-        quantity: travel.getQuantitySeatsBetweenStops(
+        quantityOfSeats: travel.getQuantitySeatsBetweenStops(
           data.origin,
           data.destiny,
         ),
+        quantityOfStops: travel
+          .getQuantityStopsBetweenStops(data.origin, data.destiny)
+          .toString(),
       });
     });
 
     console.log(result);
-
     return result;
   }
 }

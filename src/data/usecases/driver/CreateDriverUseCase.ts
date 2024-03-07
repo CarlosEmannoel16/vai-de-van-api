@@ -7,11 +7,11 @@ export class CreateDriverUseCase implements ICreateDriverUseCase {
   async create(
     data: ICreateDriverUseCase.request,
   ): Promise<ICreateDriverUseCase.response> {
-
-    console.log(data)
     const errors = [];
     const existsCpf = await this.driverRepository.checkExistsByCpf(data.cpf);
-    const existsEmail = await this.driverRepository.checkExistsByEmail(data.email);
+    const existsEmail = await this.driverRepository.checkExistsByEmail(
+      data.email,
+    );
     const existsCnh = await this.driverRepository.checkExistsByCnh(data.cnh);
 
     if (existsCpf) errors.push('CPF já cadastrado');

@@ -1,6 +1,6 @@
 import { ICustomerProtocolRepository } from '@/infra/protocols/customer/CustomerProtocolRepository';
 import { CustomerInterface } from '@/domain/Person/protocols/CustomerInterface';
-import Messages from '@/@shared/language';
+import {Messages} from '@/@shared/language';
 import { InvalidParamsError } from '@/data/errors/ParamsInvalid';
 import { IValidatorCreateCustomer } from '@/data/protocols/usecases/customer/actions/ValidatorCreateCustomerProtocol';
 import { IActionChainOfResponsibility } from '@/data/protocols/actionsChainOfResponsability/ActionChainOfResponsabilty';

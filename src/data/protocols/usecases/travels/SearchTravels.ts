@@ -17,6 +17,9 @@ export namespace ISearchTravelsUseCaseProtocol {
     dateOfDeparture: string;
     value: string;
     driver: string;
-    quantity: number;
+    quantityOfSeats: number;
+    quantityOfStops: string;
+    hourOfDeparture: string;
+    hourOfArrival: string;
   };
 }

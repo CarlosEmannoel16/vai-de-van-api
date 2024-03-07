@@ -1,5 +1,4 @@
 import { Route } from '@/domain/Route/entity/Route';
-import { Ticket } from '@/domain/Ticket/entity/Ticket';
 import { TravelInterface } from '../Interfaces/travel.interface';
 import { DriverInterface } from '@/domain/Person/protocols/DriverInterface';
 import { VehicleInterface } from '@/domain/Vehicle/interface/VehicleInterface';
@@ -49,8 +48,24 @@ export class Travel implements TravelInterface {
 
     TravelValidatorFactory.create().validate(this);
   }
+  getHourOfArrivalInBr(): string {
+    return this._arrivalDate.toLocaleTimeString('pt-br', {
+      minute: `2-digit`,
+
+      hour: '2-digit',
+      timeZone: 'America/Sao_Paulo',
+    });
+  }
+  getHourOfDepartureInBr(): string {
+    return this._departureDate.toLocaleTimeString('pt-br', {
+      hour: '2-digit',
+      minute: `2-digit`,
+      timeZone: 'America/Sao_Paulo',
+    });
+  }
+
   get tickets(): TicketInterface[] {
-    return this._tickets
+    return this._tickets;
   }
 
   get id(): string {
@@ -162,5 +177,22 @@ export class Travel implements TravelInterface {
       stopIdOrigin,
       stopIdDestiny,
     );
+  }
+
+  getQuantityStopsBetweenStops(
+    idStopOrigin: string,
+    idStopDestiny: string,
+  ): TravelInterface.getQuantityStopsBetweenStopsResult {
+    const number = TravelService.getQuantityStopsBetweenStops(
+      this.route,
+      idStopOrigin,
+      idStopDestiny,
+    );
+
+    const string = number === 1 ? 'parada' : 'paradas';
+    return {
+      number,
+      toString: () => `${number} ${string}`,
+    };
   }
 }
