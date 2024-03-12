@@ -9,11 +9,8 @@ import {
   makeDeleteUserController,
   makeUpdateProfileUserController,
 } from './main/factories/controllers';
-import {
-  makeMiddlewareAuth,
-  makeMiddlewareRouteAdm,
-} from './main/factories/middlewares';
-import { adapterMiddleware, adapterRouter } from './main/utils';
+
+import { adapterRouter } from './main/utils';
 import upload from './config/upload';
 import multer from 'multer';
 import { makeGetAllRouteController } from './main/factories/controllers/Route/makeGetAllRouteController';
@@ -41,9 +38,6 @@ routes.post('/login', adapterRouter(makeLoginController()));
 routes.get('/free/users', adapterRouter(makeGetAllUserController()));
 routes.get('/stops', adapterRouter(makeGetAllStopsController()));
 
-//routes private
-routes;
-//.use(adpterMiddleware(makeMiddlewareAuth()))
 routes.post(
   '/user/upload/profile',
   multer({ storage: upload.storage }).single('avatar'),

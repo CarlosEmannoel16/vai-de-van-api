@@ -14,5 +14,6 @@ export namespace ICreateCustomerUseCaseProtocol {
     cpf: string;
     dateOfBirth: Date;
     phone: string;
+    isDriver?: boolean;
   };
 }

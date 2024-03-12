@@ -1,4 +1,4 @@
-import { MessagesType } from "./Messages";
+import { MessagesType } from './Messages';
 
 export const MessagesEng: MessagesType = {
   customer: {
@@ -8,5 +8,8 @@ export const MessagesEng: MessagesType = {
     dateOfBirthInvalid: '',
     phoneAlreadyExists: '',
     emailAlreadyConfirmed: '',
+  },
+  stop: {
+    stopNotFound: '',
   },
 };

@@ -4,11 +4,12 @@ import { IDriverProtocolRepository } from './protocols/drivers';
 import PersonFactory, {
   PersonProps,
 } from '@/domain/Person/factory/PersonFactory';
-
-const database = new PrismaClient();
-export class DriverRepository implements IDriverProtocolRepository {
+export class DriverRepository
+  extends PrismaClient
+  implements IDriverProtocolRepository
+{
   async checkExistsByCpf(cpf: string): Promise<boolean> {
-    const driver = await database.driver.findFirst({
+    const driver = await this.driver.findFirst({
       select: {
         id: true,
       },
@@ -19,7 +20,7 @@ export class DriverRepository implements IDriverProtocolRepository {
     return driver !== null;
   }
   async checkExistsByCnh(cnh: string): Promise<boolean> {
-    const driver = await database.driver.findFirst({
+    const driver = await this.driver.findFirst({
       select: {
         id: true,
       },
@@ -30,7 +31,7 @@ export class DriverRepository implements IDriverProtocolRepository {
     return driver !== null;
   }
   async checkExistsByEmail(email: string): Promise<boolean> {
-    const driver = await database.driver.findFirst({
+    const driver = await this.driver.findFirst({
       select: {
         id: true,
       },
@@ -41,7 +42,7 @@ export class DriverRepository implements IDriverProtocolRepository {
     return driver !== null;
   }
   async getByEmail(email: string): Promise<DriverInterface> {
-    const data = await database.driver.findFirst({
+    const data = await this.driver.findFirst({
       where: {
         email,
       },
@@ -59,7 +60,7 @@ export class DriverRepository implements IDriverProtocolRepository {
     }) as DriverInterface;
   }
   async getByCpf(cpf: string): Promise<DriverInterface> {
-    const data = await database.driver.findFirst({
+    const data = await this.driver.findFirst({
       where: {
         cpf,
       },
@@ -77,7 +78,7 @@ export class DriverRepository implements IDriverProtocolRepository {
     }) as DriverInterface;
   }
   async getByCnh(cnh: string): Promise<DriverInterface> {
-    const data = await database.driver.findFirst({
+    const data = await this.driver.findFirst({
       where: {
         cnh,
       },
@@ -95,7 +96,7 @@ export class DriverRepository implements IDriverProtocolRepository {
     }) as DriverInterface;
   }
   async findById(id: string): Promise<DriverInterface> {
-    const data = await database.driver.findFirst({
+    const data = await this.driver.findFirst({
       where: {
         id,
       },
@@ -113,7 +114,7 @@ export class DriverRepository implements IDriverProtocolRepository {
     }) as DriverInterface;
   }
   async findAll(): Promise<DriverInterface[]> {
-    const data = await database.driver.findMany();
+    const data = await this.driver.findMany();
     return data.map(driver => {
       return PersonFactory.driver({
         cpf: driver.cpf,
@@ -130,7 +131,7 @@ export class DriverRepository implements IDriverProtocolRepository {
     });
   }
   async create(data: DriverInterface): Promise<DriverInterface> {
-    await database.driver.create({
+    await this.driver.create({
       data: {
         cnh: data.cnh,
         cnhDateOfIssue: data.cnhDateOfIssue,

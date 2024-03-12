@@ -1,7 +1,6 @@
-import { Request, Response } from 'express';
+import { RequestAdapter } from '@/main/utils';
 import { IResponse } from '../utils/response';
 
 export interface IController {
-  handle (req: Request, res: Response): Promise<Response<IResponse>>;
+  handle(req: RequestAdapter): Promise<IResponse>;
 }
- 

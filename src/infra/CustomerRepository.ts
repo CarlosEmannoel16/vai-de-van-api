@@ -2,10 +2,12 @@ import { PrismaClient } from '@prisma/client';
 import PersonFactory from '@/domain/Person/factory/PersonFactory';
 import { CustomerInterface } from '@/domain/Person/protocols/CustomerInterface';
 import { ICustomerProtocolRepository } from './protocols/customer/CustomerProtocolRepository';
-const database = new PrismaClient().customer;
-export class CustomerRepository implements ICustomerProtocolRepository {
+export class CustomerPrismaRepository
+  extends PrismaClient
+  implements ICustomerProtocolRepository
+{
   async checkIfCpfExists(cpf: string): Promise<boolean> {
-    const customer = await database.findFirst({
+    const customer = await this.customer.findFirst({
       select: {
         id: true,
       },
@@ -17,7 +19,7 @@ export class CustomerRepository implements ICustomerProtocolRepository {
     return customer?.id ? true : false;
   }
   async checkIfEmailExists(email: string): Promise<boolean> {
-    const customer = await database.findFirst({
+    const customer = await this.customer.findFirst({
       select: {
         id: true,
       },
@@ -29,7 +31,7 @@ export class CustomerRepository implements ICustomerProtocolRepository {
     return !!customer;
   }
   async checkIfPhoneExists(phone: string): Promise<boolean> {
-    const customer = await database.findFirst({
+    const customer = await this.customer.findFirst({
       select: {
         id: true,
       },
@@ -41,7 +43,7 @@ export class CustomerRepository implements ICustomerProtocolRepository {
     return !!customer;
   }
   async findByPhone(phone: string): Promise<CustomerInterface> {
-    const customer = await database.findFirst({
+    const customer = await this.customer.findFirst({
       where: {
         phone,
       },
@@ -59,7 +61,7 @@ export class CustomerRepository implements ICustomerProtocolRepository {
     }) as CustomerInterface;
   }
   async findByCpf(cpf: string): Promise<CustomerInterface> {
-    const customer = await database.findFirst({
+    const customer = await this.customer.findFirst({
       where: {
         cpf,
       },
@@ -75,7 +77,7 @@ export class CustomerRepository implements ICustomerProtocolRepository {
     }) as CustomerInterface;
   }
   async create(data: CustomerInterface): Promise<CustomerInterface> {
-    await database.create({
+    await this.customer.create({
       data: {
         id: data.id,
         name: data.name,
@@ -92,13 +94,13 @@ export class CustomerRepository implements ICustomerProtocolRepository {
     return data;
   }
   async findByEmail(email: string): Promise<CustomerInterface> {
-    const customer = await database.findFirst({
+    const customer = await this.customer.findFirst({
       where: {
         email,
       },
     });
 
-    if(!customer) throw new Error("Customer not found");
+    if (!customer) throw new Error('Customer not found');
 
     return PersonFactory.customer({
       id: customer.id,
@@ -111,8 +113,7 @@ export class CustomerRepository implements ICustomerProtocolRepository {
     }) as CustomerInterface;
   }
   async findById(id: string): Promise<CustomerInterface> {
-    const database = new PrismaClient();
-    const customer = await database.customer.findFirst({
+    const customer = await this.customer.findFirst({
       where: {
         id,
       },
@@ -127,6 +128,6 @@ export class CustomerRepository implements ICustomerProtocolRepository {
       emailConfirm: customer.emailConfirm,
     }) as CustomerInterface;
   }
-  async updateCustomer() {}
-  async deleteCustomer() {}
+  async update() {}
+  async delete() {}
 }

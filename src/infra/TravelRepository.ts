@@ -12,10 +12,11 @@ import { TravelInterface } from '@/domain/Travel/Interfaces/travel.interface';
 import PersonFactory from '@/domain/Person/factory/PersonFactory';
 import { StopFactory } from '@/domain/Stop/factory/StopFactory';
 
-const travelDataBase = new PrismaClient().travel;
-export class TravelRepository implements ITravelProtocolRepository {
+export class TravelRepository extends PrismaClient implements ITravelProtocolRepository  {
+
+
   async findByIdRoute(id: string): Promise<any> {
-    return travelDataBase.findMany({
+    return this.travel.findMany({
       where: {
         routeId: id,
       },
@@ -23,7 +24,7 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async findAll(): Promise<Travel[]> {
-    const data = await travelDataBase.findMany({
+    const data = await this.travel.findMany({
       select: {
         id: true,
         departureDate: true,
@@ -77,7 +78,7 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async findById(id: string): Promise<Travel> {
-    const result = await travelDataBase.findUnique({
+    const result = await this.travel.findUnique({
       where: { id },
       include: {
         Route: {
@@ -159,7 +160,7 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async create(data: Travel): Promise<Travel> {
-    await travelDataBase.create({
+    await this.travel.create({
       data: {
         description: data.description,
         departureDate: data.departureDate,
@@ -175,7 +176,7 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async update(id: string, data: Travel): Promise<Travel> {
-    await travelDataBase.update({
+    await this.travel.update({
       where: { id },
       data: {
         arrivalDate: data.arrivalDate,
@@ -190,13 +191,13 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async delete(id: string): Promise<any> {
-    return travelDataBase.delete({ where: { id } });
+    return this.travel.delete({ where: { id } });
   }
 
   async search(
     data: ISearchTravelProtocolRepository.Params,
   ): Promise<Travel[]> {
-    const result = await travelDataBase.findMany({
+    const result = await this.travel.findMany({
       where: {
         departureDate: {
           lte: new Date(`${data.dateOfTravel}T23:59:59.000Z`),
@@ -228,7 +229,6 @@ export class TravelRepository implements ITravelProtocolRepository {
         Tickets: true,
       },
     });
-
 
     return result?.map(travel => {
       return TravelFactory.create({
@@ -282,7 +282,7 @@ export class TravelRepository implements ITravelProtocolRepository {
   }
 
   async findByCityOrigin(cityOrigin: string): Promise<TravelInterface[]> {
-    const result = await travelDataBase.findMany({
+    const result = await this.travel.findMany({
       where: {
         Route: {
           TripStops: {

@@ -1,6 +1,7 @@
-import { UpdateUserController } from "@/presentation/controller/user/UpdateUserController"
-import { makeUpdateUserUseCase } from "../../useCases/user/makeUpdateUserUseCase"
+import { UpdateUserController } from '@/presentation/controller/user/UpdateUserController';
+import { makeUpdateUserUseCase } from '../../useCases/user/makeUpdateUserUseCase';
+import { IController } from '@/presentation/protocols/IController';
 
-export const makeUpdateUserController = () => {
-    return new UpdateUserController(makeUpdateUserUseCase())
-}
+export const makeUpdateUserController = (): IController => {
+  return new UpdateUserController(makeUpdateUserUseCase());
+};

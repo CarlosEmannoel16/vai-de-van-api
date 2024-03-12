@@ -14,4 +14,5 @@ export interface IResponse {
   message?: string;
   error?: string;
   totalRegisters?: number;
+  statusCode?: number;
 }

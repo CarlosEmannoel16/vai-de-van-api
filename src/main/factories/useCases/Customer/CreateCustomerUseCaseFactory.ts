@@ -1,12 +1,12 @@
 import { CreateCustomerUseCase } from '@/data/usecases/customer/CreateCustomer';
-import { CustomerRepository } from '@/infra/CustomerRepository';
+import { CustomerPrismaRepository } from '@/infra/CustomerRepository';
 import { makeCreateCustomerValidate } from './validation/CreateCustomerValidation';
 import { ICreateCustomerUseCaseProtocol } from '@/data/protocols/usecases/customer/CreateCustomerUseCaseProtocol';
 import { EmailService } from '@/infra/SendEmailService';
 import { ConfirmEmailRepository } from '@/infra/ConfirmEmailRepository';
 
 export const makeCreateCustomerUseCase = (): ICreateCustomerUseCaseProtocol => {
-  const customerRepository = new CustomerRepository();
+  const customerRepository = new CustomerPrismaRepository();
   const validateCustomer = makeCreateCustomerValidate();
   const sendEmail = new EmailService();
   const confirmEmailRepository = new ConfirmEmailRepository();

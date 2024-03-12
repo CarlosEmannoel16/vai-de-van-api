@@ -5,10 +5,13 @@ import { IValidatorCreateCustomer } from '@/data/protocols/usecases/customer/act
 import PersonFactory from '@/domain/Person/factory/PersonFactory';
 import { ISendEmail } from '@/infra/protocols/email/SendEmail';
 import { IConfirmEmailRepositoryProtocol } from '@/infra/protocols/confirmEmail/ConfirmEmailRepository';
+import { IDriverProtocolRepository } from '@/infra/protocols/drivers';
+import { DriverToCustomerAdapter } from '@/data/protocols/usecases/customer/adapters/DriverToCustomerAdapter';
 
 export class CreateCustomerUseCase implements ICreateCustomerUseCaseProtocol {
   constructor(
     private readonly customerRepository: ICustomerProtocolRepository,
+    private readonly driverRepository: IDriverProtocolRepository,
     private readonly validateCustomer: IValidatorCreateCustomer,
     private readonly sendEmail: ISendEmail,
     private readonly confirmEmailRepository: IConfirmEmailRepositoryProtocol,
@@ -24,14 +27,23 @@ export class CreateCustomerUseCase implements ICreateCustomerUseCaseProtocol {
       phone: data.phone,
     });
 
-    const customer = PersonFactory.customer({
-      cpf: data.cpf,
-      email: data.email,
-      name: data.name,
-      password: data.password,
-      dateOfBirth: data.dateOfBirth,
-      phone: data.phone,
-    });
+    let customer;
+    if (data.isDriver) {
+      const driver = await this.driverRepository.getByCpf(data.cpf);
+      if (driver) {
+        customer = new DriverToCustomerAdapter(driver);
+      }
+    }
+
+    if (!customer)
+      customer = PersonFactory.customer({
+        cpf: data.cpf,
+        email: data.email,
+        name: data.name,
+        password: data.password,
+        dateOfBirth: data.dateOfBirth,
+        phone: data.phone,
+      });
 
     customer.emailConfirm = false;
 

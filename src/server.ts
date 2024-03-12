@@ -34,7 +34,6 @@ io.on('connection', (socket: Socket) => {
 });
 
 server.listen(config.server.port, () => {
-
   Nodemailer.getInstance.init();
   console.log(`Server started in port ${config.server.port} ✅🎃🚀🇧🇷`);
   console.log(`http://localhost:${config.server.port}`);

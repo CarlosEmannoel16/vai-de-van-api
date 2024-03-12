@@ -1,9 +1,8 @@
 import { HandlerErrorController } from '@/@shared/decorators/TryCatch';
 import { IGetAllStopsProtocolUseCase } from '@/data/protocols/usecases/stops/GetAllStopsInterface';
-import ControllerException from '@/presentation/helpers/ControllerException';
+import { RequestAdapter } from '@/main/utils';
 import { IController } from '@/presentation/protocols/IController';
-import { IResponse } from '@/presentation/utils/response';
-import { Request, Response } from 'express';
+import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 
 export class GetAllStopsController implements IController {
   constructor(
@@ -11,8 +10,11 @@ export class GetAllStopsController implements IController {
   ) {}
 
   @HandlerErrorController
-  async handle(req: Request, res: Response): Promise<Response<IResponse>> {
-    const data = await this.getAllStopsUseCase.execute();
-    return res.status(200).json(data);
+  async handle(req: RequestAdapter): Promise<IResponse> {
+    const response = await this.getAllStopsUseCase.execute();
+    return {
+      status: ResponseStatus.OK,
+      data: response,
+    };
   }
 }
