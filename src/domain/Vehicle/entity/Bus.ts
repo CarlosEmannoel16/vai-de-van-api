@@ -36,16 +36,12 @@ export class Bus implements BusInterface {
     this._createdAt = createdAt;
     this._dateOfUpdate = dateOfUpdate;
   }
-  get dateOfCreate(): Date {
-    return this._createdAt;
-  }
-  get dateOfUpdate(): Date {
-    return this._dateOfUpdate;
-  }
 
-  get Id(): string {
+  get id(): string {
     return this._id;
   }
+
+
   get ownerName(): string {
     return this._ownerName;
   }
@@ -70,9 +66,7 @@ export class Bus implements BusInterface {
     return this._color;
   }
 
-  get id(): string {
-    return this._id;
-  }
+
 
   get description(): string {
     return this._name;
@@ -96,5 +90,20 @@ export class Bus implements BusInterface {
 
   get situation(): SituationVehicleType {
     return this._situation;
+  }
+
+  get dateOfCreate(): Date {
+    return this._createdAt;
+  }
+  get dateOfUpdate(): Date {
+    return this._dateOfUpdate;
+  }
+
+  changeSituation(situation: SituationVehicleType): void {
+    this._situation = situation;
+  }
+
+  changeDescription(name: string): void {
+    this._name = name;
   }
 }

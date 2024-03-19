@@ -5,7 +5,7 @@ export function HandlerErrorController(
   propertyKey: string,
   descriptor: TypedPropertyDescriptor<any>,
 ) {
-  const originalMethod = descriptor.value; // save a reference to the original method
+  const originalMethod = descriptor.value; 
   descriptor.value = async function (...args: any[]) {
     try {
       const result = await originalMethod.apply(this, args);
