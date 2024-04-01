@@ -7,7 +7,7 @@ export class Driver extends Person implements DriverInterface {
   private _cnhDateOfIssue: Date;
   private _cnhExpirationDate: Date;
 
-  constructor(data: PersonProps & { cnh: string }) {
+  constructor(data: Omit<PersonProps & { cnh: string }, 'emailConfirm'>) {
     super(data);
     this._cnh = data.cnh;
   }
@@ -34,4 +34,6 @@ export class Driver extends Person implements DriverInterface {
   set cnhExpirationDate(cnhExpirationDate: Date) {
     this._cnhExpirationDate = cnhExpirationDate;
   }
+
+
 }
