@@ -18,7 +18,18 @@ const makeDriver = () => {
 };
 
 const makeVehicle = () => {
-  return new Bus();
+  return new Bus(
+    'id_1',
+    'name_faker',
+    40,
+    'color_faker',
+    'available',
+    'plate_faker',
+    false,
+    'owner_name_faker',
+    new Date(),
+    new Date(),
+  );
 };
 
 describe.skip('Travel Unit Test', () => {
@@ -31,6 +42,7 @@ describe.skip('Travel Unit Test', () => {
       'id',
       'name',
       route,
+      'ABERTA',
       driver,
       vehicle,
       new Date('2022/06/05'),
