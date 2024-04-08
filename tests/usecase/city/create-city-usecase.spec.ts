@@ -1,11 +1,12 @@
 import { CreateCityUseCase } from '@/data/usecases/stops/CreateCityUseCase';
 import { IGetStateByIdProtocolRepository } from '@/infra/protocols';
-import { ICityProtocolRepository } from '@/infra/protocols/city';
+import { IStopProtocolRepository } from '@/infra/protocols/stops/StopProtocolRepository';
 
-const makeCityProtocolRepository = (): ICityProtocolRepository => ({
+const makeCityProtocolRepository = (): IStopProtocolRepository => ({
+  changeStatus: jest.fn(),
   create: jest.fn(),
-  disable: jest.fn(),
-  getAllCities: jest.fn(),
+  getAll: jest.fn(),
+  getByIds: jest.fn(),
   getOne: jest.fn(),
   update: jest.fn(),
 });
