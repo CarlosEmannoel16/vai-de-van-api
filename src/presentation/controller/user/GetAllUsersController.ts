@@ -1,5 +1,6 @@
 import { HandlerErrorController } from '@/@shared/decorators/TryCatch';
 import { IGetAllUsers } from '@/data/protocols/usecases/user/GetAllUsers';
+import { IRequest } from '@/main/utils';
 import { IController } from '@/presentation/protocols/IController';
 import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
@@ -7,9 +8,12 @@ import { Request, Response } from 'express';
 export class GetAllUsersController implements IController {
   constructor(private readonly getAllUsersUseCase: IGetAllUsers) {}
 
-  @HandlerErrorController
-  async handle(req: Request, res: Response): Promise<Response<IResponse>> {
+  async handle(req: IRequest): Promise<IResponse> {
     const users = await this.getAllUsersUseCase.execute();
-    return res.status(200).json({ status: ResponseStatus.OK, data: users });
+    return {
+      status: ResponseStatus.OK,
+      data: users,
+      statusCode: 200,
+    };
   }
 }

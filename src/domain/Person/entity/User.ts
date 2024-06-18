@@ -1,4 +1,4 @@
-import { PersonProps } from '../factory/PersonFactory';
+import { PersonProps, UserProps } from '../factory/PersonFactory';
 import PersonInterface from '../protocols/PersonInterface';
 import { Person } from './Person';
 
@@ -6,7 +6,7 @@ export class User extends Person implements PersonInterface {
   private _created_at: Date;
   private _updated_at: Date;
 
-  constructor(data: PersonProps) {
+  constructor(data: UserProps) {
     super(data);
     this.validate();
   }

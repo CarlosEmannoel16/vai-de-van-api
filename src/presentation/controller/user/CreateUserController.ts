@@ -15,11 +15,14 @@ export class CreateUserController implements IController {
     await createUserYupValidation.validate(req.body, {
       abortEarly: false,
     });
+
+
     const user = await this.createUserUseCase.execute(req.body);
 
     return {
       status: ResponseStatus.CREATED,
       data: user,
+      statusCode: 201,
     };
   }
 }

@@ -47,7 +47,7 @@ model Customer {
   email         String   @unique
   cpf           String   @unique
   phone         String
-  phone2        String @default("")
+  phone2        String   @default("")
   date_of_birth DateTime
   emailConfirm  Boolean  @default(false)
   Ticket        Ticket[]
@@ -72,15 +72,15 @@ model Driver {
 }
 
 model User {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   name          String
   password      String
-  email         String   @unique
-  cpf           String   @unique
+  email         String    @unique
+  cpf           String    @unique
   phone         String
-  date_of_birth DateTime
-  created_at    DateTime @default(now())
-  update_at     DateTime @default(now()) @updatedAt
+  date_of_birth DateTime?
+  created_at    DateTime  @default(now())
+  update_at     DateTime  @default(now()) @updatedAt
 }
 
 model SessionUsers {

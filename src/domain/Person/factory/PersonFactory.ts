@@ -16,7 +16,6 @@ export interface PersonProps {
   name: string;
   email: string;
   cpf: string;
-  cnh?: string;
   password?: string;
   dateOfBirth?: Date;
   phone?: string;
@@ -25,14 +24,22 @@ export interface PersonProps {
   emailConfirm?: boolean;
 }
 
+export interface DriverProps extends PersonProps {
+  cnh: string;
+}
+
+export interface UserProps extends PersonProps {
+
+}
+
 class PersonFactory implements PersonFactoryInterface {
-  driver(data: PersonProps): DriverInterface {
+  driver(data: DriverProps): DriverInterface {
     return new Driver({ ...data, cnh: data.cnh });
   }
   customer(data: PersonProps): CustomerInterface {
     return new Customer({ ...data, emailConfirm: false });
   }
-  user(data: PersonProps): UserInterface {
+  user(data: UserProps): UserInterface {
     return new User(data);
   }
 }

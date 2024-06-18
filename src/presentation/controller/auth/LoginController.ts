@@ -27,6 +27,7 @@ export class LoginController implements IController {
       status: ResponseStatus.OK,
       data: result,
       message: 'User authenticated successfully',
+      statusCode:200
     };
   }
 }
