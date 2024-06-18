@@ -33,25 +33,22 @@ import { makeCreateCustomerController } from './main/factories/controllers/custo
 import { makeAuthCustomerController } from './main/factories/controllers/customer/AuthCustomerControllerFactory';
 
 const routes = Router();
-
+//USER
 routes.post('/login', adapterRouter(makeLoginController()));
 routes.get('/free/users', adapterRouter(makeGetAllUserController()));
-routes.get('/stops', adapterRouter(makeGetAllStopsController()));
-
+routes.post('/user', adapterRouter(makeCreateUserController()));
+routes.delete('/user/:id', adapterRouter(makeDeleteUserController()));
 routes.post(
   '/user/upload/profile',
   multer({ storage: upload.storage }).single('avatar'),
   adapterRouter(makeUpdateProfileUserController()),
 );
-routes.post('/user/driver', adapterRouter(makeCreateDriverController()));
 routes.get('/user/:id', adapterRouter(makeGetUserByIdController()));
 routes.get('/users', adapterRouter(makeGetAllUserController()));
-routes.post('/user', adapterRouter(makeCreateUserController()));
-
-routes.delete('/user/:id', adapterRouter(makeDeleteUserController()));
-routes.put('/driver', adapterRouter(makeUpdateUserController()));
 
 //Driver
+routes.post('/driver', adapterRouter(makeCreateDriverController()));
+routes.put('/driver', adapterRouter(makeUpdateUserController()));
 routes.get('/drivers', adapterRouter(makeFindAllDriversController()));
 routes.post('/driver', adapterRouter(makeCreateDriverController()));
 routes.put('/driver', adapterRouter(makeUpdateUserController()));
@@ -88,5 +85,8 @@ routes.get('/travel/:id', adapterRouter(makeGetTravelByIdController()));
 //Customer
 routes.post('/customer', adapterRouter(makeCreateCustomerController()));
 routes.post('/customer/auth', adapterRouter(makeAuthCustomerController()));
+
+routes.get('/stops', adapterRouter(makeGetAllStopsController()));
+
 
 export default routes;

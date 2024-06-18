@@ -6,6 +6,7 @@ import config from '@/config/auth';
 export class AuthLogin implements IAuthLogin {
   constructor(private readonly getUserByEmail: IUserProtocolRepository) {}
   async verify(data: IAuthLogin.request): Promise<IAuthLogin.response> {
+    console.log(data);
     const user = await this.getUserByEmail.getUserByEmail(data.email);
     if (!Object.keys(user).length)
       throw new NotAuthorizedError('Usuário ou senha inválidos');

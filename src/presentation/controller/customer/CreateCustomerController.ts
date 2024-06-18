@@ -1,16 +1,16 @@
 import { HandlerErrorController } from '@/@shared/decorators/TryCatch';
 import { InvalidParamsError } from '@/data/errors/ParamsInvalid';
 import { ICreateCustomerUseCaseProtocol } from '@/data/protocols/usecases/customer/CreateCustomerUseCaseProtocol';
+import { IRequest } from '@/main/utils';
 import { IController } from '@/presentation/protocols/IController';
-import { IResponse } from '@/presentation/utils/response';
+import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 
 export class CreateCustomerController implements IController {
   constructor(
     private readonly createCustomerUseCase: ICreateCustomerUseCaseProtocol,
   ) {}
-  @HandlerErrorController
-  async handle(req: Request, res: Response): Promise<Response<IResponse>> {
+  async handle(req: IRequest): Promise<IResponse> {
     if (!req.body.dateOfBirth) {
       throw new InvalidParamsError('dateOfBirth is required');
     }
@@ -24,11 +24,14 @@ export class CreateCustomerController implements IController {
       phone: req.body.phone,
     });
 
-    return res.status(201).json({
-      name: result.name,
-      id: result.id,
-      email: result.email,
-      emailConfirmed: result.emailConfirm,
-    });
+    return {
+      data: {
+        name: result.name,
+        id: result.id,
+        email: result.email,
+        emailConfirmed: result.emailConfirm,
+      },
+      status: ResponseStatus.CREATED
+    };
   }
 }

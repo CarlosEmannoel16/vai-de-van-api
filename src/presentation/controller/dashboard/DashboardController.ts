@@ -1,15 +1,16 @@
 import { IDashboardUseCase } from '@/data/protocols/usecases/dashboard/DashboardInterface';
 import { IController } from '@/presentation/protocols/IController';
-import { IResponse } from '@/presentation/utils/response';
+import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 import { Request, Response } from 'express';
 
 import { HandlerErrorController } from '@/@shared/decorators/TryCatch';
+import { IRequest } from '@/main/utils';
 
 export class DashboardController implements IController {
   constructor(private readonly dashboardUseCase: IDashboardUseCase) {}
-  @HandlerErrorController
-  async handle(req: Request, res: Response): Promise<Response<IResponse>> {
+
+  async handle(req: IRequest): Promise<IResponse> {
     const result = await this.dashboardUseCase.execute();
-    return res.status(200).json({ data: result });
+    return { data: result, status: ResponseStatus.OK };
   }
 }

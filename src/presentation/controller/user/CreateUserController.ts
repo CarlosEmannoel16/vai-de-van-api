@@ -3,7 +3,7 @@ import { IResponse, ResponseStatus } from '../../utils/response';
 import { createUserYupValidation } from './validation/yupValidationUser';
 import { IController } from '@/presentation/protocols/IController';
 import { ICreateUser } from '@/data/protocols/usecases/user';
-import { HandlerErrorController } from '@/@shared/decorators/TryCatch';
+import { IRequest } from '@/main/utils';
 
 export class CreateUserController implements IController {
   private readonly createUserUseCase: ICreateUser;
@@ -11,19 +11,15 @@ export class CreateUserController implements IController {
     this.createUserUseCase = CreateUserUseCase;
   }
 
-  @HandlerErrorController
-  async handle(
-    req: Request,
-    res: Response<IResponse>,
-  ): Promise<Response<IResponse>> {
+  async handle(req: IRequest): Promise<IResponse> {
     await createUserYupValidation.validate(req.body, {
       abortEarly: false,
     });
     const user = await this.createUserUseCase.execute(req.body);
 
-    return res.status(201).json({
+    return {
       status: ResponseStatus.CREATED,
       data: user,
-    });
+    };
   }
 }

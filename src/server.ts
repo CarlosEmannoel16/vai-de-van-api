@@ -14,7 +14,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:4000', // Substitua pela origem correta do cliente React
+    origin: 'http://localhost:4000',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
     credentials: true,

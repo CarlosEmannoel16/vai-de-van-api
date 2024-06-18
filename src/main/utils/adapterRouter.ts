@@ -1,6 +1,6 @@
 import { IController } from '@/presentation/protocols/IController';
 import { Request, Response } from 'express';
-
+import { ValidationError } from 'yup';
 export type IRequest = {
   body: any;
   params: any;
@@ -29,10 +29,19 @@ export const adapterRouter = (controller: IController): any => {
 
     try {
       const result = await controller.handle(req);
+      console.log(result);
       return response.status(result.statusCode).json(result.data);
     } catch (error) {
       console.log(error);
-      return response.status(500).json({ message: 'Internal server error' });
+      if (error instanceof ValidationError) {
+        return response
+          .status(400)
+          .json({ message: error.inner.map(err => err.message) });
+      }
+
+      if (error instanceof Error) {
+        return response.status(500).json({ message: error.message });
+      }
     }
   };
 };

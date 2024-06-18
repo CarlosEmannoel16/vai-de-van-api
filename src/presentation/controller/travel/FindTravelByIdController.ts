@@ -1,15 +1,14 @@
 import { HandlerErrorController } from '@/@shared/decorators/TryCatch';
 import { FindTravelById } from '@/data/usecases/travels/FindTravelByIdUseCase';
+import { IRequest } from '@/main/utils';
 import { IController } from '@/presentation/protocols/IController';
-import { IResponse } from '@/presentation/utils/response';
-import { Request, Response } from 'express';
+import { IResponse, ResponseStatus } from '@/presentation/utils/response';
 
 export class FindTravelByIdController implements IController {
   constructor(private readonly findTravelByIdUseCase: FindTravelById) {}
 
-  @HandlerErrorController
-  async handle(req: Request, res: Response): Promise<Response<IResponse>> {
+  async handle(req: IRequest): Promise<IResponse> {
     const data = await this.findTravelByIdUseCase.execute(req.params.id);
-    return res.status(200).json(data);
+    return { data, status: ResponseStatus.OK };
   }
 }
